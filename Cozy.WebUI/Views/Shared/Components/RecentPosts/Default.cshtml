@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BlogPost>
+
+<section class="blog-section">
+    <div class="container-wrapper">
+        <div class="row g-0">
+            <div class="col-xl-12  col-lg-12  col-md-12  col-sm-12 col-12">
+                <div class="container-wrapper__title text-center">
+                    <h2 class="container-wrapper__title--head">Recent Posts</h2>
+                    <p class="container-wrapper__title--text">Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore.</p>
+                </div>
+            </div>
+        </div>
+        <div class="blog-slider">
+
+            @foreach (var item in Model)
+            {
+                <div>
+                    <div class="pic">
+                        <div class="blog-slider__item">
+                            <div class="blog-slider__item__img over-hidden">
+                                <img src="~/uploads/images/@item.ImagePath" alt="">
+                            </div>
+                            <div class="blog-slider__item__content">
+                                <ul class="blog-slider__item__content--list d-flex">
+                                    <li class="blog-slider__item__content--item">
+                                        <span>Post date:</span>
+                                    </li>
+                                    <li class="blog-slider__item__content--item">
+                                        <a class="date" href="#">@item.PublishedDate?.ToString("dd MMM yyy")</a>
+                                    </li>
+                                </ul>
+                                <h4>
+                                    <a class="blog-slider__item__content__link" href="blog-details.html">@item.Title</a>
+                                </h4>
+                                <p> @Html.Raw(item.Body)</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</section>

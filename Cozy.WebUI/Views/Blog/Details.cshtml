@@ -1,0 +1,338 @@
+﻿@model BlogPost
+
+@{
+    ViewData["Title"] = "Details";
+
+    IEnumerable<BlogPostComment> GetComments(BlogPostComment parent)
+    {
+        if (parent.ParentId != null)
+            yield return parent;
+
+        foreach (var item in parent.Children.SelectMany(c => GetComments(c)))
+        {
+            yield return item;
+        }
+
+    }
+}
+
+<main>
+
+    <!-- slider-area-start -->
+    <div class="slider-area over-hidden">
+        <div class="single-page blog-none page-height-2 position-relative d-flex
+          align-items-center"
+             style="background-image:
+          url(./assets/imgs/blog-slidebar-none-banner.jpg); min-height: 900px;">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex
+                align-items-center justify-content-center">
+                        <div class="page-title-content">
+                            <div class="page-text text-center">
+                                <ul class="blog-tag d-flex pb-25 justify-content-center">
+                                    <li>
+                                        <a class="d-inline-block
+                          p-0" href="#">Image,</a>
+                                    </li>
+                                    <li>
+                                        <a class="d-inline-block
+                          p-0" href="#">Photography,</a>
+                                    </li>
+                                    <li>
+                                        <a class="d-inline-block
+                          p-0" href="#">Travel</a>
+                                    </li>
+                                </ul>
+                                <h2 class="text-white">Men Wearing Canvas Boots</h2>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="breadcrumb" class="page-nav position-absolute ">
+                <ol class="breadcrumb bg-transparent justify-content-center">
+                    <li class="breadcrumb-item">
+                        <a class="secondary-color"
+                           href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="secondary-color"
+                           href="blog-right-sidebar.html">Image</a>
+                    </li>
+                    <li class="breadcrumb-item active text-capitalize text-white"
+                        aria-current="page"> </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- slider-area-end=  -->
+    <!-- blog-banner-area-start -->
+    <div class="blog-banner-area pt-65 pb-65 over-hidden">
+        <div class="container-wrapper ">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="blog-banner-left mb-30">
+                    <img src="~/uploads/images/@Model.ImagePath" alt="">
+                </div>
+            </div>
+            <ul class="blog-post-data">
+                <li class="post-date pr-35">
+                    Post date:<a class="" href="#">@Model.PublishedDate?.ToString("dd MMM yyy")</a>
+                </li>
+                <li class="post-view pr-20">
+                    <span class="fa fa-eye pr-1"></span>533 Views
+                </li>
+                <li class="post-comments">
+                    <span>
+                        <i class="far fa-comment"></i>
+                    </span><span class="px-1">@Model.Comments?.Count</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- banner-area-end  -->
+    <!-- blog-content-area-start -->
+    <div class="blog-content-area pb-90 over-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="blog-content pl-55 pr-55">
+                        <h3>@Model.Title</h3>
+                        <p class="pb-15">
+                            @Html.Raw(Model.Body)
+                        </p>
+
+                        <div class="blog-footer d-sm-flex justify-content-between pt-50">
+                            <ul class="post-tag pb-20">
+                                @foreach (var item in Model.TagCloud)
+                                {
+                                    <li class="tag-cloud-link">
+                                        <a>@item.Tag.Text</a>
+                                    </li>
+                                }
+                            </ul>
+                            <ul class="social-link pb-20">
+                                <li>
+                                    <a class="text-white d-block f-bg" href="#">
+                                        <i class="fa-brands fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-white d-block t-bg" href="#">
+                                        <i class="fa-brands fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="text-white d-block g-bg" href="#">
+                                        <i class="fa-brands fa-google-plus-g"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- /col -->
+            </div><!-- /row -->
+        </div><!-- /container -->
+    </div>
+    <!-- blog-content-area-end  -->
+    <!-- author-area-start   -->
+    <div class="author-post-area pt-100 pb-110 over-hidden">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="single-author-post pl-55 pr-55">
+                        <ul class="blog-posts d-sm-flex justify-content-between pb-70">
+                            <li class="mb-30">
+                                <h4>Miranda Skoczek Homestay</h4>
+                            </li>
+                            <li class="text-right mb-30">
+                                <h4>How Wear The Summer Stlye</h4>
+                            </li>
+                        </ul>
+                        <div class="author-post-details comments gray-bg2 pl-30 pr-30 pt-30 pb-20">
+                            <div class="row">
+                                @foreach (var comment in Model.Comments.Where(c => c.ParentId == null))
+                                {
+                                    <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 mb-20 cmnt-border comment" id="c-@comment.Id" data-comment-id="@comment.Id">
+                                        <div class="author-post pt-20 pb-20">
+                                            <span class="position-relative black-color pl-40 cmnt-own  pr-20 user-cmnt">@($"{comment.CreatedByUser?.Name} {comment.CreatedByUser?.Surname}")</span>
+                                            <span class="comment-date">@comment.CreatedDate.ToString("MMMM d, yyyy HH:mm")</span>
+                                            <p class="mt-10">
+                                                @comment.Text
+                                            </p>
+                                            <div class="cmnt-btn">
+                                                <a class="btn btn-dark btn-comment-reply">Reply <i class="fa-solid fa-arrow-right"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @foreach (var subComment in GetComments(comment))
+                                    {
+                                        <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 mb-20 ml-30 cmnt-border comment" id="c-@subComment.Id" data-comment-id="@subComment.Id">
+                                            <div class="author-post pt-20 pb-20">
+                                                <span class="position-relative black-color pl-40 cmnt-own  pr-20 user-cmnt">@($"{subComment.CreatedByUser?.Name} {subComment.CreatedByUser?.Surname}")</span>
+                                               @* <div>
+                                                    <p>
+                                                        <a href="#c-@subComment.ParentId">@($"{subComment.Parent.CreatedByUser?.Name} {subComment.Parent.CreatedByUser?.Surname}")</a>&nbsp;&nbsp;
+                                                    </p>
+                                                </div>*@
+                                                <span class="comment-date">@subComment.CreatedDate.ToString("MMMM d, yyyy HH:mm")</span>
+                                                <p class="mt-10">
+                                                    @subComment.Text
+                                                </p>
+                                                <div class="cmnt-btn">
+                                                    <a class="btn btn-dark btn-comment-reply">Reply <i class="fa-solid fa-arrow-right"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- author-area-end  -->
+    <!-- blog-area-start -->
+    <div class="reply-form-area pb-100 pt-95">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="reply-form contact-form-right pl-55 pr-55">
+                        <h3 class="pb-10">Leave a Reply </h3>
+                        <p>
+                            Your email address will not be published. Required fields are
+                            marked *
+                        </p>
+
+                        <form method="post" class="mt-40" id="replyForm">
+                            <div id="replyToComment"></div>
+                            <input type="hidden" name="postId" value="@Model.Id" />
+                            <div class="comment mb-30">
+                                <textarea name="Comment"
+                                          class="form-control"
+                                          id="comment-text"
+                                          placeholder="Comments"></textarea>
+                            </div>
+                            <button type="submit" class="btn text-white dark-black-bg transition-3 post-cmnt">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog-area-end -->
+    <!-- blog section start -->
+    @await Component.InvokeAsync("RecentPosts", new {id = @Model.Id})
+    <!-- blog section end -->
+
+</main>
+
+@section addcss{
+    <style>
+        /*.cmnt-btn{
+                    text-align:right;
+                }*/
+        .cmnt-border {
+            border: 3px solid lightgray;
+        }
+
+        #replyToComment {
+            position: relative;
+        }
+
+            #replyToComment .comment {
+                margin-left: 0;
+            }
+
+                #replyToComment .comment .author-post {
+                    padding-top: 20px;
+                    padding-left: 20px;
+                }
+
+                    #replyToComment .comment .author-post .user-cmnt {
+                        padding-left: 0;
+                        font-weight: bold;
+                        font-size: 20px;
+                        /*  text-transform:capitalize;*/
+                    }
+
+                    #replyToComment .comment .author-post .comment-date {
+                        font-size: 13px;
+                    }
+
+            #replyToComment .remove-selected-comment {
+                color: red;
+                position: absolute;
+                font-size: 2rem;
+                right: 18%;
+                top: 10px;
+            }
+
+    </style>
+}
+
+@section addjs{
+    <script>
+        $(document).ready(function () {
+            $(".btn-comment-reply").click(function (e) {
+                e.preventDefault();
+
+                $("#replyToComment").html("<a href='javascript:removeSelectedReply()' class='remove-selected-comment' >&times</a>").append($(e.currentTarget).closest(".comment").clone());
+            })
+
+            $("#replyForm").submit(function (e) {
+                e.preventDefault();
+
+                let formData = new FormData(e.currentTarget);
+
+                let toCommentId = $(`#replyToComment div.comment`).data("comment-id");
+
+
+                //console.log("commentId",toCommentId);
+
+                if (toCommentId != undefined) {
+                    formData.set("commentId", toCommentId);
+                }
+
+
+                $.ajax({
+                    url: `@Url.Action("PostComment", "Blog")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    dataType: "json",
+                    success: function (res) {
+                        //console.log(res);
+                    },
+                    error: function (response) {
+
+                        if (response.statusText == "OK") {
+                            if (toCommentId != undefined) {
+                                $(response.responseText).insertAfter($(`#c-${toCommentId}`));
+
+                                $("#replyToComment").html("")
+                                e.currentTarget.reset();
+                                $("#comment-text").val("");
+                            }
+                            else {
+                                $("div.comments div.row").append($(response.responseText))
+                                $("#comment-text").val("");
+                            }
+                        }
+
+                        console.warn(response);
+                    }
+                });
+            })
+        })
+
+        function removeSelectedReply(el) {
+            $("#replyToComment").html("");
+        }
+    </script>
+}

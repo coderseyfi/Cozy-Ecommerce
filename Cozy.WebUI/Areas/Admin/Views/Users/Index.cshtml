@@ -1,0 +1,178 @@
+﻿@model IEnumerable<CozyUser>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Users</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Users</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<!-- Page-body start -->
+<div class="page-body">
+    <!-- Horizontal-border table start -->
+    <div class="card">
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-framed">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Surname)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EmailConfirmed)
+                            </th>
+
+                            <th class="operations">
+                                @*@if (User.HasAccess("admin.users.create"))
+                                {
+                                <a asp-action="Create" class="btn btn-sm btn-primary">
+                                <i class="fa fa-pen-to-square"></i>
+                                </a>
+                                }*@
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.Surname
+                                </td>
+
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @if (item.EmailConfirmed)
+                                    {
+                                        <span class="badge badge-success">Confirmed</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-success">Pending</span>
+                                    }
+                                </td>
+                                <td class="operations">
+
+                                    @if (User.HasAccess("admin.users.details"))
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Horizontal-border table end -->
+    @Html.AntiForgeryToken()
+</div>
+<!-- Page-body end -->
+@section addcss{
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+    <style>
+        th.operations,
+        td.operations {
+            max-width: 148px;
+            width: 148px;
+            text-align: right;
+            color: #ffffff;
+        }
+
+            th.operations i,
+            td.operations i {
+                margin: 0;
+            }
+    </style>
+}
+
+@section addjs{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+    <script>
+        function removeEntity(id, name) {
+            swal(`Əminsiniz ki, '${name}' silinsin?`, {
+                title: "Diqqət!",
+                text: `Əminsiniz ki, '${name}' silinsin?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"]
+            })
+                .then((value) => {
+
+                    if (value == true) {
+
+                        let vToken = $("[name=__RequestVerificationToken]").val();
+
+                        let formData = new FormData();
+
+                        formData.set("__RequestVerificationToken", vToken);
+                        formData.set("id", id);
+
+                        $.ajax({
+                            url: `@Url.Action("Delete")`,
+                            type: "POST",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response);
+
+                                if (response.error == true) {
+                                    toastr.error(response.message, "Xeta!");
+                                    return;
+                                }
+
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}

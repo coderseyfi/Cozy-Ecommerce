@@ -1,0 +1,190 @@
+.blog-none{
+    @include forMain(){
+        min-height: 550px !important;
+    }
+    .container{
+        z-index: 1;
+        .page-title-content{
+            height: 100%;
+            h2{
+                font-size: 50px;
+                font-weight: 400;
+                @include forMain(){
+                    font-size: 42px;
+                    line-height: 1.1;
+                }
+            }
+            ul{
+                li{
+                    display: inline-block;
+                    a{
+                        font-size: 16px;
+                        margin-right: 5px;
+                        color: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+    .page-nav{
+        left: 0;
+        right: 0;
+        bottom: 30px;
+    }
+}
+.blog-none::before{
+    position: absolute;
+    content: "";
+    background: rgba(0, 0, 0, .65);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.blog-banner-area{
+ .container-wrapper{
+    @include containerWrapper();
+ }
+}
+
+.blog-content-area{
+    border-bottom: 1px solid #dee2e6 !important;
+    .container{
+        @media (min-width: 1200px)
+        {
+            max-width: 1140px;
+        }
+        .blog-content{
+            @include forMain(){
+                padding-left: 0;
+                padding-right: 0;
+            }
+            p{
+                text-align: justify;
+            }
+        }
+        .blog-footer{
+            .post-tag{
+                li{
+                    display: inline-block;
+                    transition: 0.7s;
+                    a{
+                        color: #999999;
+                        border: 1px solid #dee2e6 !important;
+                        padding: 12px;
+                    }
+                }
+                li:hover > a{
+                    transition: 0.7s;
+                    background-color: $second-color;
+                    color: $primary-color;
+                }
+            }
+            .social-link{
+                li{
+                    display: inline-block;
+                a{
+                    padding-right: 3rem;
+                    padding-left:  3rem;
+                    padding-bottom: 0.5rem;
+                    padding-top: 0.5rem;
+                    @include forMain(){
+                        padding: 8px 26px !important;
+                    }
+                }
+                    .f-bg{
+                        background: #3c5b9b;
+                  
+                    }
+                    .t-bg{
+                        background: #40c1e0;
+                    }
+                    .g-bg{
+                        background: #e52121;
+                    }
+         
+                }
+            }
+        }
+    }
+    
+}
+
+.author-post-area{
+    .container{
+        @media (min-width: 1200px)
+        {
+            max-width: 1140px;
+        }
+        .single-author-post{
+            @include forMain(){
+                padding-left: 0;
+                padding-right: 0;
+            }
+            ul{
+                li{
+                    a{
+                      font-size: 18px;  
+                      color: #999;
+                    
+                    }
+                }
+            }
+            .author-post-details{
+                background: #f7f7f7;
+                .author-post{
+                    span{
+                        font-size: 18px;
+                        color: $like-black;
+                    }
+                    span::before{
+                        position: absolute;
+                        content: "";
+                        width: 30px;
+                        height: 2px;
+                        background: #222;
+                        left: 0;
+                        top: 50%;
+                        transform: translateY(-50%);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.reply-form-area{
+.container{
+    @media (min-width: 1200px)
+    {
+        max-width: 1140px;
+    }
+    .reply-form{
+        @include forMain(){
+            padding-left: 0;
+            padding-right: 0;
+        }
+        h3{
+            font-size: 30px;
+            font-weight: 600;
+        }
+        form{
+            .comment{
+                textarea{
+                    min-height: 150px;
+                    height: 55px;
+                    border-radius: 0;
+                    padding: 20px
+                }
+            }
+            a{
+                @include blackBtn();
+                background: $second-color;
+                color: $primary-color;
+            }
+        }
+    }
+}
+}

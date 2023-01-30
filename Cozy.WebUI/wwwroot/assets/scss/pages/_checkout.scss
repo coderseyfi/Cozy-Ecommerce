@@ -1,0 +1,220 @@
+$color_1: #000000;
+$color_2: #222;
+$color_3: #006699;
+$color_4: #777;
+$color_5: #292929;
+$font-family_1: "Font Awesome 5 Free";
+$border-color_1: #e7e7e7;
+
+.coupon-content {
+	display: none;
+}
+.checkout-content {
+	display: none;
+}
+#ship-box-info {
+	display: none;
+}
+#cbox-account-info {
+	display: none;
+}
+#login {
+	cursor: pointer;
+}
+#couponshow {
+	cursor: pointer;
+}
+
+.coupon-area {
+    .container-wrapper{
+        @include containerWrapper();
+        .coupon-accordion {
+            h6 {
+                background: $primary-color;
+                border-top: 3px solid $second-color;
+                font-size: 16px;
+                font-weight: 500;
+                position: relative;
+                &::before {
+                    content: "\f07b";
+                    left: 16px;
+                    top: 17px;
+                    position: absolute;
+                    color: $second-color;
+                    font-family: $font-family_1;
+                    font-weight: 800;
+                }
+            }
+        }
+        span {
+            font-size: 16px;
+            color: $like-black;
+            line-height: 1.5;
+            &:hover {
+                color: $color_3;
+                text-decoration: underline;
+            }
+        }
+        input {
+            height: 45px;
+            margin: 0 0 14px;
+            padding: 0 0 0 10px;
+            border-radius: 0;
+        }
+        .form-control {
+            &:focus {
+                border-color: $border-color_1;
+            }
+        }
+    }
+   
+}
+
+
+.checkout-area {
+    .container-wrapper{
+        @include containerWrapper();
+     
+        .checkbox-form {
+            .checkout-area {
+                label {
+                    span {
+                        color: $color_3;
+                    }
+                }
+            }
+        }
+        .lost-password {
+            a {
+                color: $color_3;
+            }
+        }
+        .country-select {
+            select {
+                height: 45px;
+                margin: 0 0 14px;
+                padding: 0 0 0 10px;
+                border-radius: 0;
+                .form-control {
+                    &:focus {
+                        border-color: $border-color_1;
+                    }
+                }
+            }
+            select.form-control {
+                &:not([size]) {
+                    &:not([multiple]) {
+                        height: 45px;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+        .save-info {
+            input {
+                height: auto !important;
+            }
+            p {
+                font-size: 16px;
+                font-weight: 500;
+                color: $color_2;
+                letter-spacing: 0.1px;
+            }
+        }
+        .shipping {
+            .r-inpt {
+                height: auto !important;
+            }
+        }
+        .order-notes {
+            textarea {
+                height: 90px;
+                &::placeholder {
+                    opacity: 1;
+                }
+            }
+        }
+        .your-order {
+            background: #f9f9f9;
+            @include forMain(){
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+        }
+        .your-order-table {
+            table {
+                th {
+                    border-top: medium none;
+                    vertical-align: middle;
+                    white-space: nowrap;
+                    width: 50%;
+                    border-bottom: 1px solid #e7e7e7;
+                    border-right: medium none;
+                    color: $color_4;
+                    font-size: 15px;
+                    padding: 15px 0;
+                }
+                td {
+                    border-bottom: 1px solid #e7e7e7;
+                    border-right: medium none;
+                    color: $color_4;
+                    font-size: 15px;
+                    padding: 15px 0;
+                }
+            }
+        }
+        .payment-method {
+            h6 {
+                .btn-link {
+                    font-size: 13px;
+                    color: $color_5;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+            }
+        }
+        span {
+            font-size: 16px;
+            color: $color_2;
+            line-height: 1.5;
+        }
+        label {
+            font-size: 16px;
+            color: $color_2;
+            line-height: 1.5;
+            display: block;
+        }
+        input {
+            height: 45px;
+            margin: 0 0 14px;
+            padding: 0 0 0 10px;
+            border-radius: 0;
+        }
+        .form-control {
+            &:focus {
+                border-color: $border-color_1;
+            }
+        }
+        .nice-select {
+            border-radius: 0;
+            height: 45px;
+            line-height: 42px;
+            width: 100%;
+            &::after {
+                height: 8px;
+                right: 22px;
+                width: 8px;
+            }
+        }
+        .different-address {
+            .nice-select {
+                line-height: 2.3;
+            }
+        }
+        h4 {
+            font-size: 26px;
+        }
+    }
+    
+}
+

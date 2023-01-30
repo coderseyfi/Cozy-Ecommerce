@@ -1,0 +1,166 @@
+.about-me-area{
+    background: #161619;
+    height: 100vh;
+    @include screen-sm{
+        height: auto;
+    }
+    @include forMain{
+        height: auto;
+    }
+    .about-me-img{
+        height: 100%; 
+        left: 0;
+        top: 0;
+        width: 50%;
+        bottom: 0;
+        background-position: left center;
+        background-size: cover;
+        @include screen-sm{
+            // height: 100vh;
+            width: 100%;
+            position: inherit;
+        }
+        @include forMain{
+            // height: 100vh;
+            background-position: center;
+            width: 100%;
+            position: inherit !important;
+        }
+    }
+    .about-d-height{
+        top: 0;
+        right: 0;
+        width: 50%;
+        bottom: 0;
+        @include screen-sm{
+            width: 100%;
+            position: inherit !important;
+        }
+        @include forMain{
+            width: 100%;
+            position: inherit !important;
+        }
+        .about-details{
+            max-width: 75%;
+            max-height: 70vh;
+            overflow: hidden;
+            overflow-y: scroll;
+            margin: auto;
+            @include screen-sm{
+                overflow: visible;
+                max-height: inherit;
+                padding-bottom: 30px;
+            }
+            @include forMain{
+                overflow: visible;
+                max-height: inherit;
+                padding: 0 30px 30px 30px;
+                max-width: 100%;
+            }
+            span{
+                color: $like-gray;
+            }
+            h1{
+                font-size: 80px;
+                line-height: 1;
+                @include forMain{
+                   font-size: 60px;
+                }
+            }
+            p{
+                color: $like-gray;
+                line-height: 24px;
+            }
+            .my-address{
+                li{
+                    color: $primary-color;
+                    line-height: 24px;
+                }
+            }
+            .my-social-info{
+                li{
+                    display: inline-block;
+                    color: $primary-color;
+                    line-height: 24px;
+                    a{
+                        font-size: 16px;
+                        width: 120px;
+                        height: 40px;
+                        line-height: 40px;
+                    }
+                    .f-border{
+                        border: 1px solid #3c5b9b;
+                        color: #3c5b9b !important;
+                    }
+                    .t-border{
+                        border: 1px solid #40c1e0;
+                        color: #40c1e0 !important;
+                    }
+                    .g-border{
+                        border: 1px solid #e52121;
+                        color: #e52121 !important;
+                    }
+                    .d-border{
+                        border: 1px solid #d03384;
+                        color: #d03384 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.about-footer{
+    margin-top: -90px;
+    position: relative;
+    @include screen-sm{
+        background: #161619;
+        margin-top: 0;
+        padding: 65px 15px;
+    }
+    @include forMain{
+        background: #161619;
+        margin-top: 0;
+        padding: 65px 15px;
+    }
+    .copyright-area {
+        @include forMain{
+           padding: 0;
+        }
+        p{
+           margin-bottom: 0; 
+           color: $primary-color;
+           a{
+            color: $primary-color;
+            font-size: 14px;
+           }
+        }
+    }
+    .copyright-menu{
+        @include screen-sm{
+            justify-content: center !important;
+            margin-top: 40px;
+            margin-left: 0;
+        }
+        @include forMain{
+            justify-content: center !important;
+            margin-top: 40px;
+            margin-left: 0;
+            text-align: center;
+        }
+        margin-left: -26px;
+        li{
+            margin-right: 25px;
+            @include screen-sm{
+                padding: 0 10px;
+            }
+            @include forMain{
+                margin-right: 20px;
+            }
+            a{
+                color: $primary-color;
+                font-size: 14px;
+            }
+        }
+    }
+}

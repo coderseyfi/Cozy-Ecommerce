@@ -1,0 +1,331 @@
+.single-page{
+  min-height: 590px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  @include forMain(){
+    min-height: 400px;
+  };
+}
+.history-area {
+  .container {
+    @media (min-width: 1400px) {
+      max-width: 1140px;
+      }
+    .container-inner{
+      @include screen-md{
+        padding-left: 0;
+        padding-right: 0;
+       }
+       @include screen-sm{
+        padding-left: 0;
+        padding-right: 0;
+       }
+       @include forMain{
+        padding-left: 0;
+        padding-right: 0;
+       }
+    }
+    .history-title {
+      @include screen-sm{
+        padding-left: 0;
+        padding-right: 0;
+       }
+       @include forMain{
+        padding-left: 0;
+        padding-right: 0;
+       }
+       span::before{
+        @include screen-sm{
+          display: none;
+         }
+        @include forMain{
+         display: none;
+         }
+       }
+      h2 {
+        font-weight: 400;
+        @include forMain{
+          font-size: 32px;
+         }
+      }
+      .secondary-color {
+        color: $like-gray;
+      }
+      .secondary-color::before {
+        position: absolute;
+        content: "";
+        height: 2px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: $second-color;
+        left: -140px;
+        width: 100px;
+      }
+    }
+  }
+}
+
+.portfolio-area {
+  .container-wrapper {
+    @include containerWrapper();
+    @include screen-lg{
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    @include screen-md{
+      padding-left: 0;
+      padding-right: 0;
+    }
+    @include screen-sm{
+      padding-left: 0;
+      padding-right: 0;
+    }
+    @include forMain(){
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+  }
+  img{
+    width: 100%;
+    transition: all 0.3s ease-out 0s;
+    &:hover{
+      transform: scale(1.05);
+    }
+  }
+  &__wrapper{
+    display: flex;
+    justify-content: space-between;
+    @include forMain(){
+      flex-direction: column;
+    }
+    @include forMain(){
+      gap: 20px;
+    }
+  }
+  &__left{
+    width: 66%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    @media screen and (max-width:992px) {
+      gap: 10px;
+    }
+    @include forMain(){
+      width: 100%;
+      gap: 20px;
+    }
+    
+    &--up{
+      overflow: hidden;
+    }
+    &--down{
+      display: flex;
+      justify-content: space-between;
+      @include forMain(){
+        flex-direction: column;
+      }
+      @include forMain(){
+        gap: 20px;
+      }
+      div{
+        width: 49%;
+        @include forMain(){
+          width: 100%;
+        }
+        overflow: hidden;
+      }
+    }
+  }
+  &__right{
+    width: 32.5%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    @include forMain(){
+      width: 100%;
+    }
+    div{
+      overflow: hidden;
+    }
+    &--long{
+      height: 100%;
+      img{
+        height: 100%;
+      }
+    }
+  }
+}
+
+.our-service {
+  .container {
+    @media (min-width: 1400px) {
+      max-width: 1140px;
+    
+     }
+     .container-inner{
+      @include screen-lg{
+        max-width: 1140px;
+        margin: 0 auto;
+      }
+      @include screen-md{
+        padding-left: 0;
+        padding-right: 0;
+      }
+      @include screen-sm{
+        padding-left: 0;
+        padding-right: 0;
+      }
+      @include forMain(){
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+    .our-icon {
+      i {
+        font-size: 60px;
+      }
+    }
+    .our-single-service {
+      h5 {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+.shipping-area {
+  .container {
+    @media (min-width: 1400px) {
+      max-width: 1140px;
+    }
+    .shipping-content {
+      height: 750px;
+      background-attachment: fixed;
+      .ship-icon {
+        i {
+          font-size: 130px;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+.testimonial-area {
+  background-color: transparent;
+  background-image: linear-gradient(180deg, #97545b 100%, #f2295b 100%);
+  height: 800px;
+  position: relative;
+  .container {
+    @media (min-width: 1400px) {
+      max-width: 1140px;
+      .user-comment{
+        .quit {
+          a {
+            font-size: 30px;
+          }
+        }
+        .testimonials-text {
+          line-height: 25px;
+        }
+        .client {
+          img{
+            max-width: 300px;
+            margin: 0 auto;
+          }
+          h5 {
+            font-size: 18px;
+          }
+          span {
+            color: #e7b6bb;
+          }
+        }
+      }
+     
+    }
+    .testimonial--dots{
+      @include flexbox();
+      ul{
+        @include flexbox();
+        li{
+          list-style: none;
+          margin: 0 10px;
+          padding: 0;
+
+          button{
+            background-color: $primary-color;
+            border: 1px solid transparent;
+            border-radius: 100%;
+            font-size: 0;
+            height: 8px;
+            margin: 0;
+            outline: none;
+            padding: 0;
+            position: relative;
+            width: 8px;
+            &::after{
+              background-color: transparent;
+              border: 2px solid transparent;
+              border-radius: 100%;
+              content: "";
+              height: 18px;
+              left: -6px;
+              position: absolute;
+              top: -6px;
+              width: 18px;
+            }
+          }
+          
+        }
+        li.slick-active button{
+          background-color: #4e7d9a;
+          &::after{
+            border: 1px solid $primary-color;
+          }
+        }
+      }
+    }
+  }
+ 
+
+  .arrow {
+    font-size: 30px;
+    color: $primary-color;
+    cursor: pointer;
+    @include forMain(){
+      display: none;
+    }
+  }
+  .prev {
+    top: 33%;
+    position: absolute;
+    left: 5%;
+  }
+  .next {
+    top: 33%;
+    position: absolute;
+    right: 5%;
+  }
+}
+
+
+
+.dots {
+  ul {
+    @include flexbox();
+    li {
+      button {
+        border-radius: 50%;
+      }
+      margin-right: 6px;
+    }
+  }
+}
+
+.slick-slide {
+  img{
+    display: inline-block !important;
+  }
+}

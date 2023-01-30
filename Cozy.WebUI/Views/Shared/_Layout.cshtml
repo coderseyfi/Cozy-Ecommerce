@@ -1,0 +1,550 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="~/assets/imgs/tab-logo5.png">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous" />
+    <!-- slick -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <!-- Aos -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.css" />
+    <!-- CSS only -->
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="stylesheet" href="~/assets/css/style.min.css">
+
+    @RenderSection("addcss", required: false)
+
+    <title>Home</title>
+</head>
+<body>
+
+    <!--pre loader-->
+    <div id="preloader"></div>
+
+    <!-- header start -->
+    <header>
+        <div class="header">
+            <partial name="_Navbar" />
+        </div>
+    </header>
+    <!-- header end -->
+    <!-- side-mobile-menu start -->
+    <div class="side-mobile-menu">
+        <div class="close-icon">
+            <a href="javascript:void(0);">
+                <span class="close-icon fa fa-xmark"></span>
+            </a>
+        </div>
+        <div class="header-search-content">
+            <h4 class="text-center">Searching</h4>
+            <ul class="list">
+                <li class="list__item">
+                    <a class="active-blue" href="shop.html">All categories</a>
+                </li>
+                <li class="list__item">
+                    <a class="list__item__link" href="shop.html">Bedroom</a>
+                </li>
+                <li class="list__item">
+                    <a class="list__item__link" href="shop.html">Decor</a>
+                </li>
+                <li class="list__item">
+                    <a class="list__item__link" href="shop.html">Decoration</a>
+                </li>
+                <li class="list__item">
+                    <a class="list__item__link" href="shop.html">Kitchen</a>
+                </li>
+                <li class="list__item">
+                    <a class="list__item__link" href="shop.html">Lamp</a>
+                </li>
+            </ul>
+            <form class="side-form position-relative">
+                <input class="side-form--input" type="text" placeholder="Search Products...">
+                <a class="side-form--link" href="javascript:void(0)">
+                    <span class="fa-solid fa-magnifying-glass"></span>
+                </a>
+            </form>
+        </div>
+        <div class="mobile-menu">
+            <div class="mean-bar">
+                <nav class="mean-nav">
+                    <ul class="mean-nav__list d-block">
+                        <li class="mean-nav__list__item">
+                            <a class="active" href="index.html">Home</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="shop.html">Shop</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="about.html">About</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="blog.html">Blog</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="faq.html">Faqs</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="contact.html">Contact</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a href="about-me.html">About-me</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="menu-login">
+            <ul class="header-login d-flex justify-content-between">
+                <li>
+                    <a href="login.html">Login / register</a>
+                </li>
+                <li>
+                    <a href="login.html">
+                        <span class="fa fa-users"></span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="header-heart d-flex justify-content-between">
+                <li>
+                    <a href="wishlist.html">Wishlist</a>
+                </li>
+                <li>
+                    <a href="wishlist.html">
+                        <span class="fa-regular fa-heart"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- side-mobile-menu end -->
+    <!-- header search details start -->
+    <div class="header-search-details text-center pt-60 pl-230 pr-230">
+        <div class="close-icon-search">
+            <a href="javascript:void(0);">
+                <span class="clear fa fa-xmark"></span>
+            </a>
+        </div>
+        <div class="header-search-content pt-200 ml-150 mr-150">
+            <h4 class="mb-25">Searching</h4>
+            <ul class="d-flex justify-content-center">
+                <li><a class="active-all" href="shop.html">All categories</a></li>
+                <li><a href="shop.html">Bedroom</a></li>
+                <li><a href="shop.html">Decor</a></li>
+                <li><a href="shop.html">Decoration</a></li>
+                <li><a href="shop.html">Kitchen</a></li>
+                <li><a href="shop.html">Lamp</a></li>
+            </ul>
+            <form action="#" class="search-form position-relative pt-10">
+                <input type="text" placeholder="Search Products...">
+                <a class="position-absolute" href="#">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </a>
+            </form>
+        </div>
+    </div>
+
+    <div class="body-overlay"></div>
+
+    <!-- shopping-details start -->
+    <div class="shopping-details open-shopping-info">
+        <div class="close-icon-shop">
+            <a href="javascript:void(0);">
+                <span class="icon-x fa fa-xmark"></span>
+            </a>
+        </div>
+        <div class="shop-cart-content">
+            <ul class="list d-flex">
+                <li class="list__img">
+                    <a class="list__img__link d-block" href="single-product.html">
+                        <img src="~/assets/imgs/home-product5.jpg" alt="">
+                    </a>
+                </li>
+                <li class="item-info">
+                    <ul class="d-flex">
+                        <li>
+                            <h6 class="single-product-name">
+                                <a href="single-product.html">Bottle Grinder with Steel Lid</a>
+                            </h6>
+                            <span>1<span>x</span>$320.00</span>
+                        </li>
+                        <li class="s-remove">
+                            <span class="d-inline-block">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list d-flex">
+                <li class="list__img">
+                    <a class="list__img__link d-block" href="single-product.html">
+                        <img src="~/assets/imgs/home-product2.jpg" alt="">
+                    </a>
+                </li>
+                <li class="item-info">
+                    <ul class="d-flex">
+                        <li>
+                            <h6 class="single-product-name">
+                                <a href="single-product.html">Bottle Grinder with Steel Lid</a>
+                            </h6>
+                            <span>1<span>x</span>$320.00</span>
+                        </li>
+                        <li class="s-remove">
+                            <span class="d-inline-block">
+                                <i class="far fa-trash-alt"></i>
+                            </span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="subtotal">
+            <span class="theme-color">Subtotal:</span>
+            <span class="theme-color"> $440.00</span>
+        </div>
+        <a href="cart.html" class="btn p-add-cart">view cart</a>
+        <a href="checkout.html" class="btn p-add-cart">checkout</a>
+    </div>
+    <!-- shopping-details end -->
+    @RenderBody()
+
+    <div class="modal-back"></div>
+
+    <!-- footer start -->
+    <footer>
+        <div class="footer-area">
+            <div class="footer-area__top">
+                <div class="container-wrapper">
+                    <div class="row">
+                        <div class="col-xl-2  col-lg-2  col-md-4  col-sm-4 col-6">
+                            <div class="footer-widget">
+                                <h4 class="text-uppercase">Information</h4>
+                                <ul class="footer-info">
+                                    <li class="list__item">
+                                        <a class="item-link" href="">About us</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Customer Service</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Blog</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Page 404</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Sizing Guide</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">FAQs</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Contact us</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-2  col-lg-2  col-md-4  col-sm-4 col-6 d-flex justify-content-center">
+                            <div class="footer-widget">
+                                <h4 class="text-uppercase">Our Service</h4>
+                                <ul class="footer-info">
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Shipping Policy</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Help & Contact Us</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Returns & Refunds</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Online Stores</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Payment Method</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Terms & Conditions</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Privacy Policy</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-2  col-lg-2  col-md-4  col-sm-4 col-6 d-flex justify-content-end">
+                            <div class="footer-widget">
+                                <h4 class="text-uppercase">Information</h4>
+                                <ul class="footer-info">
+                                    <li class="list__item">
+                                        <a class="item-link" href="">About us</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Customer Service</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Blog</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Page 404</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Sizing Guide</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" asp-controller="home" asp-action="faq">FAQs</a>
+                                    </li>
+                                    <li class="list__item">
+                                        <a class="item-link" href="">Contact us</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-6  col-lg-6  col-md-12  col-sm-12 col-12 form-col">
+                            <div class="footer-widget footer-subscribe">
+                                <h4 class="text-uppercase">Get Deals Of The Store</h4>
+                                <div class="footer-info">
+                                    <p class="footer-info__text">
+                                        Subscribe to the Agota Store mailing list to receive updates on new arrivals, special offers and other discount information.
+                                    </p>
+                                    <partial name="_SubscribeForm" />
+
+                                   @* <form id="newsletter-subscribe" class="newsletter-form-wrap">
+                                        <div class="list">
+                                            Sign up for our free video course and <br />
+                                            urban garden inspiration
+                                        </div>
+                                        <input type="email"
+                                               name="email"
+                                               class="input-text email email-newsletter"
+                                               placeholder="Your email letter" />
+                                        <button type="submit" class="button btn-submit submit-newsletter">
+                                            SUBSCRIBE
+                                        </button>
+                                    </form>*@
+
+                                    
+
+
+                                    <ul class="footer__address">
+                                        <li class="item-link">Email: admin@basictheme.com.</li>
+                                        <li class="item-link">Add: S9 Heaven Stress, Beverly Hill, Melbourne, USA.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-area__bottom">
+                <div class="container-wrapper">
+                    <div class="row align-items-center">
+                        <div class="col-xl-9 col-lg-12 col-md-12  col-sm-12 col-12">
+                            <div class="row align-items-center">
+                                <div class="col-xl-5  col-lg-12 col-md-12 col-sm-12 col-12 pr-0 ">
+                                    <div class="copyright-text position-relative">
+                                        <p class="">
+                                            Copyright ©
+                                            <a class="copy-link" href="#">Agota – BasicTheme.</a>
+                                            All Rights Reserved.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-7  col-lg-12 col-md-12  col-sm-12 col-12 pl-0">
+                                    <ul class="copyright-menu d-flex align-items-center">
+                                        <li class="copyright-menu__item">
+                                            <a class="copyright-menu__item__link" href="index.html">Site Map</a>
+                                        </li>
+                                        <li class="copyright-menu__item">
+                                            <a class="copyright-menu__item__link" href="index.html">Search Terms</a>
+                                        </li>
+                                        <li class="copyright-menu__item">
+                                            <a class="copyright-menu__item__link" href="index.html">Advanced Search</a>
+                                        </li>
+                                        <li class="copyright-menu__item">
+                                            <a class="copyright-menu__item__link" href="index.html">Contact us</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <ul class="copyright-card">
+                                <li class="copyright-card__item">
+                                    <a class="copyright-card__item__link" href="index.html">
+                                        <img class="copyright-card__item__link__img" src="~/assets/imgs/footerCards.png" alt="">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer end -->
+    <!-- back to top -->
+    <div class="back-top position-relative">
+        <div class="top text-center">
+            <i class="fa-solid fa-chevron-up"></i>
+        </div>
+    </div>
+
+     <div class="modal fade" id="modalLoginForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Log in</h1>
+                </div>
+                <div class="modal-body">
+                    <form id="loginModal" method="post">
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Username or E-mail</label>
+                            <input type="text" class="form-control" id="recipient-name" name="Email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message-text" class="col-form-label">Password</label>
+                            <input type="password" class="form-control" id="message-text" name="Password" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="loginModal" class="btn btn-success">Log in</button>
+                    @*<a asp-controller="account" asp-action="register"  class="btn btn-dark">Register</a>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script> -->
+    <script src="https://kit.fontawesome.com/76c929e6a2.js"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        $(function () {
+            window.addEventListener('load', AOS.refresh)
+            AOS.init();
+        });
+    </script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+
+    <script src="~/assets/js/main.js"></script>
+     
+     <style>
+         .modal-backdrop{
+             z-index:0;
+         }
+
+        #modalLoginForm {
+            top:20%;
+        }
+    </style>
+
+    <script class="removable">
+        $(document).ready(function (){
+            $("#newsletter-subscribe").submit(function (e) {
+                e.preventDefault();
+
+                let formData = new FormData(e.currentTarget);
+
+
+                $.ajax({
+                    url: '@Url.Action("Subscribe","Home")',
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response){
+
+                        if(response.error == false){
+                            toastr["success"](response.message, "Uğur")
+                        }
+
+                        if(response.error == true){
+                            toastr["error"](response.message, "Xəta");
+                        }
+
+                        e.currentTarget.reset();
+                    }
+                });
+            });
+        });
+
+    
+    </script>
+    <script class="removable">
+        $(document).ready(function() {
+            $.ajaxSetup({
+                statusCode: {
+                    401: function() {
+                        $('#modalLoginForm').modal({
+                            //backdrop: 'static',
+                            keyboard: true
+                        }).modal('show');
+                    }
+                }
+            });
+
+              $("#postComment").click(function(){
+              })
+
+
+            $('#loginModal').submit(function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(e.currentTarget);
+
+                $.ajax({
+                    url: '@Url.Action("Signin", "Account", values: new{area=""})',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        if(response.error == false){
+                             $('#modalLoginForm').modal('hide');
+                             toastr.success(response.message, "Uğur!");
+                        }
+                        else
+                        {
+                            toastr.error(response.message, "Xəta");
+                        }
+
+                    }
+                });
+            });
+
+            
+        })
+    </script>
+
+
+   
+
+
+    @RenderSection("addjs", required: false)
+
+</body>
+
+</html>

@@ -1,0 +1,197 @@
+@import "../abstracts/variables";
+// @font-face {
+//   font-family: "Futura";
+//   src: url("./../base/_font.scss");
+// }
+html,
+body,
+div,
+span,
+object,
+iframe,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+code,
+em,
+img,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+b,
+u,
+i,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+main,
+canvas,
+embed,
+footer,
+header,
+nav,
+section,
+video {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  font-size: 100%;
+  text-size-adjust: none;
+  // font-family: "Raleway", sans-serif;
+  text-decoration: none;
+}
+
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// input {
+//   border-radius: 0;
+// }
+
+::-moz-selection {
+  color: $primary-color;
+  background: $select-color;
+}
+
+::selection {
+  color: $primary-color;
+  background: $select-color;
+}
+
+p {
+  font-weight: 400;
+  line-height: 28px;
+  color: $gray-color;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 150px;
+  font-weight: 400;
+  line-height: 150px;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 40px;
+  line-height: 40px;
+  margin-bottom: 0.5rem;
+  color: $gray-color;
+  font-weight: 500;
+  margin-top: 0;
+}
+
+h3 {
+  font-size: 36px;
+  font-weight: 500;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+h4 {
+  color: $gray-color;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+  margin-top: 0;
+  font-size: 22px;
+}
+
+img {
+  max-width: 100%;
+}
+
+// h5 {
+// }
+
+h6 {
+  color: $like-black;
+  font-weight: 500;
+  font-size: 1rem;
+  margin-top: 0;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $like-gray;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $select-color;
+  transition: 1s;
+}

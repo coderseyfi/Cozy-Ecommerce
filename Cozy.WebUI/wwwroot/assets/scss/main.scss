@@ -1,0 +1,36 @@
+@import "./core/reset";
+@import "./core/default";
+//variables
+@import "./abstracts/variables";
+
+//abstracts
+@import "./abstracts/mixins";
+
+//components
+@import "./components/header";
+@import "./components/side-menu";
+@import "./components/search-details";
+@import "./components/shopping-details";
+@import "./components/body-overlay";
+@import "./components/back-top";
+@import "./components/modal";
+@import "./components/modal-back";
+@import "./components/footer";
+
+//pages
+@import "./pages/home";
+@import "./pages/shop";
+@import "./pages/contact";
+@import "./pages/blog";
+@import "./pages/about";
+@import "./pages/wishlist";
+@import "./pages/login";
+@import "./pages/not-found";
+@import "./pages/cart";
+@import "./pages/checkout";
+@import "./pages/blog-details";
+@import "./pages/about-me";
+@import "./pages/single-product";
+@import "./pages/faq";
+
+

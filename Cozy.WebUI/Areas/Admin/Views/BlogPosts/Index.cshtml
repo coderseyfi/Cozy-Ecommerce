@@ -1,0 +1,256 @@
+﻿@model PagedViewModel<BlogPost>
+
+<!-- Page-body start -->
+<div class="page-body">
+
+
+    <!-- Horizontal-border table start -->
+    <div class="card">
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-framed table-imaged">
+
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Body
+                            </th>
+                            <th>
+                                PublishedDate
+                            </th>
+                            <th class="operations">
+                                <a asp-action="Create" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-pen-to-square"></i>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="image-cell">
+                                    @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                                    {
+                                        <img src="~/uploads/images/@item.ImagePath" />
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td class="ellipse">
+                                    @item.Body.ToPlainText()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PublishedDate)
+                                </td>
+                                <td class="operations" style="max-width: 200px;">
+
+                                    @if (item.PublishedDate == null)
+                                    {
+                                        <a class="btn btn-sm btn-secondary" onclick="publishDate(@item.Id, '@item.Title')">
+                                            Publish
+                                        </a>
+                                    }
+
+                                    <a asp-action="GetComments" asp-route-blogpostid="@item.Id" class="btn btn-sm btn-success">
+                                        <i class="fa-regular fa-comment"></i>
+                                    </a>
+
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Title')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+                @Model.GetPager(Url, "Index", "Admin")
+            </div>
+        </div>
+    </div>
+    <!-- Horizontal-border table end -->
+    @Html.AntiForgeryToken()
+</div>
+<!-- Page-body end -->
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+
+<style>
+    .pagination {
+        display: inline-block;
+        padding-left: 12px;
+        margin: 20px 0;
+        border-radius: 4px;
+    }
+
+        .pagination li {
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span {
+            border-radius: 0;
+        }
+
+        .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span, pagination > li > a:hover {
+            color: #777;
+            cursor: not-allowed;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+
+        .pagination > li a {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 6px 14px;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+
+        .pagination a {
+            color: #fff;
+            font-size: 12px;
+            margin: 0 10px;
+        }
+
+        .pagination > li > a:hover {
+            color: #777;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+
+
+        .pagination a i {
+            margin: 0 5px;
+        }
+</style>
+
+}
+
+@section addjs{
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
+    function removeEntity(id, name){
+        swal(`Əminsiniz ki, '${name}' silinsin?`, {
+              title: "Diqqət!",
+              text: `Əminsiniz ki, '${name}' silinsin?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("Delete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message, "Xeta!");
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+
+    function publishDate(id, name) {
+            swal(`${name} adlı məqaləni dərc etmək istəyirsiniz mi?`, {
+                title: "Diqqet!",
+                text: `${name} adlı məqaləni dərc etmək istəyirsiniz mi?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["No", "Yes"]
+            })
+                .then((value) => {
+
+                    if (value == true) {
+
+                        let vToken = $('[name=__RequestVerificationToken]').val();
+
+                        let formData = new FormData();
+                        formData.set('__RequestVerificationToken', vToken);
+                        formData.set('id', id);
+
+                        $.ajax({
+                            url: `@Url.Action("Publish")`,
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response)
+                                if (response.error == true) {
+                                    toaster.error(response.message, "Xeta");
+                                    return;
+                                }
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+
+
+                });
+
+        }
+</script>
+}

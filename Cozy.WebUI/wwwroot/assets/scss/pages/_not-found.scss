@@ -1,0 +1,27 @@
+.no-page-height {
+  @include backgrCss(950px);
+  .page-content {
+    h1 {
+      font-size: 250px;
+      @include forMain(){
+        font-size: 150px;
+      }
+    }
+    h3 {
+      font-size: 48px;
+      @include forMain(){
+        font-size: 35px;
+      }
+    }
+    .not-found-text {
+      color: $primary-color;
+    }
+    .btn {
+      @include blackBtn();
+    }
+    .btn:hover {
+      color: $primary-color;
+      background-color: $second-color;
+    }
+  }
+}

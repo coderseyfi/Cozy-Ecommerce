@@ -1,0 +1,130 @@
+.side-mobile-menu {
+  width: 340px;
+  position: fixed;
+  left: -340px;
+  top: 0;
+  z-index: 9999;
+  height: 100%;
+  transition: all 0.5s ease-out;
+  overflow: scroll;
+  -webkit-transition: all 0.5s;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: $primary-color;
+  display: flex;
+  flex-direction: column;
+  @include forMain {
+    width: 100%;
+    left: -200%;
+  }
+  .close-icon {
+    font-size: 30px;
+    padding-top: 10px;
+    float: right;
+    color: $like-gray;
+  }
+  .header-search-content {
+    padding-top: 110px;
+    .text-center {
+      padding-bottom: 10px;
+      font-size: 30px;
+    }
+    .list {
+      &__item {
+        &__link {
+          font-size: 16px;
+          margin: 20px 12px;
+          color: $like-black;
+          display: block;
+        }
+      }
+    }
+    .side-form {
+      padding-top: 10px;
+      padding-bottom: 15px;
+      &--input {
+        border: 0;
+        border-bottom: 2px solid $border-gray;
+        padding: 0;
+        width: 100%;
+        padding-left: 45px;
+        margin: 0;
+        color: $gray555;
+        padding-left: 10px;
+        font-size: 14px;
+        background: none;
+        box-shadow: none;
+        height: 45px;
+        text-indent: 0;
+      }
+      &--link {
+        right: 10px;
+        left: auto;
+        font-size: 18px;
+        position: absolute;
+        color: $gray555;
+        top: 22px;
+      }
+    }
+  }
+  .mobile-menu {
+    width: 100%;
+    .mean-bar {
+      float: left;
+      position: relative;
+      width: 100%;
+      z-index: 99;
+      .mean-nav {
+        background: #0c1923 none repeat scroll 0 0;
+        float: left;
+        margin-top: 16px;
+        width: 100%;
+        &__list {
+          width: 100%;
+          &__item {
+            position: relative;
+            float: left;
+            width: 100%;
+            background: $primary-color;
+            a {
+              border-bottom: 1px solid $border-gray;
+              color: $like-black;
+              background: $primary-color;
+              padding: 13px 5%;
+              text-transform: capitalize;
+              font-size: 16px;
+              display: block;
+              float: left;
+              margin: 0;
+              text-align: left;
+              width: 90%;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .menu-login {
+    padding-bottom: 200px;
+    padding-top: 50px;
+    ul {
+      border-bottom: 1px solid $border-gray;
+      li {
+        padding: 18px 0;
+        a {
+          color: $like-black;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+.active-blue {
+  color: $btn-color;
+  font-size: 20px;
+  margin: 20px 12px;
+  display: block;
+}

@@ -1,0 +1,70 @@
+.slider-area-contact {
+  overflow: hidden;
+  .single-page {
+    background-image: url("../imgs/contact.jpg");
+    @include backgrCss();
+
+    .breadcrumb-item {
+      .secondary-color {
+        color: $like-gray;
+      }
+    }
+  }
+}
+
+.contact-form-area {
+  overflow: hidden;
+  .container-wrapper {
+    @include containerWrapper();
+    background-color: $primary-color;
+    @include forMain() {
+      padding-right: 30px;
+      padding-left: 30px;
+    }
+    .contact-form-left {
+      @include forMain() {
+        padding-right: 0;
+        padding-left: 0;
+      }
+      .section-title {
+        text-align: left;
+        h2 {
+          @include forMain() {
+            font-size: 28px;
+          }
+        }
+        span {
+          font-size: 18px;
+          color: $like-gray;
+        }
+      }
+    }
+    .contact-form-right {
+      span {
+        font-size: 18px;
+        color: $like-gray;
+      }
+      input {
+        height: 55px;
+        border-radius: 0;
+        padding: 20px;
+      }
+      .comment {
+        textarea {
+          min-height: 150px;
+          height: 55px;
+          border-radius: 0;
+          padding: 20px;
+        }
+      }
+      form {
+        .send {
+          @include blackBtn();
+          color: $primary-color;
+          background-color: $like-black;
+          text-align: center;
+        }
+      }
+    }
+  }
+}

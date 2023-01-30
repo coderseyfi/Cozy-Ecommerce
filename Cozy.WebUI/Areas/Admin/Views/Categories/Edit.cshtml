@@ -1,0 +1,112 @@
+﻿@model CategoryEditCommand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4> Edit category</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">Categories</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Edit</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-body">
+    <div class="card">
+        <div class="card-block">
+
+            <form method="post" autocomplete="off">
+                <div class="form-group row">
+                    <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Parent category</label>
+                    <div class="col-sm-10">
+                        <select asp-for="ParentId" class="form-control select2" asp-items="ViewBag.ParentId">
+                            <option selected disabled>---Choose---</option>
+                        </select>
+                        <span asp-validation-for="ParentId" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <input asp-for=Id type="hidden" />
+                        <input type="hidden" data-parent-id="@Model.ParentId" data-id="@Model.Id" />
+
+                        <button class="btn btn-primary mr-2">Save</button>
+                        @if (Model.ParentId != null)
+                       {
+                            <button class="btn btn-secondary mr-2" id="removeParent">Remove parent</button>
+                       }
+                        <a asp-action="index" class="btn btn-info">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section addjs{
+<script class="removable" src="~/libs/select2/dist/js/select2.full.min.js"></script>
+
+<script>
+    $(".select2").select2();
+
+    $(document).ready(function(){
+        $("#removeParent").click(function(e){
+          e.preventDefault();
+
+          let parent = $("input[data-parent-id][data-id]").data();
+
+
+           $.ajax({
+                    url: `@Url.Action("RemoveParent", "Categories")`,
+                    type: "POST",
+                    data: parent,
+                    dataType: "json",
+                    contentType: "application/x-www-form-urlencoded",
+                    success: function(res){
+                       location.reload();
+                    }
+                });
+
+        })
+    })
+
+
+
+</script>
+}
+
+@section addcss{
+<link rel="stylesheet" href="~/libs/select2/dist/css/select2.min.css" />
+}

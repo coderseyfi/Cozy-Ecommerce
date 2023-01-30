@@ -1,0 +1,80 @@
+.slider-area {
+  overflow: hidden;
+  .text-wish {
+    font-size: 50px;
+    color: $wish-color !important;
+  }
+  .breadcrumb {
+    flex-wrap: wrap;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    list-style: none;
+  }
+  .secondary-color {
+    color: $like-gray;
+  }
+}
+
+.wishlist-area{
+    a{
+        color: $second-color;
+        font-size: 14px;
+    }
+    .container-wrapper{
+        @include containerWrapper();
+        .table{
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            .table-head{
+                border-top: 1px solid #dee2e6;
+                border-bottom: 0;
+                vertical-align: bottom;
+                font-weight: 400;
+                padding: 22px;
+            }
+            .table-content{
+                vertical-align: middle;
+                border-bottom: 1px solid #dee2e6;
+                border-top: 1px solid #dee2e6;
+                padding: 0.75rem;
+                span{
+                    color: $like-gray;
+                }
+                
+            }
+            .table-content6{
+                text-align: right;
+             
+            }
+            .table-content6 .btn{
+                @include blackBtn(20px 0px);
+                color: $primary-color;
+                background-color: $second-color;
+            }
+        }
+        .mobile-wishlist{
+          .p-remove{
+            text-align: right;
+            top: 10px;
+            a{
+              span{
+                font-size: 22px
+              }
+            }
+          }
+          .wish-p{
+            ul{
+              height: 90px
+            }
+          }
+        }
+    }
+}
+
+.mobile-btn{
+  @include blackBtn();
+  color: $primary-color;
+  background-color: $second-color;
+}

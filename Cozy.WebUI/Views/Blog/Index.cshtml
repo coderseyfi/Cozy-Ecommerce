@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<main>
+    <!-- slider-area-start -->
+    <section class="slider-area-blog">
+        <div class="single-page page-height-blog d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex
+                align-items-center justify-content-center">
+                        <div class="page-title text-center">
+                            <h2 class="text-capitalize text-white mb-25 pt-35">Blog</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb justify-content-center">
+                                    <li class="breadcrumb-item">
+                                        <a class="secondary-color" href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active text-capitalize
+                        text-white">
+                                        Blog
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- slider-area-end=  -->
+
+    <section class="blog-full-width-area pt-110 pl-15 pr-15">
+        <div class="container-wrapper">
+            <div class="row" id="dynamic-content">
+                    <partial name="_PostBody" model="@Model" />
+            </div>
+        </div>
+    </section>
+</main>
+
+<style>
+    .pagination {
+        display: inline-block;
+        padding-left: 12px;
+        margin: 20px 0;
+        border-radius: 4px;
+    }
+
+        .pagination li {
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span {
+            border-radius: 0;
+        }
+
+        .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span, pagination > li > a:hover {
+            color: #777;
+            cursor: not-allowed;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+
+        .pagination > li a {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 6px 14px;
+            transition: all 0.15s linear;
+        }
+
+        .pagination > li > a, .pagination > li > span {
+            position: relative;
+            float: left;
+            padding: 6px 12px;
+            margin-left: -1px;
+            line-height: 1.42857143;
+            color: #337ab7;
+            text-decoration: none;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            color: #888;
+            border-radius: 50%;
+        }
+
+        .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+            z-index: 2;
+            color: #fff;
+            cursor: default;
+            background-color: black;
+            border-color: black;
+        }
+
+        .pagination a {
+            color: #fff;
+            font-size: 12px;
+            margin: 0 10px;
+        }
+
+        .pagination > li > a:hover {
+            color: #fff;
+            background-color: black;
+            transition: all 0.15s linear;
+        }
+
+
+        .pagination a i {
+            margin: 0 5px;
+        }
+</style>
+
+@section addjs{
+
+    <script>
+        function goPage (pageIndex, pageSize){
+
+            $.ajax({
+                url: `@Url.Action("Index")?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+                method:'GET',
+                success:function(response){
+                    $('#dynamic-content').html(response);
+                    location.hash = '#dynamic-content';
+                     location.hash = '';
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            });
+        }
+    </script>
+}

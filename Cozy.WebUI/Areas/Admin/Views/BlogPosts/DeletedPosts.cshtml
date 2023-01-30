@@ -1,0 +1,206 @@
+﻿@model IEnumerable<BlogPost>
+
+@{
+    ViewData["Title"] = "DeletedPosts";
+}
+
+<h1>Index</h1>
+
+@section addcss{
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.css">
+}
+
+
+    <div class="page-wrapper">
+        <div class="page-header">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h4>Bootstrap Border Sizes</h4>
+                            <span>
+                                lorem ipsum dolor sit amet, consectetur adipisicing
+                                elit
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="page-header-breadcrumb">
+                        <ul class="breadcrumb-title">
+                            <li class="breadcrumb-item" style="float: left;">
+                                <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                            </li>
+
+                            <li class="breadcrumb-item" style="float: left;">
+                                <span>BlogPosts</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-body">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Horizontal Borders</h5>
+                    <span>
+                        Example of <code>horizontal</code> table borders. This is a
+                        default table border style attached to <code>.table</code> class.
+                        All borders have the same grey color and style, table itself doesn't
+                        have a border, but you can add this border using
+                        <code>.table-framed</code> class added to the table with
+                        <code>.table</code> class.
+                    </span>
+
+                </div>
+                <div class="card-block table-border-style">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Title)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Body)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.PublishedDate)
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="image-cell">
+                                        @if (!string.IsNullOrWhiteSpace(item.ImagePath))
+                                        {
+                                            <img src="~/uploads/images/@item.ImagePath" class="img-fluid">
+                                        }
+                                    </td>
+                                    <td class="ellipse">
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td class="ellipse ">
+                                        @item.Body.ToPlainText();
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PublishedDate)
+                                    </td>
+
+                                    <td class="operations table-imaged">
+                                        <a class="btn btn-sm btn-success" onclick="removeEntityBack(@item.Id, '@item.Title')"><i class="fa-solid fa-rotate-left mr-0"></i></a>
+                                        <a asp-action="DeletedPostDetails" asp-route-id="@item.Id" class="btn btn-sm btn-info"><i class="fa-solid fa-eye mr-0"></i></a>
+                                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Title')"><i class="fa-solid fa-trash-can mr-0"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+
+@section addjs{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+
+    <script class="removeable">
+        function removeEntity(id, name) {
+            swal(`Are you sure you want to delete as permanently ${name}?`, {
+                title: "Diqqet!",
+                text: `Are you sure you want to delete as permanently ${name}?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["No", "Yes"]
+            })
+                .then((value) => {
+
+                    if (value == true) {
+
+                        let vToken = $('[name=__RequestVerificationToken]').val();
+
+                        let formData = new FormData();
+                        formData.set('__RequestVerificationToken', vToken);
+                        formData.set('id', id);
+
+                        $.ajax({
+                            url: `@Url.Action("Clear")`,
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response)
+                                if (response.error == true) {
+                                    toaster.error(response.message, "Xeta");
+                                    return;
+                                }
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+
+
+                });
+
+        }
+        function removeEntityBack(id, name) {
+            swal(`Are you sure you want to get back ${name}?`, {
+                title: "Diqqet!",
+                text: `Are you sure you want to get back ${name}?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["No", "Yes"]
+            })
+                .then((value) => {
+
+                    if (value == true) {
+
+                        let vToken = $('[name=__RequestVerificationToken]').val();
+
+                        let formData = new FormData();
+                        formData.set('__RequestVerificationToken', vToken);
+                        formData.set('id', id);
+
+                        $.ajax({
+                            url: `@Url.Action("Back")`,
+                            type: 'POST',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response)
+                                if (response.error == true) {
+                                    toaster.error(response.message, "Xeta");
+                                    return;
+                                }
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+
+
+                });
+
+        }
+    </script>
+     }

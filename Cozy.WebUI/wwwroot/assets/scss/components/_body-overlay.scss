@@ -1,0 +1,27 @@
+.body-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s;
+}
+
+.opened {
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 999;
+  left: 0;
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.3s;
+}

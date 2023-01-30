@@ -1,0 +1,48 @@
+﻿@model PagedViewModel<BlogPost>
+
+@foreach (var item in Model.Items)
+{
+    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+        <div class="blog-right-sidebar-left-content mb-60">
+            <div class="blog-right-sidebar-left-img mb-25">
+                <img class="pb-15 blog-img" src="~/uploads/images/@item.ImagePath" alt="" />
+            </div>
+            <ul class="blog-tag d-flex">
+                @foreach (var tag in item.TagCloud)
+                {
+                <li>
+                    <a class="blog-tag__link d-inline-block mb-15" href="#">
+                        @tag.Tag.Text
+                    </a>
+                </li>
+                }
+               
+            </ul>
+            <h3 class="blog-head">
+                <a asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" >@item.Title</a>
+            </h3>
+            <p class="blog-text">
+                @Html.Raw(item.Body)
+            </p>
+            <ul class="blog-post-data">
+                <li class="post-date pr-35">
+                    Post date:<a href="#">@item.PublishedDate?.ToString("MMM dd, yyyy")</a>
+                </li>
+                <li class="post-view pr-20">
+                    <span class="fa fa-eye pr-5"></span>443 views
+                </li>
+                <li class="post-comments">
+                    <span><i class="far fa-comment"></i></span><span class="px-1">0</span>Comments
+                </li>
+            </ul>
+            @*<a asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="btn-1 read-more">Read More</a>*@
+        </div>
+    </div>
+}
+
+<!-- Pagination -->
+<div class="div mb-40" style="text-align:center">
+    <div class="col-12">
+        @Model.GetPager(Url, "Index", paginateFunction: "goPage")
+    </div>
+</div>

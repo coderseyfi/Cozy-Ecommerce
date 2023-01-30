@@ -1,0 +1,145 @@
+.modal{
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    outline: 0;
+    display: none;
+    transition: 1s;
+    @include forMain(){
+        overflow-y: scroll;
+    }
+    .product-modal{
+        padding-left: 15px;
+        padding-right: 15px;
+        max-width: 1080px;
+        border-radius: 0;
+        .modal-content{
+            border-radius: 0;
+            .modal-close{
+                .close-modal{
+                    float: right;
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    line-height: 1;
+                    color: #000;
+                    text-shadow: 0 1px 0 #fff;
+                    opacity: .5;
+                    cursor: pointer;
+                }
+            }
+            .product-tabs{
+                width: 100px;
+                .nav-link{
+                    width: 80px;
+                    height: 100px;
+                    padding: 0;
+                    opacity: .6;
+                }
+            }
+           
+        }
+        .product-modal-left{
+            p{
+                font-size: 14px;
+            }
+            h4{
+                font-size: 30px;
+                a{
+                    color: inherit;
+                }
+            }
+            .price{
+                span{
+                    font-size: 20px;
+                    font-weight: 500;
+                }
+                .modal-old-price{
+                    color: #999;
+                    font-size: 16px !important;
+                }
+            }
+            .available{
+                p{
+                    line-height: 2;
+                }
+            }
+            .quick-add-to-cart{
+                .quantity{
+                    font-size: 14px;
+                }
+                .quantity-field{
+                    .custom-prev{
+                        position: absolute;
+                        right: 32px;
+                        top: 60%;
+                        transform: translateY(-50%);
+                        font-size: 12px;
+                        color: #c8c8c8;
+                    }
+                    input{
+                        width: 110px;
+                        height: 63px;
+                        padding: 0 20px;
+                        &::-webkit-outer-spin-button,
+                        &::-webkit-inner-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                        }
+                    }
+                    .custom-next{
+                        top: 40%;
+                        position: absolute;
+                        right: 32px;
+                        transform: translateY(-50%);
+                        font-size: 12px;
+                        color: #c8c8c8;
+                    }
+                   
+                }
+                .add-cart-btn{
+                    height: 62px;
+                    line-height: 60px;
+                    padding: 0 40px;
+                    background: #131215;
+                    color: #fff;
+                    border: 1px solid transparent;
+                    display: inline-block;
+                    margin-bottom: 20px;
+                }
+            }
+            .social-sharing-wrapper{
+                .social-sharing{
+                        li{
+                            font-size: 14px;
+                            display: inline-block;
+                            a{
+                                @include socialSharing();
+                            }
+                            a:hover{
+                                background-color: $btn-color;
+                                color: $primary-color;
+                            }
+                        }
+                }
+                
+            }
+        }
+    }
+}
+
+
+.blue-color{
+    color: $btn-color;
+}
+
+.modal-open{
+    overflow: hidden;
+}

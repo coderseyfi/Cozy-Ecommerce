@@ -1,0 +1,738 @@
+.slider-section {
+  position: relative;
+  .container-fluid {
+    .row {
+      .info-slider {
+        .slider-item {
+          width: 100%;
+          .image {
+            width: 100%;
+            position: relative;
+
+            img {
+              width: 100%;
+              min-height: 900px;
+              object-fit: cover;
+              @include forMain(){
+                min-height: 500px;
+              }
+            }
+            .slider-content {
+              position: absolute;
+              left: 15.5%;
+              top: 27%;
+              @include forMain(){
+                padding-left: 0;
+              }
+              &__cap {
+                font-size: 16px;
+                letter-spacing: 1px;
+                line-height: 60px;
+                text-transform: capitalize;
+                color: $yellow-color;
+                position: relative;
+                padding-left: 60px;
+                @include screen-lg {
+                  line-height: 1;
+                }
+                @include screen-md {
+                  line-height: 1;
+                }
+                @include screen-sm {
+                  padding-left: 0;
+                  line-height: 0;
+                }
+                @include forMain {
+                  padding-left: 0;
+                  line-height: 0;
+                }
+              }
+              &__cap::before {
+                position: absolute;
+                content: "";
+                width: 30px;
+                height: 2px;
+                background: $yellow-color;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                @include screen-sm {
+                  position: inherit;
+                }
+                @include screen-xs {
+                  position: inherit;
+                }
+              }
+              &__head {
+                font-size: 150px;
+                font-weight: 400;
+                line-height: 150px;
+                color: $primary-color;
+                padding-top: 70px;
+                padding-bottom: 10px;
+                transition: 1s;
+                @include screen-lg {
+                  font-size: 105px;
+                  line-height: 1;
+                  padding-top: 32px;
+                }
+                @include screen-md {
+                  font-size: 94px;
+                  line-height: 1;
+                  padding-top: 32px;
+                }
+                @include screen-sm {
+                  font-size: 85px;
+                  line-height: 0.8;
+                  padding-top: 22px;
+                }
+
+                @include forMain {
+                  font-size: 75px;
+                  line-height: 1;
+                  padding-top: 10px;
+                }
+              }
+              &__text {
+                font-size: 16px;
+                font-weight: 400;
+                line-height: 24px;
+                color: $primary-color;
+                margin-bottom: 90px;
+                transition: 1s;
+                @include screen-lg {
+                  margin-bottom: 40px;
+                }
+                @include screen-md {
+                  margin-bottom: 40px;
+                }
+                @include screen-sm {
+                  margin-bottom: 30px;
+                }
+                @include screen-xs {
+                  margin-bottom: 20px;
+                }
+                @include forMain {
+                  font-size: 14px;
+                  padding-right: 20px;
+                  margin-bottom: 30px;
+                }
+              }
+              &__btn {
+                padding: 20px 75px;
+                font-size: 16px;
+                line-height: 21px;
+                border-radius: 0;
+                background: $primary-color;
+                color: $second-color;
+                outline: 0 none;
+                text-transform: capitalize;
+                transition: 0.3s;
+              }
+              &__btn:hover {
+                background: $second-color;
+                color: $primary-color;
+                transition: 0.3s;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//feature-section
+.feature-position {
+  top: -115px;
+  margin-bottom: -115px;
+  @include screen-lg {
+    top: -78px;
+    margin-bottom: -78px;
+  }
+  @include screen-md {
+    top: -80px;
+    margin-bottom: -80px;
+  }
+  @include screen-sm {
+    top: -80px;
+    margin-bottom: -80px;
+  }
+  @include forMain {
+    position: static !important;
+    padding-top: 20px;
+    margin-bottom: 0;
+  }
+  .container-wrapper {
+    @include containerWrapper();
+    .feature-bg {
+      background: $primary-color;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 30px;
+      margin-bottom: 10px;
+      @include screen-lg {
+        padding: 15px 30px 0 30px;
+      }
+      @include screen-md {
+        padding: 15px 30px;
+      }
+      .single-feature {
+        @include forMain {
+          margin-bottom: 15px;
+        }
+        &:hover > img{
+          transform: scale(1.1);
+        }
+      }
+      .img-zoom {
+        height: 542px;
+        transition: 0.3s;
+        width: 100%;
+       
+       
+        @include forMain(){
+          height: 400px;
+        }
+      }
+      .section-content {
+        padding-left: 40px;
+        padding-top: 35px;
+        @include forContent();
+        @include screen-lg {
+          padding-top: 45px;
+        }
+        @include screen-sm {
+          padding-left: 13px;
+        }
+        .word {
+          font-size: 16px;
+          line-height: 16px;
+          text-transform: capitalize;
+          color: $yellow-color;
+        }
+        .head {
+          padding-bottom: 30px;
+          padding-top: 10px;
+          color: $primary-color;
+          font-size: 36px;
+          @include screen-md {
+            font-size: 26px;
+          }
+          @include screen-sm {
+            font-size: 20px;
+            padding-bottom: 10px;
+          }
+          @include screen-xs {
+            font-size: 35px;
+          }
+          @include forMain {
+            font-size: 25px;
+            padding-bottom: 10px;
+          }
+        }
+        .text {
+          font-size: 16px;
+          line-height: 16px;
+          text-transform: capitalize;
+          color: $primary-color;
+          @include screen-sm {
+            font-size: 14px;
+            margin-bottom: 0;
+          }
+          @include forMain {
+            font-size: 14px;
+            margin-bottom: 0;
+          }
+        }
+        .btn2 {
+          font-size: 16px;
+          padding-top: 45px;
+          padding-bottom: 7px;
+          transition: 0.3s;
+          color: $primary-color;
+        }
+        .btn2::before {
+          @include underLineBtn();
+        }
+        .btn2:hover::before {
+          width: 100%;
+        }
+      }
+      .sec-2 {
+        @include forContent();
+        padding-top: 65px;
+        .word-s {
+          font-size: 16px;
+          line-height: 16px;
+          text-transform: capitalize;
+          @include flexbox(center, center);
+          color: $orange-color;
+        }
+        .head-s {
+          padding-bottom: 30px;
+          padding-top: 10px;
+          color: $like-black;
+          font-size: 36px;
+          @include screen-md {
+            font-size: 26px;
+          }
+          @include screen-sm {
+            font-size: 20px;
+            padding-bottom: 10px;
+          }
+          @include screen-xs {
+            font-size: 35px;
+          }
+          @include forMain {
+            font-size: 25px;
+            padding-bottom: 10px;
+          }
+        }
+        .text-s {
+          font-size: 16px;
+          line-height: 16px;
+          text-transform: capitalize;
+          color: $like-black;
+        }
+        .sale-off-img {
+          max-width: 235px;
+          margin: auto;
+          padding-bottom: 50px;
+          padding-top: 30px;
+          @include screen-md {
+            max-width: 160px;
+          }
+          @include screen-sm {
+            max-width: 125px;
+            padding: 20px 0 22px 0;
+          }
+          @include forMain(){
+            max-width: 145px;
+            padding: 35px 0 35px 0;
+          }
+        }
+        .btn-s {
+          @include blackBtn();
+          @include forMain {
+            padding: 14px 60px;
+          }
+        }
+        .btn-s:hover {
+          background: $second-color;
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+.bestseller {
+  overflow: hidden;
+  &__container {
+    @include containerWrapper();
+    padding-left: 15px;
+    padding-right: 15px;
+    &__item {
+      margin-bottom: 40px;
+    }
+    &__title {
+      padding-top: 90px;
+      padding-bottom: 30px;
+      @include screen-sm {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      @include forMain {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      &--head {
+        font-size: 40px;
+        line-height: 40px;
+        color: $like-black;
+        font-weight: 500;
+        margin-bottom: 16px;
+        @include forMain {
+          font-size: 27px;
+        }
+      }
+      &--text {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 28px;
+        color: #222222;
+        margin-bottom: 16px;
+      }
+    }
+    .product {
+      padding-bottom: 30px;
+      position: relative;
+      background-color: $primary-color;
+      // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      &__image {
+        position: relative;
+        &__link {
+          display: block;
+          &--img {
+            width: 100%;
+            height: 100%;
+            transition: 0.5s;
+         
+          }
+        }
+        &__hover {
+          @include forContent(absolute);
+          &--link {
+            display: block;
+          }
+          &--img {
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            transition: 0.5s;
+          }
+        }
+        &__button {
+          @include flexbox();
+          position: absolute;
+          left: 50%;
+          bottom: 25px;
+          transform: translate(-50%);
+          opacity: 0;
+          transition: 0.5s;
+          &--link {
+            display: block;
+          }
+          &--icon {
+            color: $primary-color;
+            width: 50px;
+            height: 50px;
+            background-color: $like-black;
+            border-radius: 50%;
+            line-height: 50px;
+            text-align: center;
+            margin: 5px;
+            display: inline-block;
+            transition: 0.6s;
+          }
+          &--icon:hover {
+            background-color: $btn-color;
+            transition: 0.6s;
+          }
+        }
+      }
+      &__name {
+        padding-top: 20px;
+        padding-left: 20px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        &__link {
+          color: $like-black;
+        }
+      }
+      &__price {
+        padding-left: 20px;
+        &__new {
+          font-weight: 600;
+          font-size: 14px;
+          font-family: "Rubik", sans-serif;
+          color: $second-color;
+          ins {
+            text-decoration: none;
+          }
+        }
+        &__old {
+          color: $like-gray;
+          font-weight: 600;
+          font-size: 14px;
+          font-family: "Rubik", sans-serif;
+          padding-left: 3px;
+        }
+      }
+    }
+    .product:hover{
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+    &__button {
+      text-align: center;
+      padding-top: 10px;
+      &--link {
+        padding: 20px 75px;
+        font-size: 16px;
+        line-height: 21px;
+        border-radius: 0;
+        background: $primary-color;
+        color: $second-color;
+        outline: 0 none;
+        text-transform: capitalize;
+        transition: 0.3s;
+        border: 1px solid $like-black;
+      }
+      &--link:hover {
+        background: $second-color;
+        color: $primary-color;
+      }
+    }
+  }
+}
+.product-suggest {
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 100px;
+  padding-bottom: 20px;
+  @include forMain {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .bottom {
+    padding-bottom: 20px;
+  }
+  &__feature {
+    position: relative;
+    overflow: hidden;
+    &:hover > img{
+      transform: scale(1.1);
+      transition: 0.5s;
+    }
+    &__img {
+      min-height: 450px;
+      transition: 0.5s;
+      max-width: 100%;
+      
+      @include screen-lg {
+        min-height: 315px;
+      }
+      @include screen-md {
+        min-height: 300px;
+      }
+      @include screen-sm {
+        min-height: 260px;
+      }
+      @include forMain {
+        min-height: 250px;
+      }
+    }
+    &__content {
+      @include forContent(absolute);
+      padding-left: 90px;
+      padding-top: 100px;
+      @include screen-lg {
+        padding-top: 45px;
+      }
+      @include screen-md {
+        padding-top: 30px;
+      }
+      @include screen-sm {
+        padding-top: 50px;
+        padding-left: 30px;
+      }
+      @include screen-xs {
+        padding-left: 50px;
+        padding-top: 40px;
+      }
+      @include forMain {
+        padding-left: 20px;
+        padding-top: 40px;
+      }
+      &--cap {
+        font-size: 16px;
+        line-height: 16px;
+        text-transform: capitalize;
+        color: $yellow-color;
+      }
+      &--head {
+        padding-top: 10px;
+        padding-bottom: 30px;
+        color: $primary-color;
+        font-size: 36px;
+        font-weight: 500;
+        @include screen-sm {
+          font-size: 20px;
+          padding-bottom: 10px;
+        }
+        @include screen-xs {
+          font-size: 35px;
+        }
+        @include forMain {
+          font-size: 22px;
+          padding-bottom: 10px;
+        }
+      }
+      &--text {
+        font-size: 16px;
+        line-height: 16px;
+        text-transform: capitalize;
+        color: $primary-color;
+        margin-bottom: 16px;
+        @include screen-sm {
+          font-size: 14px;
+          margin-bottom: 0;
+        }
+        @include forMain {
+          font-size: 14px;
+          margin-bottom: 0;
+        }
+      }
+      &--link {
+        font-size: 16px;
+        padding-bottom: 5px;
+        padding-top: 45px;
+        color: $primary-color;
+        position: relative;
+        display: inline-block;
+      }
+      &--link::before {
+        @include underLineBtn();
+      }
+      &--link:hover:before {
+        width: 100%;
+      }
+    }
+  }
+}
+.sale-product {
+  overflow: hidden;
+  .container-wrapper {
+    @include containerWrapper();
+    &__title {
+      padding-top: 80px;
+      padding-bottom: 10px;
+      text-align: center;
+
+      @include screen-sm {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      &__head {
+        font-size: 40px;
+        line-height: 40px;
+        font-weight: 500;
+        color: $gray-color;
+        margin-bottom: 12px;
+        @include forMain {
+          font-size: 28px;
+        }
+      }
+      &__text {
+        font-weight: 400;
+        line-height: 28px;
+        color: $gray-color;
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+.blog-section {
+  overflow: hidden;
+  padding-bottom: 60px;
+  .container-wrapper {
+    @include containerWrapper();
+    &__title {
+      padding-bottom: 30px;
+      padding-top: 40px;
+      @include screen-sm {
+        padding-left: 0;
+        padding-right: 0;
+      }
+      @include forMain {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      &--head {
+        @include forMain {
+          font-size: 28px;
+        }
+      }
+      &--text {
+        font-size: 14px;
+      }
+    }
+  }
+  .blog-slider {
+    .pic {
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+    &__item {
+      padding-bottom: 40px;
+      &__img {
+        height: 290px;
+        @include screen-md {
+          height: 250px;
+        }
+        @include forMain {
+          height: fit-content;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+          transition: 0.5s;
+          &:hover{
+            transform: scale(1.1);
+            transition: 0.5s;
+          }
+        }
+      }
+      &__content {
+        padding-top: 25px;
+        h4 {
+          @include forMain {
+            font-size: 19px;
+            margin-bottom: 20px;
+          }
+        }
+        &--list {
+          padding-bottom: 6px;
+        }
+        &--item {
+          span {
+            padding-right: 6px;
+          }
+          a {
+            color: $btn-color;
+          }
+        }
+        &__link {
+          color: $gray-color !important;
+        }
+        &__link:hover {
+          color: $btn-color;
+        }
+        &__btn {
+          @include blackBtn(16px 52px);
+          display: inline-block;
+          margin-top: 15px;
+        }
+        &__btn:hover {
+          color: $primary-color;
+          background-color: $second-color;
+        }
+      }
+    }
+  }
+}
+.brand-logo {
+  .container-wrapper {
+    @include containerWrapper();
+    padding-left: 15px;
+    padding-right: 15px;
+    .brand-active {
+      border-top: 1px solid gray;
+      .brand-item {
+        width: 280px;
+        padding-top: 85px;
+        padding-bottom: 85px;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+    }
+  }
+}
+
+.img-active{
+ display: block !important;
+}

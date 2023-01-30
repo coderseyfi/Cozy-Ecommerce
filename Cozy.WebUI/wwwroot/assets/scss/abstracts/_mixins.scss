@@ -1,0 +1,132 @@
+@mixin flexbox($alignItems: center, $justifyContent: center) {
+  display: flex;
+  justify-content: $justifyContent;
+  align-items: $alignItems;
+}
+
+@mixin containerWrapper() {
+  max-width: 1430px;
+  margin: 0 auto;
+}
+
+@mixin blackBtn(
+  $padding: 20px 60px,
+  $color: $second-color,
+  $background: $primary-color
+) {
+  padding: $padding;
+  font-size: 16px;
+  line-height: 21px;
+  border-radius: 0;
+  color: $color;
+  background: $background;
+  outline: 0 none;
+  text-transform: capitalize;
+  transition: 0.3s;
+  border: 1px solid $gray-color;
+}
+
+@mixin underLineBtn() {
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: #fff;
+  content: "";
+  bottom: 0;
+  left: 0;
+  transition: 0.3s;
+}
+
+@mixin forContent($position: absolute) {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: $position;
+}
+
+@mixin backgrCss($min-height: 590px) {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: $min-height;
+}
+
+@mixin socialSharing (){
+  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  background: #fff;
+  color: #555555;
+  border: 1px solid #e1e1e1;
+  border-radius: 50%;
+  line-height: 40px;
+  text-align: center;
+  margin-right: 10px;
+  transition: .3s;
+  margin-right: 10px;
+  margin-left: 0;
+}
+
+@mixin formControl() {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@mixin forNavbar {
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    padding: 12px 15px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    padding: 12px 15px;
+  }
+  @media screen and (max-width: 767px) {
+    padding: 12px 0;
+    background: #4a4a4e;
+  }
+}
+
+//resposive start
+
+//forWideComp
+@mixin screen-lg {
+  @media screen and (min-width: 1200px) and (max-width: 1400px) {
+    @content;
+  }
+}
+
+//forComp
+@mixin screen-md {
+  @media screen and (min-width: 992px) and (max-width: 1199px) {
+    @content;
+  }
+}
+//forTablet
+@mixin screen-sm {
+  @media screen and (min-width: 768px) and (max-width: 991px) {
+    @content;
+  }
+}
+
+//forPhone
+@mixin screen-xs {
+  @media screen and (min-width: 576px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+//forUnderPhone
+@mixin forMain {
+  @media screen and (max-width: 767px) {
+    @content;
+  }
+}

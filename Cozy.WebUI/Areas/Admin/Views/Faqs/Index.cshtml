@@ -1,0 +1,178 @@
+﻿@model IEnumerable<Faq>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Bootstrap Border Sizes</h4>
+                    <span>
+                        lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Faqs</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page-header end -->
+<!-- Page-body start -->
+<div class="page-body">
+    <!-- Horizontal-border table start -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Horizontal Borders</h5>
+            <span>
+                Example of <code>horizontal</code> table borders. This is a
+                default table border style attached to <code>.table</code> class.
+                All borders have the same grey color and style, table itself doesn't
+                have a border, but you can add this border using
+                <code>.table-framed</code> class added to the table with
+                <code>.table</code> class.
+            </span>
+
+        </div>
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-framed">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Question)
+                            </th>
+                            <th class="ellipse">
+                                @Html.DisplayNameFor(model => model.Answer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th class="operations">
+                                <a asp-action="Create" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-pen-to-square"></i>
+                                </a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Question)
+                                </td>
+                                <td class="ellipse">
+                                    @item.Answer.ToPlainText();
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td class="operations">
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Question')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Horizontal-border table end -->
+    @Html.AntiForgeryToken()
+</div>
+<!-- Page-body end -->
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js~/lib/toastr.js/toastr.min.css" />
+<style>
+    th.operations,
+    td.operations {
+        max-width: 148px;
+        width: 148px;
+        text-align: right;
+        color: #ffffff;
+    }
+
+        th.operations i,
+        td.operations i {
+            margin: 0;
+        }
+</style>
+}
+
+@section addjs{
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
+    function removeEntity(id, name){
+        swal(`Əminsiniz ki, '${name}' silinsin?`, {
+              title: "Diqqət!",
+              text: `Əminsiniz ki, '${name}' silinsin?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("Delete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message, "Xeta!");
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+</script>
+}

@@ -1,0 +1,16 @@
+.modal-back{
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.700);
+    display: none;
+    transition: 1s;
+}
+
+.not-fade{
+    display: block;
+    transition: 1s;
+}

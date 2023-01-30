@@ -1,0 +1,51 @@
+.slider-area-login {
+  .page-title {
+    h2 {
+      font-size: 50px;
+      color: #343a40 !important;
+      font-weight: 300;
+    }
+
+    .breadcrumb-item {
+      a {
+        color: $like-gray;
+      }
+    }
+  }
+}
+
+.login-register-area {
+  .row {
+    justify-content: center;
+    align-items: center;
+    .login-area {
+      width: 85%;
+      .login-form {
+        background-color: $primary-color;
+        @include forMain() {
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+        label {
+          font-size: 16px;
+          color: #222222;
+          text-align: left;
+        }
+        input {
+          height: 55px;
+        }
+        .login-form {
+          @include formControl();
+        }
+        .btn {
+          @include blackBtn();
+        }
+        .f-get-pass {
+          a {
+            color: $like-black;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,101 @@
+﻿
+
+
+<div class="header-top header-top--second">
+    <div class="header-top__container container-fluid">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="header-top__container__left col-xl-3 col-lg-7 col-md-7 col-sm-7 col-8">
+                <div class="header-top__container__left__bar d-block d-xl-none">
+                    <a class="header-top__container__left__bar__link" href="javascript:void(0)">
+                        <i class="header-top__container__left__bar__link__icon fa-solid fa-bars"></i>
+                    </a>
+                </div>
+                <div class="header-top__container__left__logo float-right float-xl-left">
+                    <a class="header-top__container__left__logo__link"
+                       asp-controller="home" asp-action="index">
+                        <img class="header-top__container__left__logo__link__img"
+                             src="~/assets/imgs/cozy2.svg"
+                             alt="Agota" />
+                    </a>
+                </div>
+            </div>
+            <div class="header-top__container__mid col-xl-3 col-lg-1 col-md-1 col-sm-1 col-1 d-none d-xl-flex justify-content-lg-center">
+                <div class="header-top__container__mid__menu">
+                    <nav class="header-top__container__mid__menu__nav">
+                        <ul class="header-top__container__mid__menu__nav__list">
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                   asp-controller="home" asp-action="index">Home</a>
+                            </li>
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                  asp-controller="shop" asp-action="index">Shop</a>
+                            </li>
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                   href="about.html">About</a>
+                            </li>
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                   asp-controller="blog" asp-action="index">Blog</a>
+                            </li>
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                   asp-controller="home" asp-action="contact">Contact</a>
+                            </li>
+                            <li class="header-top__container__mid__menu__nav__list__list--item">
+                                <a class="header-top__container__mid__menu__nav__list__list--item__link same-color"
+                                   asp-controller="home" asp-action="faq">Faqs</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="header-top__container__right col-xl-3 col-lg-4 col-md-5 col-sm-5 col-4 d-flex">
+                <div class="header-top__container__right__items d-none d-xl-flex">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                               @User.GetPrincipalName()
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a></li>
+                            </ul>
+                        </div>
+                       
+                    }
+                    else
+                    {
+                        <a class="header-top__container__right__items__link same-color"
+                       asp-controller="account" asp-action="signin">
+                            Login
+                        </a>
+                        <a class="header-top__container__right__items__link same-color"
+                       asp-controller="account" asp-action="register">
+                            Register
+                        </a>
+                    }
+
+
+                    <a class="header-top__container__right__items__link same-color"
+                       href="javascript:void(0)">
+                        <i class="search-icon-header fa-solid fa-magnifying-glass"></i>
+                    </a>
+                    <a class="header-top__container__right__items__link same-color pr-0"
+                       href="wishlist.html">
+                        <i class="fa-regular fa-heart"></i>
+                       @* <sup class="icon-sup">0</sup>*@
+                    </a>
+                </div>
+                <div class="header-top__container__right__item">
+                    <a class="header-top__container__right__item__link same-color"
+                       href="javascript:void(0)">
+                        <i class="fa fa-bag-shopping"></i>
+                       @* <sup class="icon-sup">4</sup>*@
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model ContactInfoCreateCommand
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<!-- Page-header start -->
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Create a blog post</h4>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">Contact details</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Create</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page-header end -->
+<!-- Page-body start -->
+<div class="page-body">
+    <div class="card">
+        <div class="card-header">
+          
+        </div>
+        <div class="card-block">
+
+            <form method="post" autocomplete="off" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label asp-for="PhoneNumber" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <input asp-for="PhoneNumber" class="form-control" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                
+
+                <div class="form-group row">
+                    <label asp-for="Location" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <textarea asp-for="Location" class="form-control" id="body"></textarea>
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label asp-for="EmailAddress" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <textarea asp-for="EmailAddress" class="form-control" id="body"></textarea>
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-primary mr-2">Save</button>
+                        <a asp-action="index" class="btn btn-info">Cancel</a>
+                    </div>
+                </div>
+
+
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Page-body end -->
+@section addjs{
+<script class="removable" src="~/libs/ckeditor5/ckeditor.min.js"></script>
+<script class="removable" src="~/libs/select2/dist/js/select2.full.min.js"></script>
+
+<script>
+    let reader = new FileReader();
+    reader.addEventListener("load", function(){
+        let imageViewer = document.querySelector(".image-viewer");
+
+        imageViewer.setAttribute("style", `background-image:url(${reader.result})`);
+    });
+    
+
+    document.getElementById("image").addEventListener("change", function(e){
+        console.log(e);
+        const selectedFile = e.currentTarget.files[0];
+        reader.readAsDataURL(selectedFile);
+    });
+
+    ClassicEditor
+        .create( document.querySelector( '#body' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+
+        $(".select2").select2();
+</script>
+}
+
+@section addcss{
+    <link rel="stylesheet"  href="~/libs/select2/dist/css/select2.min.css"/>
+}
+
+
+

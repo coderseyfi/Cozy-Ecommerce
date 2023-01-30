@@ -1,0 +1,143 @@
+﻿@model ContactPost
+@{
+    ViewData["Title"] = "Reply";
+}
+
+<h2>Answer to messages</h2>
+
+<div class="card-block">
+    <div>
+        <div class="form-group row">
+            <label asp-for="Name" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <p class="form-control">
+                    @Model.Name
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <p class="form-control">
+                    @Model.Email
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <label asp-for="Subject" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <p class="form-control">
+                    @Model.Subject
+                </p>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <label asp-for="Content" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <p class="form-control">
+                    @Model.Content
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label asp-for="CreatedDate" class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <p class="form-control">
+                    @Model.CreatedDate
+                </p>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<div>
+    <dl class="dl-horizontal">
+
+        <form class="reply-con" id="reply-contact" method="post">
+            <h3 class="reply">Reply</h3>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Subject</label>
+                <div class="col-sm-10">
+                    <input asp-for="EmailSubject" type="text" placeholder="Enter your Subject" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Body</label>
+                <div class="col-sm-10">
+                    <input asp-for="Id" hidden />
+                    <input asp-for="Name" hidden />
+                    <input asp-for="Email" hidden />
+                    <input asp-for="Content" hidden />
+                    <input asp-for="Subject" hidden />
+                    <textarea asp-for="Answer" class="form-control" id="editor"></textarea>
+                    <span asp-validation-for="Answer" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row mt-2">
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-primary mr-2">Send</button>
+                    <a asp-action="index" class="btn btn-info">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </dl>
+</div>
+
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.1/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#reply-contact').submit(function(e) {
+            e.preventDefault();
+
+            let formData = new FormData(e.currentTarget);
+
+            $.ajax({
+                url: '@Url.Action("Reply", "ContactPosts")',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    if (response.error == true) {
+                        toastr.error(response.message, "Uğursuz!");
+                    } else {
+                        toastr.success(response.message, "Uğurlu!");
+                    }
+                    e.currentTarget.reset();
+                },
+                error: function(response) {
+                    toastr.error(response.message, "Ugursuz!")
+                }
+            })
+        })
+    })
+</script>
+}

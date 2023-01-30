@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Subscribe>
+
+
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Subscribed emails</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Subscribed emails</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                Is approved ?
+            </th>
+            <th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsApproved)
+                </td>
+
+                <td class="operations">
+                   
+                   @if (User.HasAccess("admin.subscribes.delete"))
+                    {
+                         <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Email')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    }
+                       
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.AntiForgeryToken()
+
+@section addcss{
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+    <script>
+        function removeEntity(id, name) {
+            swal(`${name} emailini abunəlikdən çıxarmaq istədiyinizdən əminsiniz?`, {
+                title: "Diqqət!",
+                text: `${name} emailini abunəlikdən çıxarmaq istədiyinizdən əminsiniz?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"]
+            })
+                .then((value) => {
+                    if (value == true) {
+                        let vToken = $("[name=__RequestVerificationToken]").val();
+                        let formData = new FormData();
+                        formData.set("__RequestVerificationToken", vToken);
+                        formData.set("id", id);
+                        $.ajax({
+                            url: `@Url.Action("Delete")`,
+                            type: "POST",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                if (response.error == true) {
+                                    toastr.error(response.message, "Xeta!");
+                                    return;
+                                }
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}

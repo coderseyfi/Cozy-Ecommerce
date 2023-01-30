@@ -1,0 +1,26 @@
+﻿@{
+    var message = ViewBag.Message as Tuple<bool, string>;
+}
+
+
+<div class="question container mb-100 mt-200">
+    <div class="row">
+        <div class="col-12">
+
+            @if (message.Item1)
+            {
+                <div class="alert alert-danger">
+                    @message.Item2
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-success">
+                    @message.Item2
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

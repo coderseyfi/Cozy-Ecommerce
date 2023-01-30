@@ -1,0 +1,145 @@
+﻿@model IEnumerable<BlogPostComment>
+
+@{
+    ViewData["Title"] = "Comments";
+}
+
+<div class="page-header">
+    <div class="row align-items-end">
+
+        <div class="col">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">All blogposts</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>All comments</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Page-body start -->
+<div class="page-body">
+
+
+    <!-- Horizontal-border table start -->
+    <div class="card">
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-framed table-imaged">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                Comment
+                            </th>
+                            <th>
+                                Author
+                            </th>
+                            <th>
+                                Posted date
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ellipse">
+                                    @Html.DisplayFor(modelItem => item.Text)
+                                </td>
+                                <td>
+                                    @item.CreatedByUser?.Name @item.CreatedByUser?.Surname
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td class="operations">
+
+                                    <a asp-action="CommentDetails" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+
+                                    <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.CreatedByUser?.Name')">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Horizontal-border table end -->
+    @Html.AntiForgeryToken()
+</div>
+<!-- Page-body end -->
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
+    function removeEntity(id, name){
+        swal(`'${name}' adlı istifadəçinin rəyini silmək istədiyinizə əminsiniz?`, {
+              title: "Diqqət!",
+              text: `'${name}' adlı istifadəçinin rəyini silmək istədiyinizə əminsiniz?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("CommentDelete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message, "Xeta!");
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+</script>
+}
+
+

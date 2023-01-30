@@ -1,0 +1,22 @@
+﻿@model BlogPostComment
+
+<div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 mb-20  cmnt-border comment @(Model.ParentId != null ? "ml-30" : "")" id="c-@Model.Id" data-comment-id="@Model.Id">
+    <div class="author-post mb-15 pt-20 pb-20">
+        <span class="position-relative black-color pl-50 cmnt-own pb-10 pr-20 user-cmnt">@($"{Model.CreatedByUser?.Name} {Model.CreatedByUser?.Surname}")</span>
+      @*  <div>
+            <p>
+                @if (Model.ParentId != null)
+                {
+                    <a href="#c-@Model.ParentId">@($"{Model.Parent?.CreatedByUser?.Name} {Model.Parent?.CreatedByUser?.Surname}")</a><span>&nbsp;&nbsp;</span>
+                }
+            </p>
+        </div>*@
+        <span class="comment-date">@Model.CreatedDate.ToString("MMMM d, yyyy HH:mm")</span>
+        <p class="mt-10">
+            @Model.Text
+        </p>
+        <div class="cmnt-btn">
+            <a class="btn btn-dark btn-comment-reply">Reply <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </div>
+</div>

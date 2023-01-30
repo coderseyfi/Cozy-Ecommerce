@@ -1,0 +1,151 @@
+﻿@model IEnumerable<ContactPost>
+
+@{
+    ViewData["Title"] = "Index";
+    string answer = "Bu mesajı cavablamamısınız";
+    string date = "Tarix yoxdur";
+}
+
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Answer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AnswerDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td class="ellipse">
+                    @Html.Raw(item.Content)
+                </td>
+                <td class="ellipse">
+                    @if (item.Answer == null)
+                    {
+                        @answer
+                    }
+                    else
+                    {
+                        @Html.Raw(item.Answer)
+                    }
+                </td>
+                <td>
+                    @if (item.AnswerDate == null)
+                    {
+                        @date
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.AnswerDate)
+                    }
+                </td>
+                <td class="operations">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    @if (item.AnswerDate == null)
+                    {
+                        <a asp-action="Reply" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-reply"></i>
+                        </a>
+                    }
+
+                    <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Email')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.AntiForgeryToken()
+
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
+    function removeEntity(id, name){
+        swal(`${name} emailindən gələn mesajı silmək istədiyinizdən əminsiniz?`, {
+              title: "Diqqət!",
+              text: `${name} emailindən gələn mesajı silmək istədiyinizdən əminsiniz?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("Delete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message, "Xeta!");
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+</script>
+}
+

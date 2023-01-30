@@ -1,0 +1,65 @@
+﻿.tab-control > .alert {
+    margin: 0;
+    border-radius: 0;
+}
+
+.tab-control > .tab-navs {
+    background-color: #ab8e66;
+    padding: 0 5px;
+}
+
+    .tab-control > .tab-navs > li {
+        float: left;
+    }
+
+        .tab-control > .tab-navs > li > a {
+            display: inline-block;
+            border-radius: 0;
+            border: 0px;
+            padding: 15px 20px;
+            color: #ffffff;
+            min-width: 70px;
+            font-size: 1.5em;
+        }
+
+            .tab-control > .tab-navs > li > a:hover, .tab-control > .tab-navs > li > a:focus {
+                background-color: transparent;
+                color: #505458;
+            }
+
+            .tab-control > .tab-navs > li > a.active, .tab-control > .tab-navs > li > a.active:focus, .tab-control > .tab-navs > li > a.active:hover {
+                color: #555;
+                cursor: default;
+                background-color: #e0e0e0;
+                border: 1px solid #ddd;
+                border-bottom-color: transparent;
+                border-width: 0px;
+                border-radius: 25%;
+            }
+
+            .tab-control > .tab-navs > li > a.required {
+                color: #f35958 !important;
+                animation-name: wobble;
+                animation-duration: 1s;
+                animation-iteration-count: 3;
+                animation-fill-mode: both;
+            }
+
+    .tab-control > .tab-navs:after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+
+.tab-control > .tab-pages > .tab-page {
+    width: 100%;
+    display: none;
+}
+
+    .tab-control > .tab-pages > .tab-page.active {
+        display: block;
+    }
+
+    .tab-control > .tab-pages > .tab-page > table, .tab-control > .tab-pages > .tab-page > .accordion-group {
+        margin-top: 20px;
+    }

@@ -1,0 +1,138 @@
+﻿@model IEnumerable<ContactInfo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+
+            
+            <th class="operations">
+
+                @if (User.HasAccess("admin.contactinfos.create"))
+                {
+                    <a asp-action="Create" class="btn btn-sm btn-primary">
+                        <i class="fa fa-pen-to-square"></i>
+                    </a>
+                }
+
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td class="operations">
+
+                    @if (User.HasAccess("admin.contactinfos.edit"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                    }
+
+                    @if (User.HasAccess("admin.contactinfos.details"))
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    }
+
+                    @if (User.HasAccess("admin.contactinfos.delete"))
+                    {
+                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.PhoneNumber')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.AntiForgeryToken()
+
+@section addcss{
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+    <script>
+        function removeEntity(id, name) {
+            swal(`${name} emailindən gələn mesajı silmək istədiyinizdən əminsiniz?`, {
+                title: "Diqqət!",
+                text: `${name} emailindən gələn mesajı silmək istədiyinizdən əminsiniz?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"]
+            })
+                .then((value) => {
+
+                    if (value == true) {
+
+                        let vToken = $("[name=__RequestVerificationToken]").val();
+
+                        let formData = new FormData();
+
+                        formData.set("__RequestVerificationToken", vToken);
+                        formData.set("id", id);
+
+                        $.ajax({
+                            url: `@Url.Action("Delete")`,
+                            type: "POST",
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            success: function (response) {
+                                console.log(response);
+
+                                if (response.error == true) {
+                                    toastr.error(response.message, "Xeta!");
+                                    return;
+                                }
+
+                                location.reload();
+                            },
+                            error: function (errorResponse) {
+                                console.error(errorResponse);
+                            }
+                        });
+                    }
+                });
+        }
+    </script>
+}

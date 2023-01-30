@@ -1,0 +1,79 @@
+.shopping-details {
+  width: 400px;
+  position: fixed;
+  right: -205%;
+  top: 0;
+  z-index: 999;
+  height: 100%;
+  transition: 0.7s;
+  background: $primary-color;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  padding-left: 50px;
+  padding-right: 40px;
+  @include forMain {
+    width: 100%; //inherit ele
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+  .close-icon-shop {
+    font-size: 30px;
+    float: right;
+    .icon-x {
+      color: $like-gray;
+    }
+  }
+  .shop-cart-content {
+    margin-top: 60px;
+    .list {
+      padding-bottom: 20px;
+      &__img {
+        padding-right: 1rem;
+        padding-left: 0;
+        &__link {
+          border: 1px solid $border-gray !important;
+          img {
+            max-width: 85px;
+          }
+        }
+      }
+      .item-info {
+        display: inline-block;
+        ul li {
+          display: inline-block;
+          .single-product-name {
+            a {
+              color: inherit;
+            }
+          }
+        }
+        .s-remove {
+          text-align: right;
+          padding-left: 6px;
+        }
+      }
+    }
+  }
+  .subtotal {
+    margin-bottom: 20px;
+    margin-top: 1rem;
+    .theme-color {
+      color: $subtotal-color;
+      &:nth-child(2) {
+        float: right;
+      }
+    }
+  }
+  .btn {
+    @include blackBtn();
+    color: $primary-color;
+    background: $second-color;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    width: 100%;
+    &:hover {
+      color: $second-color;
+      background: $primary-color;
+    }
+  }
+}
