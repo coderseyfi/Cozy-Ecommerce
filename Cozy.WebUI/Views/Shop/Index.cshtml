@@ -32,9 +32,6 @@
         </div>
     </div>
     <!-- slider-area-end  -->
-
-
-
     <!--  shop-header-area-start -->
     <div class="shop-sidebar-left">
         <div class="shop-header-area pt-110">
@@ -141,54 +138,17 @@
                                                 <div class="f-choose-color">
                                                     <h4>Filter By Choose Color</h4>
                                                     <ul class="product-menubar mt-30 mb-15  over-x-hidden over-x-scroll">
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-1" name="example">
-                                                                <a href="#"><span class="pl-15">Blue</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-2" name="example">
-                                                                <a href="#"><span class="pl-15">dark blue</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-3" name="example">
-                                                                <a href="#"><span class="pl-15">Light black</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-4" name="example">
-                                                                <a href="#"><span class="pl-15">Gray</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-5" name="example">
-                                                                <a href="#"><span class="pl-15">Green</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-6" name="example">
-                                                                <a href="#"><span class="pl-15">Orange</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-7" name="example">
-                                                                <a href="#"><span class="pl-15">Pink</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio color-8" name="example">
-                                                                <a href="#"><span class="pl-15">yellow-brown</span></a>
-                                                            </div>
-                                                        </li>
+                                                        @foreach (var item in Model.Colors)
+                                                        {
+                                                            <li>
+                                                                <div class="d-flex align-items-center mb-3">
+                                                                    <input type="checkbox" class="option-input radio color-1" name="example">
+                                                                    <a href="#">
+                                                                        <span class="pl-15">@item.Name</span>
+                                                                    </a>
+                                                                </div>
+                                                            </li>
+                                                        }
                                                     </ul>
                                                 </div>
                                             </div>
@@ -209,8 +169,8 @@
                                                                 </div>
                                                             </li>
                                                         }
-                                                 
-                                                        
+
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -271,19 +231,62 @@
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col-  pb-30 mb-35">
                                         <div class="f-category">
                                             <h4>Filter By Categories</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
-                                                @foreach (var item in Model.Categories)
+                                            @*<ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
+                                                @foreach (var item in Model.Categories.Where(c=>c.ParentId == null))
                                                 {
-                                                          <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio" name="example" >
-                                                        <a href="#"><span class="pl-15">@item.Name</span></a>
-                                                    </div>
-                                                </li>
+                                                    <li>
+                                                        <div class="d-flex align-items-center mb-3">
+
+                                                            <a href="#"><span class="pl-15">@item.Name</span></a>
+                                                        </div>
+
+                                                        @if (item.Children != null && item.Children.Any())
+                                                        {
+                                                            <ul>
+                                                                @foreach (var child in item.Children)
+                                                                {
+                                                                    <li>
+                                                                        <div class="d-flex align-items-center mb-3">
+                                                                            <input type="checkbox" class="option-input radio" name="example">
+                                                                            <a href="#"><span class="pl-15">@child.Name</span></a>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+                                                    </li>
                                                 }
-                                          
-                                           
+                                            </ul>*@
+                                            <div class="widget widget-categories">
+                                                  <ul class="list-categories">
+                                                @foreach (var item in Model.Categories.Where(c=>c.ParentId == null))
+                                                {
+                                                    <li class="list-category-item">
+
+                                                        @if (item.ParentId != null)
+                                                        {
+                                                             <input type="checkbox" class="option-input radio" name="example">
+                                                        }
+                                                        <label for="cb-@item.Id" class="label-text-category">@item.Name</label>
+                                                        @if (item.Children != null && item.Children.Any())
+                                                        {
+                                                            <i class="fa fa-chevron-down show-children show-children-@item.Id" data-btn-id="@item.Id"></i>
+                                                            <ul class="children-categories ul-@item.Id" style="display: none;" data-id="@item.Id">
+                                                                @foreach (var child in item.Children)
+                                                                {
+                                                                    <li class="list-category-item category-hover-item" style="border: none;">
+                                                                         <input type="checkbox" class="option-input radio" name="example">
+                                                                        <label  class="label-text">@child.Name</label>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+
+                                                    </li>
+                                                }
                                             </ul>
+                                            </div>
+                                          
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md- 12 col-sm- col-mb-35">
@@ -306,70 +309,17 @@
                                         <div class="f-choose-color">
                                             <h4>Filter By Choose Color</h4>
                                             <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-1" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Blue</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-2" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">dark blue</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-3" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Light black</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-4" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Gray</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-5" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Green</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-6" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Orange</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-7" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">Pink</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="d-flex align-items-center mb-3">
-                                                        <input type="checkbox" class="option-input radio color-8" name="example">
-                                                        <a href="#">
-                                                            <span class="pl-15">yellow-brown</span>
-                                                        </a>
-                                                    </div>
-                                                </li>
+                                                @foreach (var item in Model.Colors)
+                                                {
+                                                    <li>
+                                                        <div class="d-flex align-items-center mb-3">
+                                                            <input type="checkbox" class="option-input radio" name="example">
+                                                            <a href="#">
+                                                                <span class="pl-15">@item.Name</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>
@@ -377,18 +327,15 @@
                                         <div class="f-choose-color mr-4">
                                             <h4>Filter By Brand</h4>
                                             <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
-                                            @foreach (var item in Model.Brands)
+                                                @foreach (var item in Model.Brands)
                                                 {
                                                     <li>
                                                         <div class="d-flex align-items-center mb-3">
-                                                            <input type="checkbox" class="option-input
-                                                   radio" name="example">
+                                                            <input type="checkbox" class="option-input radio" name="example">
                                                             <a href="#"><span class="pl-15">@item.Name</span></a>
                                                         </div>
                                                     </li>
                                                 }
-                                         
-                                              
                                             </ul>
                                         </div>
                                     </div>
@@ -1121,8 +1068,6 @@
         </div>
     </div>
     <!-- /shop-slidebar-left -->
-
-
     <!-- Modal start -->
     <div class="modal" id="product-modal" tabindex="-1" style="display:
           none;">
@@ -1244,17 +1189,62 @@
 </main>
 
 @section addcss{
-      <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+
+    <style>
+
+
+        .widget li {
+        list-style: none;
+        line-height: 28px;
+        padding: 10px 0;
+        position:relative;
+         }
+
+         .list-category-item {
+        margin-left: 25px;
+       border-bottom: 1px solid #eee;
+        border: none;
+         
+         }
+
+       .list-category-item .category-input{
+        transform:scale(1.4);
+       }
+
+       .category-hover-item{
+           display:flex;
+           align-items:center;
+           gap:8px;
+       }
+      
+
+         .category-hover-item:hover .label-text, .widget li:hover .show-children {
+        color:lightgray;
+          transition: all 0.15s linear;
+        }
+
+      .show-children {
+       cursor: pointer;
+       padding-top: 5px;
+       position: absolute;
+       right: 10px;
+        transition: all 0.15s linear;
+      }
+
+     .border-none{
+       border: none;
+      }
+
+
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous"
-      />
+      crossorigin="anonymous" />
     <link rel="stylesheet" href="assets/css/style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
-      />
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
     <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/black-tie/jquery-ui.min.css"
       integrity="sha512-+Z63RrG0zPf5kR9rHp9NlTMM29nxf02r1tkbfwTRGaHir2Bsh4u8A79PiUKkJq5V5QdugkL+KPfISvl67adC+Q=="
@@ -1263,12 +1253,48 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/black-tie/theme.min.css"
       integrity="sha512-pRXxoDFasJ7vmpKnFluI1tFoIQvfjxvfYSxJY7/2li9EM0RY1NlibP6K3CvyzppFY90Co/HvkEGd1W17LbaiRw=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
-     
+   
+
+
     <link rel="stylesheet" href="./assets/css/style.min.css">
 }
 
 
 @section addjs{
+
+    <script>
+        $(document).ready(function(){
+            $(`.show-children`).click(function () {
+
+                let btnId = $(this).data("btn-id");
+
+                $(".children-categories").each(function () {
+
+                    let categoryId = $(this).data("id");
+
+                    if (btnId == categoryId) {
+                        $(`.children-categories.ul-${categoryId}`).slideToggle({ duration: 250 });
+                        $(`.show-children-${btnId}`).toggleClass("rotate");
+                    }
+                })
+
+            })
+
+            $(".label-text").click(function () {
+                let entityId = $(this).data("entity-id");
+
+                $(`.category-hover-item .label-text-${entityId}`).toggleClass("checked");
+            })
+
+            $(".label-text-category").click(function () {
+                let entityId = $(this).data("entity-id");
+
+                $(`.category-hover-item .label-text-category-${entityId}`).toggleClass("checked");
+            })
+        })
+      
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
         integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
@@ -1277,7 +1303,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
     <script src="https://kit.fontawesome.com/76c929e6a2.js"
         crossorigin="anonymous"></script>
-  
+
+ 
     <script src="~/assets/js/main.js"></script>
 }
 

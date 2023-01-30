@@ -22,12 +22,14 @@ namespace Cozy.WebUI.Controllers
         {
             var brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
             var categories = await db.Categories.Where(c => c.DeletedDate == null).ToListAsync();
+            var colors = await db.Colors.Where(c => c.DeletedDate == null).ToListAsync();
 
 
             var vm = new ProductViewModel()
             {
                 Brands = brands,
-                Categories = categories
+                Categories = categories,
+                Colors = colors
             };
           
            
