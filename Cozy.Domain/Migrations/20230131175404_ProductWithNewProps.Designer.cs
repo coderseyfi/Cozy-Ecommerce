@@ -4,14 +4,16 @@ using Cozy.Domain.Models.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cozy.Domain.Migrations
 {
     [DbContext(typeof(CozyDbContext))]
-    partial class CozyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230131175404_ProductWithNewProps")]
+    partial class ProductWithNewProps
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,6 +292,9 @@ namespace Cozy.Domain.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -317,6 +322,8 @@ namespace Cozy.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("ProductColorId");
 
@@ -710,11 +717,19 @@ namespace Cozy.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Cozy.Domain.Models.Entites.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Cozy.Domain.Models.Entites.ProductColor", null)
                         .WithMany("Products")
                         .HasForeignKey("ProductColorId");
 
                     b.Navigation("Brand");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Cozy.Domain.Models.Entites.ProductImage", b =>

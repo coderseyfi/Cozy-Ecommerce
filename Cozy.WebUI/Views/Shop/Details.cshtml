@@ -1,0 +1,219 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "View";
+}
+
+
+<main>
+
+    <!-- slider-area-start-->
+    <div class="p-page-area pt-100">
+        <div class="container-wrapper pl-15 pr-15">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-title pt-15">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a class="secondary-color"
+                                       href="index.html">Home</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a class="secondary-color"
+                                       href="shop.html">Shop</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a class="secondary-color"
+                                       href="single-product.html">Outdoor</a>
+                                </li>
+                                <li class="breadcrumb-item active text-capitalize text-dark"
+                                    aria-current="page">Antique Chinese Armchairs</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider-area-end=  -->
+    <!--  shop-header-area-start -->
+    <div class="product-view-scroll-area over-hidden">
+        <div class="container-wrapper pl-15 pr-15">
+            <div class="p-view-position">
+                <div class="row">
+                    <div class="col-xl-7 col-lg-6 col-md-12 col-sm-12 col-12">
+                        <div class="product-left-img-tab d-flex">
+                            <div class="nav product-tabs flex-column nav-pills">
+
+                                @foreach (var item in Model.ProductImages)
+                                {
+                                    <a class="nav-link single-pr @(item.IsMain ? "nav-link-active": "")" href="#">
+                                        <img class="product-thumbnail" src="~/assets/imgs/@item.Name" alt="">
+                                    </a>
+                                }
+                            </div>
+                            <div class="tab-content text-center position-relative">
+                                 @foreach (var item in Model.ProductImages)
+                                {
+                                    <div class="tab-pane arm  @(item.IsMain ? "active": "")">
+                                    <div class="product-img">
+                                            <img class="height100" src="~/assets/imgs/@item.Name" alt="">
+                                    </div>
+                                  </div>
+                                }
+                              
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-5 col-lg-6 col-md-12 col-sm-12 col-12 pl-xl-0">
+                        <div class="product-view-info">
+                            <div class="product-left-img-info">
+                                <h3>@Model.Name</h3>
+                                <div class="price pb-20 pt-10"><span>$862.00</span></div>
+                                <div class="available">
+                                    <p> Availability: <span class="blue-color">In Stock</span></p>
+                                </div>
+                                <div class="sku pb-2"><p>Sku: <span>@Model.StockKeepingUnit</span></p></div>
+                                <p class="border-bottom pb-35">
+                                    @Model.ShortDescription
+                                </p>
+                                <div class="all-info d-md-flex d-lg-block align-items-center">
+                                    <div class="quick-add-to-cart d-lg-flex align-items-center pt-10">
+                                        <div class="quantity d-inline-block">Quantity :</div>
+                                        <div class="quantity-field position-relative d-inline-block pl-40 pr-10 pb-2 pb-lg-0">
+                                           <span class="custom-prev enable">
+                                              <i class="fas fa-chevron-down"></i>
+                                           </span> 
+                                           <input type="number" name="select1" value="0" class="quantity-input-arrow quantity-input-2  border-gray inp-asp" min="0">
+                                           <span class="custom-next">
+                                              <i class="fas fa-chevron-up"></i>
+                                           </span>  
+                                        </div>
+                                        <a href="#" class="btn dark-black-bg d-inline-block text-white">Add to cart</a>
+                                    </div>
+                                    <ul class="single-product-list-button d-flex align-items-center mt-40">
+                                        <li class="tool text-dark border p-3 ml-2">
+                                            <a href="#" class="d-block border-gray text-dark">
+                                                <span class="fa fa-heart"></span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="mega-product pt-30 mb-40">
+                                    <p class="mb-1">
+                                        <span>Categories:</span>
+                                        <a href="shop.html" class="secondary-color">Bedroom,</a>
+                                        <a href="shop.html" class="secondary-color">Kitchen,</a>
+                                        <a href="shop.html" class="secondary-color">Outdoor</a>
+                                    </p>
+                                    <p class="mb-1">
+                                        <span>Tags:</span>
+                                        <a href="shop.html" class="secondary-color">Cozy,</a>
+                                        <a href="shop.html" class="secondary-color">Furniture,</a>
+                                        <a href="shop.html" class="secondary-color">Livingroom,</a>
+                                        <a href="shop.html" class="secondary-color">Table</a>
+                                    </p>
+                                </div>
+                                <ul class="social-sharing d-flex align-items-center">
+                                    <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-pinterest-p"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- shop-header-area-end -->
+
+
+    <div class="product-view-tab-area pt-30 pb-70 border-bottom">
+        <div class="container-wrapper pl-15 pr-15">
+            <nav class="d-flex justify-content-center">
+                <div class="nav review-tabs product-view-tab">
+                    <a class="nav-item nav-link show active px-0 mr-5 pb-1">Description</a>
+                </div>
+            </nav>
+            <div class="tab-content">
+                <div class="tab-pane fade show active mt-60">
+                    <div class="describe-area">
+                        <div class="describe-text">
+                            <h5 class="desc-title pb-1">Description:</h5>
+                            <p class="mb-0">
+                                Designed by Hans J. Wegner in 1949 as one of
+                                the first models created especially for Carl Hansen &amp;
+                                Son, and produced since 1950. The last of a series of chairs
+                                Wegner designed based on inspiration from antique Chinese
+                                armchairs. The gently rounded top together with the back and
+                                seat offers a variety of comfortable seating positions,
+                                ideal for both long visits to the dining table and relaxed
+                                lounging.
+                            </p>
+                            <p>
+                                The top that goes with everything. Sleek and simple, this
+                                sleeveless shell has a relaxed fit and classic round
+                                neckline. Plus—it’s made of our eco-conscious Clean Silk,
+                                for more beauty and less waste. Here’s how.
+                            </p>
+                        </div>
+                        <div class="describe-product-img mt-35 mb-35">
+                            <div class="row">
+                                <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 pr-lg-0">
+                                    <img class="width100 mb-20" src="~/assets/imgs/dcr-product.jpg" alt="">
+                                </div>
+                                <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-6 col-md- 6 col-sm-6  col-12">
+                                            <img class="mb-20 width100" src="~/assets/imgs/dcr-product2.jpg" alt="">
+                                        </div>
+                                        <div class="col-xl-12 col-lg-6 col-md- 6 col-sm-6  col-12">
+                                            <img class="width100" src="~/assets/imgs/dcr-product3.jpg" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="describe-text">
+                            <h5 class="pb-2">Technical Info:</h5>
+                            <p class="mb-0">
+                                Measurement: 56 x 52 x 80 cm high. The seat
+                                height is 44 cm. Armrest height 65.8 cm.
+                            </p>
+                            <p class="mb-0">Manufacturer: Normann Copenhagen</p>
+                            <p class="">Designer: Simon Legald.</p>
+                            <p>
+                                The characteristic “Y” provides comfortable back support
+                                and stability to the steam-bent top, also inspiring the
+                                chair’s names An excellent example of Wegner’s constant
+                                striving towards organic simplicity to create sculptural
+                                beauty, comfort and outstanding stability. The gently
+                                rounded top together with the back and seat offers a variety
+                                of comfortable seating positions, ideal for both long visits
+                                to the dining table and relaxed lounging. A light chair,
+                                easy to move around the dining table and about the room.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+@section addcss{
+    <style>
+        .inp-asp::-webkit-outer-spin-button,
+        .inp-asp::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+    </style>
+}
+

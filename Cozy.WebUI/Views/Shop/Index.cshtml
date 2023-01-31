@@ -37,10 +37,8 @@
         <div class="shop-header-area pt-110">
             <div class="container-wrapper pl-15 pr-15 position-relative">
                 <div class="row position-static">
-                    <div class="col-xl-4 col-lg-3 col-md-2 col-sm-3 col-12
-                position-static">
-                        <div class="product-search position-relative d-none d-xl-block
-                  pr-25">
+                    <div class="col-xl-4 col-lg-3 col-md-2 col-sm-3 col-12 position-static">
+                        <div class="product-search position-relative d-none d-xl-block pr-25">
                             <input class="pl-15"
                                    type="text"
                                    name="p-s-name"
@@ -52,14 +50,11 @@
                         <div class="product-filter-nb d-xl-none d-block p-title">
                             <div class="product-filter pb-45 text-left">
                                 <a href="javascript:void(0)"
-                                   class="product-filter-btn position-relative
-                      d-inline-block">Filter <span>+</span></a>
+                                   class="product-filter-btn position-relative d-inline-block">Filter <span>+</span></a>
                             </div>
-                            <div class="product-filter-details position-absolute bg-white
-                    over-hidden">
+                            <div class="product-filter-details position-absolute bg-white  over-hidden">
                                 <div class="container-wrapper pl-15 pr-15">
-                                    <div class="product-filter-details-wrapper pt-35 pb-15
-                        pl-30 pr-30">
+                                    <div class="product-filter-details-wrapper pt-35 pb-15 pl-30 pr-30">
                                         <div class="row">
                                             <div class="col-xl-3 col-lg-3 col-md- col-sm- col-
                             mb-30">
@@ -133,8 +128,7 @@
                                                     </ul>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-
-                            mb-30">
+                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-  mb-30">
                                                 <div class="f-choose-color">
                                                     <h4>Filter By Choose Color</h4>
                                                     <ul class="product-menubar mt-30 mb-15  over-x-hidden over-x-scroll">
@@ -169,7 +163,6 @@
                                                                 </div>
                                                             </li>
                                                         }
-
 
                                                     </ul>
                                                 </div>
@@ -231,62 +224,9 @@
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col-  pb-30 mb-35">
                                         <div class="f-category">
                                             <h4>Filter By Categories</h4>
-                                            @*<ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
-                                                @foreach (var item in Model.Categories.Where(c=>c.ParentId == null))
-                                                {
-                                                    <li>
-                                                        <div class="d-flex align-items-center mb-3">
-
-                                                            <a href="#"><span class="pl-15">@item.Name</span></a>
-                                                        </div>
-
-                                                        @if (item.Children != null && item.Children.Any())
-                                                        {
-                                                            <ul>
-                                                                @foreach (var child in item.Children)
-                                                                {
-                                                                    <li>
-                                                                        <div class="d-flex align-items-center mb-3">
-                                                                            <input type="checkbox" class="option-input radio" name="example">
-                                                                            <a href="#"><span class="pl-15">@child.Name</span></a>
-                                                                        </div>
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                        }
-                                                    </li>
-                                                }
-                                            </ul>*@
                                             <div class="widget widget-categories">
-                                                  <ul class="list-categories">
-                                                @foreach (var item in Model.Categories.Where(c=>c.ParentId == null))
-                                                {
-                                                    <li class="list-category-item">
-
-                                                        @if (item.ParentId != null)
-                                                        {
-                                                             <input type="checkbox" class="option-input radio" name="example">
-                                                        }
-                                                        <label for="cb-@item.Id" class="label-text-category">@item.Name</label>
-                                                        @if (item.Children != null && item.Children.Any())
-                                                        {
-                                                            <i class="fa fa-chevron-down show-children show-children-@item.Id" data-btn-id="@item.Id"></i>
-                                                            <ul class="children-categories ul-@item.Id" style="display: none;" data-id="@item.Id">
-                                                                @foreach (var child in item.Children)
-                                                                {
-                                                                    <li class="list-category-item category-hover-item" style="border: none;">
-                                                                         <input type="checkbox" class="option-input radio" name="example">
-                                                                        <label  class="label-text">@child.Name</label>
-                                                                    </li>
-                                                                }
-                                                            </ul>
-                                                        }
-
-                                                    </li>
-                                                }
-                                            </ul>
+                                                @Html.Raw(Model.Categories.GetCategoriesRaw())
                                             </div>
-                                          
                                         </div>
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md- 12 col-sm- col-mb-35">
@@ -339,23 +279,6 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="blog-widget pl-30 pr-30 pt-10 pb-30 mb-40">
-                                        <h5 class="pb-15 mb-20">Filter By Popular Tags</h5>
-                                        <ul class="search-tag">
-                                            <li>
-                                                <a href="#">Cozy<span>(9)</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Furniture<span>(9)</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Livingroom <span>(9)</span></a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Table<span>(9)</span></a>
-                                            </li>
-                                        </ul>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -366,697 +289,52 @@
                                 <div id="col-4" class="bestsellers broducts-area">
                                     <div class="container-wrapper pl-15 pr-15">
                                         <div class="row">
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product1.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-1.jpg"
-                                                                     alt="" />
+
+                                            @foreach (var item in Model.Products)
+                                            {
+                                                var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+
+                                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
+                                                    <div class="single-product position-relative pb-30">
+                                                        <div class="single-product-img position-relative">
+                                                            <a asp-action="details" asp-route-id="1">
+                                                                <img src="~/assets/imgs/@imagePath" alt="pr-img" />
                                                             </a>
+                                                            <div class="single-product-hover-img position-absolute">
+                                                                <a asp-action="details" asp-route-id="1">
+                                                                    <img src="~/assets/imgs/@imagePath" alt="pr-img"/>
+                                                                </a>
+                                                            </div>
+                                                            <ul class="single-product-button d-flex position-absolute">
+                                                                <li>
+                                                                    <a asp-action="index">
+                                                                        <i class="fa-solid fa-bag-shopping"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="eye">
+                                                                    <a href="javascript:void(0)">
+                                                                        <i class="fa-solid fa-eye"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <li>
+                                                                    <a asp-action="index">
+                                                                        <i class="fa-solid fa-heart"></i>
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
                                                         </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
+                                                        <h5 class="product-name pt-20 pl-20">
+                                                            <a href="single-product.html">
+                                                               @item.Name
+                                                            </a>
+                                                        </h5>
+                                                        <div class="product-price pl-20">
+                                                            <span class="black-color"><ins>$799.00</ins></span>
+                                                            <span class="old-price"><del>$829.00</del></span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product7.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-7.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                    <a href="#"
-                                                       class="sale-tag position-absolute text-white text-uppercase d-inline-block">sale</a>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product2.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-2.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- /single-product-img -->
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product5.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-5.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                                <!-- /single-product -->
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product7.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-7.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product2.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-2.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product3.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-3.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product6.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-6.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product1.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-1.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product4.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-4.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product7.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-7.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product6.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-6.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product5.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-5.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product4.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-4.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product3.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-3.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                <div class="single-product position-relative pb-30">
-                                                    <div class="single-product-img position-relative">
-                                                        <a href="single-product.html">
-                                                            <img src="./assets/imgs/home-product2.jpg"
-                                                                 alt="" />
-                                                        </a>
-                                                        <div class="single-product-hover-img position-absolute">
-                                                            <a href="single-product.html">
-                                                                <img src="./assets/imgs/home-product-hover-2.jpg"
-                                                                     alt="" />
-                                                            </a>
-                                                        </div>
-                                                        <ul class="single-product-button d-flex position-absolute">
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-bag-shopping"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li class="eye">
-                                                                <a href="javascript:void(0)">
-                                                                    <i class="fa-solid fa-eye"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="shop.html">
-                                                                    <i class="fa-solid fa-heart"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <h5 class="product-name pt-20 pl-20">
-                                                        <a href="single-product.html">
-                                                            Form Armchair
-                                                            Walnut Base
-                                                        </a>
-                                                    </h5>
-                                                    <div class="product-price pl-20">
-                                                        <span class="black-color"><ins>$799.00</ins></span>
-                                                        <span class="old-price"><del>$829.00</del></span>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -1201,7 +479,7 @@
          }
 
          .list-category-item {
-        margin-left: 25px;
+        margin-left: 10px;
        border-bottom: 1px solid #eee;
         border: none;
          
@@ -1209,13 +487,10 @@
 
        .list-category-item .category-input{
         transform:scale(1.4);
+        margin-right: 8px;
        }
 
-       .category-hover-item{
-           display:flex;
-           align-items:center;
-           gap:8px;
-       }
+      
       
 
          .category-hover-item:hover .label-text, .widget li:hover .show-children {
