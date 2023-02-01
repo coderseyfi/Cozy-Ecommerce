@@ -247,14 +247,15 @@
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col- pb-30 mb-20">
                                         <div class="f-choose-color">
+                                            <!-- Desktop version -->
                                             <h4>Filter By Choose Color</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
+                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name = "colors">
                                                 @foreach (var item in Model.Colors)
                                                 {
                                                     <li>
                                                         <div class="d-flex align-items-center mb-3">
-                                                            <input type="checkbox" class="option-input radio" name="example">
-                                                            <a href="#">
+                                                            <input class='category-input' type='checkbox' data-color-id="colors" />
+                                                            <a>
                                                                 <span class="pl-15">@item.Name</span>
                                                             </a>
                                                         </div>
@@ -265,14 +266,15 @@
                                     </div>
                                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col- pb-30 mb-25">
                                         <div class="f-choose-color mr-4">
+                                            <!-- Desktop version -->
                                             <h4>Filter By Brand</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
+                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name="brands">
                                                 @foreach (var item in Model.Brands)
                                                 {
                                                     <li>
                                                         <div class="d-flex align-items-center mb-3">
-                                                            <input type="checkbox" class="option-input radio" name="example">
-                                                            <a href="#"><span class="pl-15">@item.Name</span></a>
+                                                            <input class='category-input' type='checkbox' data-brand-id="brands"/>
+                                                            <a><span class="pl-15">@item.Name</span></a>
                                                         </div>
                                                     </li>
                                                 }
@@ -324,7 +326,7 @@
                                                             </ul>
                                                         </div>
                                                         <h5 class="product-name pt-20 pl-20">
-                                                            <a href="single-product.html">
+                                                            <a asp-action="details">
                                                                @item.Name
                                                             </a>
                                                         </h5>
@@ -472,29 +474,29 @@
 
 
         .widget li {
-        list-style: none;
-        line-height: 28px;
-        padding: 10px 0;
-        position:relative;
-         }
+         list-style: none;
+         line-height: 28px;
+         padding: 10px 0;
+         position:relative;
+        }
 
          .list-category-item {
-        margin-left: 10px;
-       border-bottom: 1px solid #eee;
-        border: none;
-         
+          margin-left: 10px;
+          border-bottom: 1px solid #eee;
+          border: none;
          }
 
        .list-category-item .category-input{
         transform:scale(1.4);
         margin-right: 8px;
+        accent-color: #403b3b;
        }
 
       
       
 
-         .category-hover-item:hover .label-text, .widget li:hover .show-children {
-        color:lightgray;
+       .category-hover-item:hover .label-text, .widget li:hover .show-children {
+          color:lightgray;
           transition: all 0.15s linear;
         }
 
@@ -567,6 +569,23 @@
                 $(`.category-hover-item .label-text-category-${entityId}`).toggleClass("checked");
             })
         })
+
+        function setFilter(){
+            const filterObj = {};
+
+            $("ul[data-entity-name]").each(function(index,item){
+              let entityPropertyName = $(item).data('entity-name');
+
+              filterObj[entityPropertyName] = [];
+
+              $(item).find('li div input:checked').each(function (indexLi, itemLi) {
+                    const entityId = $(itemLi).data('color-id');
+                  filterObj[entityPropertyName].push(entityId);
+              })
+
+            });
+            console.log(filterObj);
+        }
       
     </script>
 
