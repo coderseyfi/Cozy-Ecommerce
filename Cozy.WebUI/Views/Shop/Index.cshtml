@@ -52,6 +52,8 @@
                                 <a href="javascript:void(0)"
                                    class="product-filter-btn position-relative d-inline-block">Filter <span>+</span></a>
                             </div>
+
+                            <!--Mobile version-->
                             <div class="product-filter-details position-absolute bg-white  over-hidden">
                                 <div class="container-wrapper pl-15 pr-15">
                                     <div class="product-filter-details-wrapper pt-35 pb-15 pl-30 pr-30">
@@ -192,7 +194,7 @@
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 d-none d-md-block text-center">
                         <div class="shop-title p-title pb-50">
-                            <h5 class="mb-0 mt-2">Showing all 12 results</h5>
+                            <h5 class="mb-0 mt-2">Showing all @Model.Products.Count results</h5>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 col-sm-4 col-12 d-flex justify-content-md-end position-static">
@@ -254,7 +256,7 @@
                                                 {
                                                     <li>
                                                         <div class="d-flex align-items-center mb-3">
-                                                            <input class='category-input' type='checkbox' data-color-id="colors" />
+                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
                                                             <a>
                                                                 <span class="pl-15">@item.Name</span>
                                                             </a>
@@ -273,7 +275,7 @@
                                                 {
                                                     <li>
                                                         <div class="d-flex align-items-center mb-3">
-                                                            <input class='category-input' type='checkbox' data-brand-id="brands"/>
+                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id"/>
                                                             <a><span class="pl-15">@item.Name</span></a>
                                                         </div>
                                                     </li>
@@ -290,53 +292,11 @@
                             <div class="col-xl-12 col-lg- col-md- col-sm- col-">
                                 <div id="col-4" class="bestsellers broducts-area">
                                     <div class="container-wrapper pl-15 pr-15">
-                                        <div class="row">
+                                        <div class="row list-products">
 
-                                            @foreach (var item in Model.Products)
-                                            {
-                                                var imagePath = item.ProductImages.FirstOrDefault()?.Name;
 
-                                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
-                                                    <div class="single-product position-relative pb-30">
-                                                        <div class="single-product-img position-relative">
-                                                            <a asp-action="details" asp-route-id="1">
-                                                                <img src="~/assets/imgs/@imagePath" alt="pr-img" />
-                                                            </a>
-                                                            <div class="single-product-hover-img position-absolute">
-                                                                <a asp-action="details" asp-route-id="1">
-                                                                    <img src="~/assets/imgs/@imagePath" alt="pr-img"/>
-                                                                </a>
-                                                            </div>
-                                                            <ul class="single-product-button d-flex position-absolute">
-                                                                <li>
-                                                                    <a asp-action="index">
-                                                                        <i class="fa-solid fa-bag-shopping"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="eye">
-                                                                    <a href="javascript:void(0)">
-                                                                        <i class="fa-solid fa-eye"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a asp-action="index">
-                                                                        <i class="fa-solid fa-heart"></i>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <h5 class="product-name pt-20 pl-20">
-                                                            <a asp-action="details">
-                                                               @item.Name
-                                                            </a>
-                                                        </h5>
-                                                        <div class="product-price pl-20">
-                                                            <span class="black-color"><ins>$799.00</ins></span>
-                                                            <span class="old-price"><del>$829.00</del></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
+                                            <partial name="_ProductsContainer" model="@Model.Products" />
+
                                         </div>
                                     </div>
                                 </div>
@@ -515,25 +475,6 @@
 
     </style>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
-      crossorigin="anonymous" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/black-tie/jquery-ui.min.css"
-      integrity="sha512-+Z63RrG0zPf5kR9rHp9NlTMM29nxf02r1tkbfwTRGaHir2Bsh4u8A79PiUKkJq5V5QdugkL+KPfISvl67adC+Q=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/black-tie/theme.min.css"
-      integrity="sha512-pRXxoDFasJ7vmpKnFluI1tFoIQvfjxvfYSxJY7/2li9EM0RY1NlibP6K3CvyzppFY90Co/HvkEGd1W17LbaiRw=="
-      crossorigin="anonymous" referrerpolicy="no-referrer" />
-   
-
-
-    <link rel="stylesheet" href="./assets/css/style.min.css">
 }
 
 
@@ -568,35 +509,83 @@
 
                 $(`.category-hover-item .label-text-category-${entityId}`).toggleClass("checked");
             })
+
+            $('li div input.category-input').click(function(){
+             
+             setFilter();
+            });
         })
 
         function setFilter(){
-            const filterObj = {};
 
-            $("ul[data-entity-name]").each(function(index,item){
-              let entityPropertyName = $(item).data('entity-name');
+            if($.setFilterProcessId != undefined){
+                clearTimeout($.setFilterProcessId);
+            }
 
-              filterObj[entityPropertyName] = [];
+            $.setFilterProcessId = setTimeout(function () {
 
-              $(item).find('li div input:checked').each(function (indexLi, itemLi) {
-                    const entityId = $(itemLi).data('color-id');
-                  filterObj[entityPropertyName].push(entityId);
-              })
+               const filterObj = {};
 
-            });
-            console.log(filterObj);
+               $("ul[data-entity-name]").each(function(index,item){
+                const entityPropertyName = $(item).data('entity-name');
+ 
+                 filterObj[entityPropertyName] = [];
+
+                 $(item).find('li div input:checked').each(function (indexLi, itemLi) {
+                        const entityId = $(itemLi).data('entity-id');
+                        filterObj[entityPropertyName].push(entityId);
+                 })
+
+               });
+
+
+               console.log(filterObj);
+
+                const filterObjJson = JSON.stringify(filterObj);
+
+                $.ajax({
+
+                   url: '@Url.Action("Filter")',
+                   type: 'POST',
+                   data: filterObj,
+                   //contentType: 'application/json',
+                   dataType: 'html',
+                   //data: filterObj,
+                   //dataType: 'html',
+                   //contentType: 'application/json',
+                   contentType: 'application/x-www-form-urlencoded',
+                   beforeSend: function(){
+                        $("div.list-products").html("<img src='/assets/imgs/pre-loader.gif'/>");
+                   },
+                   success: function(response){
+                       //console.log(response)
+
+                        setTimeout(function () {
+                            $("div.list-products").html(response);
+
+                            if ($('div.list-products').children().length == 0) {
+                                $("div.list-products").html("<img src='/assets/imgs/no-product-found.png'/>");
+                            }
+
+                        }, 1000);
+                   },
+                   error: function (response) {
+                       console.log(response);
+                   }
+                 
+               })
+               .always(function (){
+                   console.log('sorgudan sonra');
+               });
+
+
+
+            }, 2000);
         }
       
     </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
-        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script src="https://kit.fontawesome.com/76c929e6a2.js"
-        crossorigin="anonymous"></script>
+ 
 
  
     <script src="~/assets/js/main.js"></script>

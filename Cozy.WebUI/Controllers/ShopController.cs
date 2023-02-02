@@ -1,4 +1,5 @@
 ﻿using Cozy.Domain.Models.DataContexts;
+using Cozy.Domain.Models.FormModels;
 using Cozy.Domain.Models.ViewModels.ProductViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ namespace Cozy.WebUI.Controllers
         {
             this.db = db;
         }
+
         public async Task<IActionResult> Index()
         {
             var brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
@@ -50,6 +52,43 @@ namespace Cozy.WebUI.Controllers
 
             return View(vm);
         }
+
+
+
+        [HttpPost]
+        public IActionResult Filter(ShopFilterFormModel model)
+        {
+            var query = db.Products
+                .Include(p => p.ProductImages.Where(i => i.IsMain == true))
+                //.Include(c=>c.Category)
+                .Include(p => p.Brand)
+                .Where(p => p.DeletedDate == null)
+                .AsQueryable();
+
+            if (model?.Brands?.Count() > 0)
+            {
+                query = query.Where(p => model.Brands.Contains(p.BrandId));
+            }
+
+            if (model?.Colors?.Count() > 0)
+            {
+                query = query.Where(p => model.Colors.Contains(p.BrandId));
+            }
+
+            //if (model?.Categories?.Count() > 0)
+            //{
+            //    query = query.Where(p => model.Categories.Contains(p.CategoryId));
+            //}
+
+            //if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
+            //{
+            //    query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
+            //}
+
+            return PartialView("_ProductsContainer", query.ToList());
+        }
+
+
 
         public async Task<IActionResult> Details(int id)
         {
