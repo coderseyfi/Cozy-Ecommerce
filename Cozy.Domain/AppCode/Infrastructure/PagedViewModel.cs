@@ -27,8 +27,18 @@ namespace Cozy.Domain.AppCode.Infrastructure
         {
 
             this.TotalCount = query.Count();
-            this.PageIndex = model.PageIndex;
             this.PageSize = model.PageSize;
+
+            if (this.MaxPageSize < model.PageIndex)
+            {
+                this.PageIndex = this.MaxPageSize;
+            }
+            else
+            {
+                this.PageIndex = model.PageIndex;
+            }
+
+           
 
             this.Items = query.Skip((this.PageIndex - 1) * this.PageSize)
                               .Take(this.PageSize)

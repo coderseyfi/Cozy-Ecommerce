@@ -44,6 +44,8 @@ namespace Cozy.WebUI
                      .Build();
 
                      cfg.Filters.Add(new AuthorizeFilter(policy));
+
+                     cfg.ModelBinderProviders.Insert(0, new BooleanBinderProvider());
                  }
              ).AddNewtonsoftJson(cfg => cfg.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 

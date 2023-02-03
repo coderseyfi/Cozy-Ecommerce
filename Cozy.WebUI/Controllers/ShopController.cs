@@ -31,6 +31,7 @@ namespace Cozy.WebUI.Controllers
                 .ToListAsync();
 
             var colors = await db.Colors.Where(c => c.DeletedDate == null).ToListAsync();
+            var materials = await db.Materials.Where(c => c.DeletedDate == null).ToListAsync();
 
             var products = await db.Products
                 .Include(p=>p.ProductImages.Where(i=>i.IsMain == true))
@@ -44,6 +45,7 @@ namespace Cozy.WebUI.Controllers
                 Brands = brands,
                 Categories = categories,
                 Colors = colors,
+                Materials= materials,
                 Products = products
             };
             

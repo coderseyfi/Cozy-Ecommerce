@@ -61,62 +61,7 @@
                                             <div class="col-xl-3 col-lg-3 col-md- col-sm- col-   mb-30">
                                                 <div class="f-category">
                                                     <h4>Filter By Categories</h4>
-                                                    <ul class="product-menubar mt-30 mb-15  over-x-hidden over-x-scroll">
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Bedroom</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Decor</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Decoration</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Kitchen</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Lamp</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input  radio" name="example">
-                                                                <a href="#"><span class="pl-15">Lighting</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input  radio" name="example">
-                                                                <a href="#"><span class="pl-15">Living Room</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Outdoor</span></a>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="d-flex align-items-center mb-3">
-                                                                <input type="checkbox" class="option-input radio" name="example">
-                                                                <a href="#"><span class="pl-15">Table</span></a>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                                    @Html.Raw(Model.Categories.GetCategoriesRaw())
                                                 </div>
                                             </div>
                                             <div class="col-xl-3 col-lg-3 col-md- col-sm- col-  mb-30">
@@ -244,7 +189,24 @@
                                                 @foreach (var item in Model.Colors)
                                                 {
                                                     <li>
-                                                        <div class="d-flex align-items-center mb-3">
+                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
+                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
+                                                            <a>
+                                                                <span class="pl-15">@item.Name</span>
+                                                            </a>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                        <div class="f-choose-color">
+                                            <!-- Desktop version -->
+                                            <h4>Filter By Choose Material</h4>
+                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name="materials">
+                                                @foreach (var item in Model.Materials)
+                                                {
+                                                    <li>
+                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
                                                             <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
                                                             <a>
                                                                 <span class="pl-15">@item.Name</span>
@@ -263,7 +225,7 @@
                                                 @foreach (var item in Model.Brands)
                                                 {
                                                     <li>
-                                                        <div class="d-flex align-items-center mb-3">
+                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
                                                             <input class='category-input' type='checkbox' data-entity-id="@item.Id"/>
                                                             <a><span class="pl-15">@item.Name</span></a>
                                                         </div>
@@ -435,7 +397,7 @@
           border: none;
          }
 
-       .list-category-item .category-input{
+       .category-input{
         transform:scale(1.4);
         margin-right: 8px;
         accent-color: #403b3b;

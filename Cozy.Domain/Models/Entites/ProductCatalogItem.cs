@@ -15,5 +15,8 @@ namespace Cozy.Domain.Models.Entites
         public int ColorId { get; set; }
         public virtual ProductColor Color { get; set; }
 
+        public int MaterialId { get; set; }
+        public virtual ProductMaterial Material { get; set; }
+
     }
 }

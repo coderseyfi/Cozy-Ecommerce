@@ -39,6 +39,7 @@ namespace Cozy.Domain.Models.DataContexts
 
         public DbSet<BlogPostTagItem> BlogPostTagCloud { get; set; }
         public DbSet<ProductColor> Colors { get; set; }
+        public DbSet<ProductMaterial> Materials { get; set; }
         public DbSet<ProductCatalogItem> ProductCatalogItems { get; set; }
 
 
@@ -49,6 +50,17 @@ namespace Cozy.Domain.Models.DataContexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ProductCatalogItem>(cfg=>
+            {
+                cfg.HasKey(k => new { 
+                    k.ProductId, 
+                    k.ColorId, 
+                    k.MaterialId
+                });
+
+                cfg.Property(p => p.Id).UseIdentityColumn();
+            });
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CozyDbContext).Assembly);
         }

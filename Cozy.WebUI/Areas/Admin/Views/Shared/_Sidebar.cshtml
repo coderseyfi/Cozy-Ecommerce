@@ -109,9 +109,9 @@
 
             </li>
             <li>
-                @if (User.HasAccess("admin.productmaterial.index"))
+                @if (User.HasAccess("admin.productmaterials.index"))
                 {
-                    <a href="javascript:void(0)">
+                    <a asp-controller="productmaterials" asp-action="index">
                         <span class="pcoded-micon">
                             <i class="fa-solid fa-recycle"></i>
                         </span>

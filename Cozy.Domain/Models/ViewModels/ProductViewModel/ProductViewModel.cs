@@ -12,6 +12,7 @@ namespace Cozy.Domain.Models.ViewModels.ProductViewModel
         public ICollection<Brand> Brands { get; set; }
         public ICollection<Category> Categories { get; set; }
         public ICollection<ProductColor> Colors { get; set; }
+        public ICollection<ProductMaterial> Materials { get; set; }
         public ICollection<Product> Products { get; set; }
     }
 }

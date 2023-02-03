@@ -4,14 +4,16 @@ using Cozy.Domain.Models.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cozy.Domain.Migrations
 {
     [DbContext(typeof(CozyDbContext))]
-    partial class CozyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203110125_ProductCatalogItemsNew")]
+    partial class ProductCatalogItemsNew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,9 +292,6 @@ namespace Cozy.Domain.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -317,8 +316,6 @@ namespace Cozy.Domain.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("BrandId");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Products");
                 });
@@ -764,13 +761,7 @@ namespace Cozy.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cozy.Domain.Models.Entites.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
                     b.Navigation("Brand");
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Cozy.Domain.Models.Entites.ProductCatalogItem", b =>

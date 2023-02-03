@@ -4,14 +4,16 @@ using Cozy.Domain.Models.DataContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cozy.Domain.Migrations
 {
     [DbContext(typeof(CozyDbContext))]
-    partial class CozyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203104126_ProductCatalogItemWithMaterial")]
+    partial class ProductCatalogItemWithMaterial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -290,9 +292,6 @@ namespace Cozy.Domain.Migrations
                     b.Property<int>("BrandId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
@@ -318,20 +317,17 @@ namespace Cozy.Domain.Migrations
 
                     b.HasIndex("BrandId");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Cozy.Domain.Models.Entites.ProductCatalogItem", b =>
                 {
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MaterialId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedDate")
@@ -340,18 +336,19 @@ namespace Cozy.Domain.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
-                        .HasAnnotation("SqlServer:IdentitySeed", 1)
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("MaterialId")
+                        .HasColumnType("int");
 
-                    b.HasKey("ProductId", "ColorId", "MaterialId");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ColorId");
 
                     b.HasIndex("MaterialId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ProductCatalogItems");
                 });
@@ -764,13 +761,7 @@ namespace Cozy.Domain.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Cozy.Domain.Models.Entites.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
-
                     b.Navigation("Brand");
-
-                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Cozy.Domain.Models.Entites.ProductCatalogItem", b =>
