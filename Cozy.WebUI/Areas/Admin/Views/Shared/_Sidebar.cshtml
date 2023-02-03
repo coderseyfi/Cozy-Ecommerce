@@ -70,6 +70,55 @@
                 }
 
             </li>
+           @* <li class="pcoded-hasmenu" dropdown-icon="style1" subitem-icon="style1">
+                <a href="javascript:void(0)">
+                    <span class="pcoded-micon"><i class="fa-solid fa-shop"></i></span>
+                    <span class="pcoded-mtext">Products</span>
+                    <span class="pcoded-mcaret"></span>
+                </a>
+                <ul class="pcoded-submenu">
+                    <li>
+                        @if (User.HasAccess("admin.productcolors.index"))
+                        {
+                            <a asp-controller="productcolors" asp-action="index">
+                                <span class="pcoded-mtext">Product Colors</span>
+                            </a>
+                        }
+
+                    </li>
+                    <li>
+                        @if (User.HasAccess("admin.productmaterial.index"))
+                        {
+                            <a asp-controller="productcolors" asp-action="index">
+                                <span class="pcoded-mtext">Product Material</span>
+                            </a>
+                        }
+                    </li>
+                </ul>
+            </li>*@
+            <li>
+                @if (User.HasAccess("admin.productcolors.index"))
+                {
+                    <a asp-controller="productcolors" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-palette"></i>
+                        </span>
+                        <span class="pcoded-mtext">Product Colors</span>
+                    </a>
+                }
+
+            </li>
+            <li>
+                @if (User.HasAccess("admin.productmaterial.index"))
+                {
+                    <a href="javascript:void(0)">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-recycle"></i>
+                        </span>
+                        <span class="pcoded-mtext">Product Material</span>
+                    </a>
+                }
+            </li>
             <li>
                 @if (User.HasAccess("admin.contactposts.index"))
                 {

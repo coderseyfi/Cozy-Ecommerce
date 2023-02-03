@@ -7,11 +7,11 @@
     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
         <div class="single-product position-relative pb-30">
             <div class="single-product-img position-relative">
-                <a asp-action="details" asp-route-id="1">
+                <a asp-action="details" asp-route-id="@item.Id">
                     <img src="~/assets/imgs/@imagePath" alt="pr-img" />
                 </a>
                 <div class="single-product-hover-img position-absolute">
-                    <a asp-action="details" asp-route-id="1">
+                    <a asp-action="details" asp-route-id="@item.Id">
                         <img src="~/assets/imgs/@imagePath" alt="pr-img" />
                     </a>
                 </div>
