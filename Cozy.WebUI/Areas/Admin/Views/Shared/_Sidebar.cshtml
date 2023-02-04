@@ -99,6 +99,18 @@
             <li>
                 @if (User.HasAccess("admin.productcolors.index"))
                 {
+                    <a asp-controller="products" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-shop"></i>
+                        </span>
+                        <span class="pcoded-mtext">Products</span>
+                    </a>
+                }
+
+            </li>
+            <li>
+                @if (User.HasAccess("admin.productcolors.index"))
+                {
                     <a asp-controller="productcolors" asp-action="index">
                         <span class="pcoded-micon">
                             <i class="fa-solid fa-palette"></i>

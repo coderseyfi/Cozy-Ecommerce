@@ -14,7 +14,7 @@ namespace Cozy.Domain.AppCode.Infrastructure
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
-        public int MaxPageSize
+        public int MaxPageCount
         {
             get
             {
@@ -29,9 +29,9 @@ namespace Cozy.Domain.AppCode.Infrastructure
             this.TotalCount = query.Count();
             this.PageSize = model.PageSize;
 
-            if (this.MaxPageSize < model.PageIndex)
+            if (this.MaxPageCount < model.PageIndex)
             {
-                this.PageIndex = this.MaxPageSize;
+                this.PageIndex = this.MaxPageCount < 1 ? 1 : this.MaxPageCount;
             }
             else
             {
@@ -76,7 +76,7 @@ namespace Cozy.Domain.AppCode.Infrastructure
                 builder.Append("<li class='prev disabled'><a>Previous</li>");
             }
 
-            int min = 1, max = this.MaxPageSize;
+            int min = 1, max = this.MaxPageCount;
 
             if (this.PageIndex > (int)Math.Floor(maxPaginationButtonCount / 2D))
             {
@@ -85,9 +85,9 @@ namespace Cozy.Domain.AppCode.Infrastructure
 
             max = min + maxPaginationButtonCount - 1;
 
-            if (max > this.MaxPageSize)
+            if (max > this.MaxPageCount)
             {
-                max = this.MaxPageSize;
+                max = this.MaxPageCount;
                 min = max - maxPaginationButtonCount + 1;
             }
 
@@ -113,7 +113,7 @@ namespace Cozy.Domain.AppCode.Infrastructure
             }
 
 
-            if (this.PageIndex < this.MaxPageSize)
+            if (this.PageIndex < this.MaxPageCount)
             {
                 var link = hasPaginationFunction
                     ? $"javascript:{paginateFunction}({this.PageIndex + 1},{this.PageSize})"

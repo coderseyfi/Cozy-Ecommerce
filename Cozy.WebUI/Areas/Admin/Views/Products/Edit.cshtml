@@ -1,71 +1,137 @@
-﻿@model Cozy.Domain.Models.Entites.Product
+﻿@model ProductEditCommand
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Product</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Create Product</h4>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="StockKeepingUnit" class="control-label"></label>
-                <input asp-for="StockKeepingUnit" class="form-control" />
-                <span asp-validation-for="StockKeepingUnit" class="text-danger"></span>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-action="index">All brands</a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Create</span>
+                    </li>
+                </ul>
             </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShortDescription" class="control-label"></label>
-                <input asp-for="ShortDescription" class="form-control" />
-                <span asp-validation-for="ShortDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BrandId" class="control-label"></label>
-                <select asp-for="BrandId" class="form-control" asp-items="ViewBag.BrandId"></select>
-                <span asp-validation-for="BrandId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="CreatedDate" class="control-label"></label>
-                <input asp-for="CreatedDate" class="form-control" />
-                <span asp-validation-for="CreatedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedDate" class="control-label"></label>
-                <input asp-for="DeletedDate" class="form-control" />
-                <span asp-validation-for="DeletedDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
+<div class="page-body">
+    <div class="card">
+        <div class="card-block">
+            <form method="post" autocomplete="off" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group ">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="StockKeepingUnit" class="form-label"></label>
+                            <input asp-for="StockKeepingUnit" class="form-control" />
+                            <span asp-validation-for="StockKeepingUnit" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="Price" class="kform-label"></label>
+                            <input asp-for="Price" class="form-control" />
+                            <span asp-validation-for="Price" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="BrandId" class="form-label"></label>
+                            <select class="form-control select2" asp-for="BrandId" asp-items="@ViewBag.BrandId"></select>
+                            <span asp-validation-for="BrandId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group ">
+                            <label asp-for="CategoryId" class="form-label"></label>
+                            <select class="form-control select2" asp-for="CategoryId" asp-items="@ViewBag.CategoryId"></select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ShortDescription" class="form-label"></label>
+                            <input asp-for="ShortDescription" class="form-control" />
+                            <span asp-validation-for="ShortDescription" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div style="width: 100%;" class="imager-container" id="viewer1" name="images">
+                            @foreach (var item in Model.Images)
+                            {
+                                <label thumb-url='/uploads/images/@item.TempPath' image-id="@item.Id" @(item.IsMain ? "checked" : "")></label>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description" class="form-control" id="editor"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 d-flex justify-content-end">
+                        <input type="hidden" asp-for="Id" />
+                        <button class="btn btn-primary mr-2">Save</button>
+                        <a asp-action="index" class="btn btn-info">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
+
+
+<!-- Page-body end -->
+@section addjs{
+    <script class="removable" src="~/libs/ckeditor5/ckeditor.min.js"></script>
+    <script class="removable" src="~/libs/select2/dist/js/select2.full.min.js"></script>
+    <script class="removable" src="~/libs/multiple-imager-js/js/imager.js"></script>
+
+    <script>
+
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        $('#viewer1').imgadd({
+            tnWidth: '80px',
+            tnHeight: '80px',
+            fontSize: '55px',
+            plusInnerHtml: '',
+            plusBtnClass: undefined
+        });
+
+
+
+    </script>
+}
+
+@section addcss{
+    <link rel="stylesheet" href="~/libs/multiple-imager-js/css/imager.css" />
+    <link rel="stylesheet" href="~/libs/select2/dist/css/select2.min.css" />
+
+    <style>
+        /*   .viewer-thumbs {
+                            width:100%;
+                        }*/
+    </style>
+}

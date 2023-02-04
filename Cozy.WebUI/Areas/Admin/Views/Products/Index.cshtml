@@ -32,12 +32,11 @@
     <div class="card">
         <div class="card-block table-border-style">
             <div class="table-responsive">
-                <table class="table table-framed tree">
-
+                <table class="table table-framed tree table-imaged">
                     <thead>
                         <tr>
                             <th>
-
+                                Image
                             </th>
                             <th>
                                 Name
@@ -59,50 +58,8 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach (var item in Model.Items)
-                        {
-                            <tr>
-                                <td>
-                                    image
-                                </td>
-                                <td>
-                                    @item.Name
-                                </td>
-                                <td>
-                                    @item.ShortDescription
-                                </td>
-                                <td>
-                                    @item.Price
-                                </td>
-                                <td class="operations">
-
-                                    @if (User.HasAccess("admin.products.edit"))
-                                    {
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </a>
-                                    }
-
-
-                                    @if (User.HasAccess("admin.products.details"))
-                                    {
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-                                    }
-
-
-                                    @if (User.HasAccess("admin.products.delete"))
-                                    {
-                                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Name')">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                    }
-
-                                </td>
-                            </tr>
-                        }
+                    <tbody id="dynamic-content">
+                        <partial name="_ListBody" model="@Model" />
                     </tbody>
                 </table>
 
@@ -120,6 +77,16 @@
     <link rel="stylesheet" href="~/libs/jquery-treegrid/css/jquery.treegrid.css" />
 
     <style>
+
+        thead th,
+        tbody td{
+            vertical-align:middle !important;
+        }
+
+        .image-cell img{
+           max-height:70px;
+        }
+
         th.operations,
         td.operations {
             max-width: 148px;
@@ -175,15 +142,16 @@
                                 data: formData,
                                 contentType: false,
                                 processData: false,
-                                success: function (response) {
-                                    console.log(response);
+                                success: function (response,status,xhr) {
 
-                                    if (response.error == true) {
+                                    if (xhr.responseText.isHtml()){
+                                        $('#dynamic-content').html(xhr.responseText);
+                                    }
+                                    else if (response.error == true){
                                         toastr.error(response.message, "Xeta!");
                                         return;
                                     }
 
-                                    location.reload();
                                 },
                                 error: function (errorResponse) {
                                     console.error(errorResponse);

@@ -42,6 +42,18 @@ namespace Cozy.Domain.AppCode.Extensions
                     );
         }
 
+
+        //horrible
+        public static int GetCurrentUserIdNew(this ClaimsPrincipal principal)
+        {
+            if (principal.Identity is ClaimsIdentity identity)
+            {
+                return identity.GetCurrentUserId();
+            }
+
+            return 0;
+        }
+
         public static bool HasAccess(this ClaimsPrincipal principal, string policyName)
         {
             return principal.IsInRole("SuperAdmin") || principal.HasClaim(c => c.Type.Equals(policyName) && c.Value.Equals("1"));

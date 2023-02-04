@@ -11,18 +11,20 @@ using MediatR;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Business.BrandModule;
 using Microsoft.AspNetCore.Authorization;
+using Cozy.Domain.AppCode.Extensions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Cozy.WebUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     public class ProductsController : Controller
     {
-        private readonly CozyDbContext _context;
+        private readonly CozyDbContext db;
         private readonly IMediator mediator;
 
-        public ProductsController(CozyDbContext context, IMediator mediator)
+        public ProductsController(CozyDbContext db, IMediator mediator)
         {
-            _context = context;
+            this.db = db;
             this.mediator = mediator;
         }
 
@@ -40,7 +42,7 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var product = await _context.Products
+            var product = await db.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -55,8 +57,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
       
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name");
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name");
+            ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name");
             return View();
         }
 
@@ -71,8 +73,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             if (response == null)
             {
 
-                ViewBag.BrandId = new SelectList(_context.Brands, "Id", "Name", command.BrandId);
-                ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", command.CategoryId);
+                ViewBag.BrandId = new SelectList(db.Brands, "Id", "Name", command.BrandId);
+                ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", command.CategoryId);
                 return View(command);
             }
 
@@ -80,76 +82,98 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(ProductSingleQuery query)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var product = await mediator.Send(query);
 
-            var product = await _context.Products.FindAsync(id);
             if (product == null)
             {
                 return NotFound();
             }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Id", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
-            return View(product);
+
+            var command = new ProductEditCommand();
+            command.Name = product.Name;
+            command.Price = product.Price;
+            command.ShortDescription = product.ShortDescription;
+            command.Description = product.Description;
+            command.BrandId = product.BrandId;
+            command.CategoryId = product.CategoryId;
+            command.StockKeepingUnit = product.StockKeepingUnit;
+
+            command.Images = product.ProductImages.Select(x=> new ImageItem
+            {
+                    Id = x.Id,
+                    TempPath = x.Name,
+                    IsMain= x.IsMain,
+
+
+            }).ToArray();
+
+            ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
+            ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
+            return View(command);
         }
 
    
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,StockKeepingUnit,Price,ShortDescription,Description,BrandId,CategoryId,Id,CreatedDate,DeletedDate")] Product product)
+        public async Task<IActionResult> Edit(int id,ProductEditCommand command)
         {
-            if (id != product.Id)
+         
+           
+            if (id != command.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["BrandId"] = new SelectList(_context.Brands, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
-            return View(product);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Policy = "admin.products.delete")]
-        public async Task<IActionResult> DeleteConfirmed(ProductRemoveCommand command)
-        {
             var response = await mediator.Send(command);
 
             if (response == null)
             {
-                return NotFound();
+
+                ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", command.BrandId);
+                ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", command.CategoryId);
+                return View(command);
+
             }
 
             return RedirectToAction(nameof(Index));
         }
 
+
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.products.delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id && p.DeletedDate == null);
+
+            if (product == null)
+            {
+                return Json(new
+                {
+                    error = true,
+                    message = "Melumat movcud deyil"
+                });
+            }
+
+            product.DeletedDate = DateTime.UtcNow.AddHours(4);
+            product.DeletedByUserId = User.GetCurrentUserIdNew();
+            await db.SaveChangesAsync();
+
+            var response = await mediator.Send(new ProductsPagedQuery());
+
+            return PartialView("_ListBody", response);
+
+           
+        }
+
+
+
         private bool ProductExists(int id)
         {
-            return _context.Products.Any(e => e.Id == id);
+            return db.Products.Any(e => e.Id == id);
         }
     }
 }

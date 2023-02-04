@@ -27,6 +27,7 @@ namespace Cozy.Domain.Business.ProductModule
             public async Task<Product> Handle(ProductSingleQuery request, CancellationToken cancellationToken)
             {
                 var data = await db.Products
+                    .Include(p=>p.ProductImages)
                     .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedDate == null,cancellationToken);
 
                 return data;
