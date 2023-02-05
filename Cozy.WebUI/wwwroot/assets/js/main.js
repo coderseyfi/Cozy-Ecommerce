@@ -439,7 +439,8 @@ $(document).ready(function () {
         var qtyMin = parseInt($inputs.attr("min"));
         var qtyMax = parseInt($inputs.attr("max"));
     
-        $inputs.change(function () {
+        $inputs.change(
+            function () {
             var $this = $(this);
             var $minusBtn = $this.siblings(".qty-count--minus");
             var $addBtn = $this.siblings(".qty-count--add");
@@ -492,9 +493,6 @@ $(document).ready(function () {
         });
     })();
     
-   
-
-
 
 
     let modalPrs = document.querySelectorAll('.m-pr'),

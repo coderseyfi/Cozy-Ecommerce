@@ -48,7 +48,7 @@
 
                     @foreach (var item in Model)
                     {
-                        <div class="card rounded-3 mb-4">
+                        <div class="card basket-card rounded-3 mb-4">
                             <div class="card-body p-4">
                                 <div class="row d-flex justify-content-between align-items-center">
                                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -64,7 +64,7 @@
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                         <div class="qty-input">
                                             <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-                                            <input class="product-qty" type="number" name="[0].Quantity" min="0"  asp-for="@item.Quantity" />
+                                            <input class="product-qty" type="number" data-product-id="@item.ProductId" onchange="changeQuantity(event, this)" value="@item.Quantity" />
                                             <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@
                                         <h5 class="mb-0 mb-sm-3">Total: @((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
                                     </div>
                                     <div class="col-md-4 col-lg-3 col-xl-1">
-                                        <a href="#" class="text-danger">
+                                        <a onclick="removeFromBasket(this, '@item.Product.Name');return" class="text-danger" data-product-id="@item.ProductId">
                                             <i class="fas fa-trash fa-lg" aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -83,8 +83,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
-                            <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
+                            <a asp-action="index" class="btn p-add-cart p-add-cart2 basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
+                            <a href="#" class="btn p-add-cart p-add-cart2  basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
                         </div>
                     </div>
 
@@ -103,9 +103,74 @@
         justify-content:space-around;
 
     }
-    .card-body .p-add-cart2{
+
+    .card-body .basket-btn {
         width:300px;
     }
     </style>
 }
+
+@section addjs{
+    <script class="removeable" src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script class="removeable" src="~/libs/toastr.js/toastr.min.js"></script>
+    <script class="removeable" src="~/libs/toastr.js/toastr.customize.js"></script>
+    <script>
+
+        function removeFromBasket(element, name) {
+
+            swal(`Əminsiniz ki '${name}' silinsin?`, {
+                title: "Diqqət!",
+                text: `Əminsiniz ki '${name}' silinsin?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"],
+            })
+                .then((value) => {
+
+                    if (value == true) {
+                        const elementData = $(element).data();
+                        console.log(elementData);
+
+                        $.ajax({
+                            url: `@Url.Action("RemoveFromBasket","Shop")`,
+                            type: 'POST',
+                            data: elementData,
+                            contentType: 'application/x-www-form-urlencoded',
+                            success: function (response) {
+                                if (response.error == false) {
+                                    $(element).closest('div.card').remove();
+                                    toastr.success(response.message, 'Success');
+                                    return;
+                                }
+
+                                toastr.error(response.message, 'Error');
+                            },
+                            error: function (response, status, xhr) {
+                                console.log(response, status, xhr);
+                            }
+                        });
+                    }
+                });
+
+
+
+        }
+
+        function changeQuantity(event, element){
+
+            if(element.value < 1){
+                console.log("olmadiki", element.value)
+                return;
+            }
+
+             const elementData = $(element).data();
+             elementData.productQuantity = element.value;
+
+
+             console.log(elementData);
+        }
+
+    </script>
+ }
 

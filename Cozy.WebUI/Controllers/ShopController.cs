@@ -1,4 +1,5 @@
 ﻿using Cozy.Domain.AppCode.Extensions;
+using Cozy.Domain.Business.BasketModule;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
 using Cozy.Domain.Models.Entites;
@@ -119,8 +120,12 @@ namespace Cozy.WebUI.Controllers
         }
 
 
+
+        #region BasketRegion
+
+
+
         [Route("/basket")]
-        [Authorize(Policy = "shop.basket")]
         public async Task<IActionResult> Basket(ProductBasketQuery query)
         {
             var response = await mediator.Send(query);
@@ -129,9 +134,10 @@ namespace Cozy.WebUI.Controllers
         }
 
 
+
+
         [HttpPost]
         [Route("/basket")]
-        [Authorize(Policy ="shop.basket")]
         public async Task<IActionResult> Basket(AddToBasketCommand command)
         {
             var response = await mediator.Send(command);
@@ -139,6 +145,29 @@ namespace Cozy.WebUI.Controllers
             return Json(response);
         }
 
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveFromBasket(RemoveFromBasketCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            return Json(response);
+        }
+
+
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangeBasketQuantity(ChangeBasketQuantityCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            return Json(response);
+        }
+
+        #endregion
 
 
         [AllowAnonymous]

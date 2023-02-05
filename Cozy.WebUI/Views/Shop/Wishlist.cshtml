@@ -29,7 +29,7 @@
 <section class="h-100" style="background-color: #eee;">
     <div class="container h-100 py-5">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-10" id="dynamic-content">
+            <div class="col-10 p-0" id="dynamic-content">
 
                 <div class="d-flex justify-content-between align-items-center
                 mb-4">
@@ -45,17 +45,34 @@
 
                 <partial name="_WishlistBody"  model="Model"/>
 
-                <div class="card">
-                    <div class="card-body text-center">
-                        <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
-                    </div>
-                </div>
+              
 
+            </div>
+            <div class="card col-10 p-0">
+                <div class="card-body">
+                    <a asp-action="index" class="btn p-add-cart p-add-cart2 basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
+                    <a asp-action="basket" class="btn p-add-cart p-add-cart2 basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">View Cart</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
+
+@section addcss{
+    <style>
+        .card-body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+            .card-body .basket-btn {
+                width: 300px;
+            }
+           
+    </style>
+}
 
 
 @section addjs{
@@ -73,6 +90,7 @@
                 },
                 success: function (response) {
                     $('#dynamic-content').html(response);
+                  
                 },
                 error: function (response) {
                 }
@@ -91,7 +109,7 @@
                 contentType: 'application/x-www-form-urlencoded',
                 success: function (response) {
                     if (response.error == false) {
-                        //$(e.target).closest('tr').remove();
+                        //$(e.target).closest('div.card').remove();
                         toastr.success(response.message, 'Success');
                         return;
 
