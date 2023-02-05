@@ -54,6 +54,18 @@ namespace Cozy.WebUI
                 cfg.UseSqlServer(configuration.GetConnectionString("cString"));
             });
 
+            services.ConfigureApplicationCookie(cfg =>
+            {
+                cfg.Cookie.Name = "Cozy";
+                cfg.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                cfg.SlidingExpiration = true;
+            });
+
+            services.AddHttpClient("MyClient", client =>
+            {
+                client.Timeout = TimeSpan.FromSeconds(60);
+            });
+
 
             services.Configure<EmailServiceOptions>(cfg =>
             {
@@ -94,7 +106,7 @@ namespace Cozy.WebUI
 
                 cfg.Cookie.Name = "Cozy";
                 cfg.Cookie.HttpOnly = true;
-                cfg.ExpireTimeSpan = new TimeSpan(0, 15, 0);
+                cfg.ExpireTimeSpan = new TimeSpan(4, 15, 0);
             });
 
 
@@ -135,7 +147,7 @@ namespace Cozy.WebUI
             var asemblies = AppDomain.CurrentDomain.GetAssemblies().AsEnumerable().Where(a => a.FullName.StartsWith("Cozy."));
 
             services.AddMediatR(asemblies.ToArray());
-
+            
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<CozyRole> roleManager)
@@ -163,7 +175,7 @@ namespace Cozy.WebUI
 
             app.UseEndpoints(cfg =>
             {
-				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=account}/{action=signin}/{id?}");
+				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=dashboard}/{action=index}/{id?}");
 
 				cfg.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
             });

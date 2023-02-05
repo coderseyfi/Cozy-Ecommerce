@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Wishlist";
+}
+
+<!-- slider-area-start -->
+<div class="slider-area over-hidden">
+    <div class="single-page cart-height d-flex align-items-center height">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-center justify-content-center">
+                    <div class="page-title page-title1 pt-180 pb-70">
+                        <h2 class="text-capitalize text-dark mb-15">Wishlist Page</h2>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center bg-transparent">
+                                <li class="breadcrumb-item"><a class="secondary-color" href="index.html">Home</a></li>
+                                <li class="breadcrumb-item active text-capitalize text-dark" aria-current="page">Wishlist Page</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- slider-area-end -->
+
+
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10" id="dynamic-content">
+
+                <div class="d-flex justify-content-between align-items-center
+                mb-4">
+                    <!-- <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3> -->
+                    <div>
+                        <p class="mb-0">
+                            <span class="text-muted">Sort by:</span> <a href="#!" class="text-body">
+                                price <i class="fas fa-angle-down mt-1"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <partial name="_WishlistBody"  model="Model"/>
+
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+@section addjs{
+    <script>
+        function removeFromFav(productId, e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '',
+                type: 'post',
+                beforeSend: function (xhr) {
+                    const favorites = ($.cookie('favorites') || '').split(',').filter(item => item.length > 0);
+                    const refreshFavorites = favorites.filter(item => item != productId);
+                    $.cookie('favorites', refreshFavorites.toString(), { path: '/', expires: 7 });
+                },
+                success: function (response) {
+                    $('#dynamic-content').html(response);
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+        function addToBasket(e) {
+            e.preventDefault();
+
+            const elementData = $(e.currentTarget).data();
+
+            $.ajax({
+                url: `@Url.Action("Basket","Shop")`,
+                type: 'POST',
+                data: elementData,
+                contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    if (response.error == false) {
+                        //$(e.target).closest('tr').remove();
+                        toastr.success(response.message, 'Success');
+                        return;
+
+                    }
+                    console.log(response)
+
+                    toastr.error(response.message, 'Error');
+                },
+                error: function (response, status, xhr) {
+                    console.log(response, status, xhr);
+                }
+            });
+        }
+    </script>
+}
+

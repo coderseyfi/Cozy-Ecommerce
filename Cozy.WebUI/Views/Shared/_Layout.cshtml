@@ -226,7 +226,7 @@
             <span class="theme-color">Subtotal:</span>
             <span class="theme-color"> $440.00</span>
         </div>
-        <a href="cart.html" class="btn p-add-cart">view cart</a>
+        <a asp-controller="shop" asp-action="basket" class="btn p-add-cart">view cart</a>
         <a href="checkout.html" class="btn p-add-cart">checkout</a>
     </div>
     <!-- shopping-details end -->
@@ -465,6 +465,12 @@
     <script src="~/libs/toastr.js/toastr.min.js"></script>
     <script src="~/libs/toastr.js/toastr.customize.js"></script>
 
+
+    <!-- Jquery-cookie -->
+    <script src="~/libs/jquery.cookie/jquery.cookie.js"></script>
+
+
+    <!-- main js -->
     <script src="~/assets/js/main.js"></script>
      
      <style>

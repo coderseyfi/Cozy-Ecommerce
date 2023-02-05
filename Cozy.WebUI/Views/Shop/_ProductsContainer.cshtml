@@ -27,7 +27,7 @@
                         </a>
                     </li>
                     <li>
-                        <a asp-action="index">
+                        <a href="javascript:addToFavorites(@item.Id)">
                             <i class="fa-solid fa-heart"></i>
                         </a>
                     </li>
@@ -39,9 +39,30 @@
                 </a>
             </h5>
             <div class="product-price pl-20">
-                <span class="black-color"><ins>$799.00</ins></span>
-                <span class="old-price"><del>$829.00</del></span>
+                <span class="black-color" data-currency-usd="@(item.Price-10)">
+                    <ins>@(item.Price - 10)</ins>
+                </span>
+                <span class="old-price" data-currency-usd="@item.Price">
+                    <del>@item.Price</del>
+                </span>
             </div>
         </div>
     </div>
 }
+
+<script>
+    function addToFavorites(productId) {
+        const favorites = ($.cookie('favorites') || '').split(',').filter(item => item.length > 0);
+
+        if (favorites.filter(item => item == productId).length == 0) {
+            favorites.push(productId);
+
+            $.cookie('favorites', favorites.toString(),{ path: '/' });
+        }
+
+         console.log($.cookie('favorites'))
+
+
+
+    }
+</script>

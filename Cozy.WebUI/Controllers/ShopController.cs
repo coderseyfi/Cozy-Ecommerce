@@ -1,10 +1,16 @@
-﻿using Cozy.Domain.Models.DataContexts;
+﻿using Cozy.Domain.AppCode.Extensions;
+using Cozy.Domain.Business.ProductModule;
+using Cozy.Domain.Models.DataContexts;
+using Cozy.Domain.Models.Entites;
 using Cozy.Domain.Models.FormModels;
 using Cozy.Domain.Models.ViewModels.ProductViewModel;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cozy.WebUI.Controllers
@@ -14,10 +20,12 @@ namespace Cozy.WebUI.Controllers
     public class ShopController : Controller
     {
         private readonly CozyDbContext db;
+        private readonly IMediator mediator;
 
-        public ShopController(CozyDbContext db)
+        public ShopController(CozyDbContext db, IMediator mediator)
         {
             this.db = db;
+            this.mediator = mediator;
         }
 
         public async Task<IActionResult> Index()
@@ -48,9 +56,6 @@ namespace Cozy.WebUI.Controllers
                 Materials= materials,
                 Products = products
             };
-            
-           
-
 
             return View(vm);
         }
@@ -77,19 +82,9 @@ namespace Cozy.WebUI.Controllers
                 query = query.Where(p => model.Colors.Contains(p.BrandId));
             }
 
-            //if (model?.Categories?.Count() > 0)
-            //{
-            //    query = query.Where(p => model.Categories.Contains(p.CategoryId));
-            //}
-
-            //if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
-            //{
-            //    query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
-            //}
 
             return PartialView("_ProductsContainer", query.ToList());
         }
-
 
 
         public async Task<IActionResult> Details(int id)
@@ -107,5 +102,52 @@ namespace Cozy.WebUI.Controllers
 
             return View(product);
         }
+
+
+        [AllowAnonymous]
+        [Route("/wishlist")]
+        public async Task<IActionResult> Wishlist(WishlistQuery query)
+        {
+            var favs = await mediator.Send(query);
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_WishlistBody", favs);
+            }
+
+            return View(favs);
+        }
+
+
+        [Route("/basket")]
+        [Authorize(Policy = "shop.basket")]
+        public async Task<IActionResult> Basket(ProductBasketQuery query)
+        {
+            var response = await mediator.Send(query);
+
+            return View(response);
+        }
+
+
+        [HttpPost]
+        [Route("/basket")]
+        [Authorize(Policy ="shop.basket")]
+        public async Task<IActionResult> Basket(AddToBasketCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            return Json(response);
+        }
+
+
+
+        [AllowAnonymous]
+        [Route("/checkout")]
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
+
     }
 }

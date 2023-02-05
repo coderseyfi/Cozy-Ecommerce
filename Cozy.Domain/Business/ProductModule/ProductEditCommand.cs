@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.IO;
 using System;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Cozy.Domain.Business.ProductModule
 {
@@ -36,18 +38,22 @@ namespace Cozy.Domain.Business.ProductModule
         {
             private readonly CozyDbContext db;
             private readonly IHostEnvironment env;
+            private readonly IActionContextAccessor ctx;
 
-            public ProductEditCommandHandler(CozyDbContext db, IHostEnvironment env)
+            public ProductEditCommandHandler(CozyDbContext db, IHostEnvironment env, IActionContextAccessor ctx)
             {
                 this.db = db;
                 this.env = env;
+                this.ctx = ctx;
             }
 
             public async Task<Product> Handle(ProductEditCommand request, CancellationToken cancellationToken)
             {
                 try
                 {
-                    var model = await db.Products.FirstOrDefaultAsync(p =>
+                    var model = await db.Products
+                     .Include(p => p.ProductImages.Where(i => i.DeletedByUserId == null))   
+                     .FirstOrDefaultAsync(p =>
                      p.Id == request.Id
                      && p.DeletedDate == null
                     , cancellationToken);
@@ -66,24 +72,24 @@ namespace Cozy.Domain.Business.ProductModule
                     model.CategoryId = request.CategoryId;
 
                     /*
-                     sekil deyisdirmek istese
-                    elave sekil artirsa
-                    var olan sekli silibse
+                    1. sekil deyisdirmek istemirse
+                    2. elave sekil artirsa + 
+                    3 var olan sekli silibse
                      */
 
-                    if (request.Images != null && request.Images.Where(i => i.File != null).Count() > 0)
+                    if (request.Images != null && request.Images.Count() > 0)
                     {
-                        model.ProductImages = new List<ProductImage>();
 
 
-
-
-                        foreach (var item in request.Images.Where(i => i.File != null))
+                        #region 2.Teze fayllar var
+                        foreach (var imageItem in request.Images.Where(i => i.File != null && i.Id == null))
                         {
-                            var image = new ProductImage();
-                            image.IsMain = item.IsMain;
 
-                            string extension = Path.GetExtension(item.File.FileName);//.jpg
+                            var image = new ProductImage();
+                            image.IsMain = imageItem.IsMain;
+                            image.ProductId = model.Id;
+
+                            string extension = Path.GetExtension(imageItem.File.FileName);//.jpg
 
                             image.Name = $"product-{Guid.NewGuid().ToString().ToLower()}{extension}";
 
@@ -91,14 +97,44 @@ namespace Cozy.Domain.Business.ProductModule
 
                             using (var fs = new FileStream(fullName, FileMode.Create, FileAccess.Write))
                             {
-                                await item.File.CopyToAsync(fs, cancellationToken);
+                                await imageItem.File.CopyToAsync(fs, cancellationToken);
                             }
 
                             model.ProductImages.Add(image);
                         }
+                        #endregion
+
+                        #region 3.Movcud sekillerden silinibse
+                        foreach (var item in request.Images.Where(i => i.Id > 0 && i.TempPath == null))
+                        {
+                            var productImage = await db.ProductImages.FirstOrDefaultAsync(pi => pi.Id == item.Id && pi.ProductId == model.Id && pi.DeletedByUserId == null);
+
+                            if (productImage != null)
+                            {
+                                productImage.IsMain = false;
+                                productImage.DeletedDate = DateTime.UtcNow.AddHours(4);
+                                productImage.DeletedByUserId = ctx.GetCurrentUserId();
+                            }
+                        }
+                        #endregion
+
+
+                        #region 1.Movcud deyishdirmek istemese
+
+                        foreach (var item in model.ProductImages)
+                        {
+                            var fromForm = request.Images.FirstOrDefault(i => i.Id == item.Id);
+
+                            if (fromForm != null)
+                            {
+                                item.IsMain = fromForm.IsMain;
+                            }
+
+                          
+                        }
+                        #endregion
                     }
 
-                    await db.Products.AddAsync(model, cancellationToken);
                     await db.SaveChangesAsync(cancellationToken);
 
 

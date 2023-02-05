@@ -48,7 +48,7 @@
                                 @foreach (var item in Model.ProductImages)
                                 {
                                     <a class="nav-link single-pr @(item.IsMain ? "nav-link-active": "")">
-                                        <img class="product-thumbnail" src="~/assets/imgs/@item.Name" alt="">
+                                        <img class="product-thumbnail" src="~/uploads/images/@item.Name" alt="">
                                     </a>
                                 }
                             </div>
@@ -57,7 +57,7 @@
                                 {
                                     <div class="tab-pane arm  @(item.IsMain ? "active": "")">
                                     <div class="product-img">
-                                            <img class="height100" src="~/assets/imgs/@item.Name" alt="">
+                                            <img class="height100" src="~/uploads/images/@item.Name" alt="">
                                     </div>
                                   </div>
                                 }
@@ -144,20 +144,7 @@
                         <div class="describe-text">
                             <h5 class="desc-title pb-1">Description:</h5>
                             <p class="mb-0">
-                                Designed by Hans J. Wegner in 1949 as one of
-                                the first models created especially for Carl Hansen &amp;
-                                Son, and produced since 1950. The last of a series of chairs
-                                Wegner designed based on inspiration from antique Chinese
-                                armchairs. The gently rounded top together with the back and
-                                seat offers a variety of comfortable seating positions,
-                                ideal for both long visits to the dining table and relaxed
-                                lounging.
-                            </p>
-                            <p>
-                                The top that goes with everything. Sleek and simple, this
-                                sleeveless shell has a relaxed fit and classic round
-                                neckline. Plus—it’s made of our eco-conscious Clean Silk,
-                                for more beauty and less waste. Here’s how.
+                             @Html.Raw(Model.Description)
                             </p>
                         </div>
                         <div class="describe-product-img mt-35 mb-35">

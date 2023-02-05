@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Basket>
+@{
+    ViewData["Title"] = "Basket";
+}
+
+<main>
+
+    <!-- slider-area-start -->
+    <div class="slider-area over-hidden">
+        <div class="single-page cart-height d-flex align-items-center height">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex align-items-center justify-content-center">
+                        <div class="page-title page-title1 pt-180 pb-70">
+                            <h2 class="text-capitalize text-dark mb-15">Shopping Cart</h2>
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb justify-content-center bg-transparent">
+                                    <li class="breadcrumb-item">
+                                        <a class="secondary-color"
+                                           href="index.html">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active text-capitalize text-dark" aria-current="page">Cart</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- slider-area-end -->
+
+
+    <section class="h-100" style="background-color: #eee;">
+        <div class="container h-100 py-5">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-10">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3> 
+                        <div>
+                            <p class="mb-0">
+                                <span class="text-muted">Sort by:</span> <a href="#!" class="text-body">
+                                    price <i class="fas fa-angle-down mt-1"></i>
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+
+                    @foreach (var item in Model)
+                    {
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img src="~/uploads/images/@item.Product.ProductImages.FirstOrDefault()?.Name" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2">
+                                        <p class="lead fw-normal mb-2">@item.Product.Name</p>
+                                        <p><span class="text-muted">Color: </span>@item.Product.Name</p>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-1">
+                                        <h5 class="mb-0 mb-sm-3">@item.Product.Price.ToString("0.00₼")</h5>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        <div class="qty-input">
+                                            <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
+                                            <input class="product-qty" type="number" name="[0].Quantity" min="0"  asp-for="@item.Quantity" />
+                                            <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2">
+                                        <h5 class="mb-0 mb-sm-3">Total: @((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
+                                    </div>
+                                    <div class="col-md-4 col-lg-3 col-xl-1">
+                                        <a href="#" class="text-danger">
+                                            <i class="fas fa-trash fa-lg" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="card">
+                        <div class="card-body">
+                            <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
+                            <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+@section addcss{
+    <style>
+    .card-body{
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:space-around;
+
+    }
+    .card-body .p-add-cart2{
+        width:300px;
+    }
+    </style>
+}
+

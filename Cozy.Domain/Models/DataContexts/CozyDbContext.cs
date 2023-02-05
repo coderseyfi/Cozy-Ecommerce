@@ -29,7 +29,15 @@ namespace Cozy.Domain.Models.DataContexts
 
         public DbSet<Product> Products { get; set; }
 
+        public DbSet<ProductColor> Colors { get; set; }
+
+        public DbSet<ProductMaterial> Materials { get; set; }
+
         public DbSet<ProductImage> ProductImages { get; set; }
+
+        public DbSet<ProductCatalogItem> ProductCatalogItems { get; set; }
+
+        public DbSet<Basket> Basket { get; set; }
 
         public DbSet<BlogPost> BlogPosts { get; set; }
 
@@ -38,9 +46,8 @@ namespace Cozy.Domain.Models.DataContexts
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<BlogPostTagItem> BlogPostTagCloud { get; set; }
-        public DbSet<ProductColor> Colors { get; set; }
-        public DbSet<ProductMaterial> Materials { get; set; }
-        public DbSet<ProductCatalogItem> ProductCatalogItems { get; set; }
+    
+      
 
 
 
