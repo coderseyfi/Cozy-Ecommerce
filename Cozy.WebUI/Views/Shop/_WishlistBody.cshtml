@@ -22,16 +22,12 @@
                     <p><span class="text-muted">Size: </span>M <span class="text-muted">Color: </span>Grey</p>
                 </div>
                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <div class="qty-input">
-                        <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-                        <input class="product-qty" type="number" name="product-qty" min="0" value="1">
-                        <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
-                    </div>
+                    <span>In Stock</span>
                 </div>
-                <div class="col-md-3 col-lg-2 col-xl-1">
+                <div class="col-md-3 col-lg-2 col-xl-2">
                     <h5 class="mb-0 mb-sm-3">$@item.Price</h5>
                 </div>
-                <div class="col-md-4 col-lg-3 col-xl-2">
+                <div class="col-md-4 col-lg-3 col-xl-3">
                     <a onclick="addToBasket(event)" data-product-id="@item.Id" class="btn p-add-cart p-add-cart2 text-uppercase add-to-cart">Add to Basket</a>
                 </div>
                 <div class="col-md-4 col-lg-3 col-xl-1">

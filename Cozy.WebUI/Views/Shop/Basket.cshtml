@@ -58,18 +58,23 @@
                                         <p class="lead fw-normal mb-2">@item.Product.Name</p>
                                         <p><span class="text-muted">Color: </span>@item.Product.Name</p>
                                     </div>
-                                    <div class="col-md-3 col-lg-2 col-xl-1">
-                                        <h5 class="mb-0 mb-sm-3">@item.Product.Price.ToString("0.00₼")</h5>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 bj">
+                                        <h5 class="mb-0 mb-sm-3 amount">Price:@item.Product.Price.ToString("0.00₼")</h5>
                                     </div>
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                        <div class="qty-input">
-                                            <button class="qty-count qty-count--minus" data-action="minus" type="button">-</button>
-                                            <input class="product-qty" type="number" data-product-id="@item.ProductId" onchange="changeQuantity(event, this)" value="@item.Quantity" />
-                                            <button class="qty-count qty-count--add" data-action="add" type="button">+</button>
+                                        <div class="qnt-input">
+                                            <input 
+                                                type="number" 
+                                                data-product-id="@item.ProductId" 
+                                                onchange="changeQuantity(event, this)" 
+                                                value="@item.Quantity" 
+                                                name="select1"  
+                                                class="quantity-input-arrow quantity-input-2 basket-quantity border-gray"
+                                                min="1" />
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-lg-2 col-xl-2">
-                                        <h5 class="mb-0 mb-sm-3">Total: @((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 bj">
+                                        <h5 class="mb-0 mb-sm-3 product-subtotal-@item.ProductId">Total:@((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
                                     </div>
                                     <div class="col-md-4 col-lg-3 col-xl-1">
                                         <a onclick="removeFromBasket(this, '@item.Product.Name');return" class="text-danger" data-product-id="@item.ProductId">
@@ -80,6 +85,21 @@
                             </div>
                         </div>
                     }
+
+                    <div class="card rounded-3 mb-4">
+                        <div class="total-price-area mt-60 text-center">
+                            <h2 class="font600">Cart totals</h2>
+                            <ul class="pt-15 pb-25">
+                                <li class="d-flex justify-content-between align-items-center border-gray mb-1 pl-25 pr-25 pt-15 pb-15">
+                                    <span>Subtotal</span><span>$480</span>
+                                </li>
+                                <li class="d-flex justify-content-between align-items-center border-gray pl-25 pr-25 pt-15 pb-15">
+                                    <span>Totat: @Model.Sum(m=>m.Quantity * m.Product.Price).ToString("0.00₼")</span>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
 
                     <div class="card">
                         <div class="card-body">
@@ -107,6 +127,20 @@
     .card-body .basket-btn {
         width:300px;
     }
+
+    .basket-quantity{
+            width: 110px;
+            height: 43px;
+            padding: 0 20px;
+            background-color:lightgray;
+            border:none;
+            border-radius: 8px;
+            outline:none;
+    }
+   /* .basket-quantity:hover,
+    .basket-quantity:focus{
+                outline: 2px solid lightslategray;
+    }*/
     </style>
 }
 
@@ -154,21 +188,60 @@
                 });
 
 
-
         }
 
+
         function changeQuantity(event, element){
+
+            if ($.processId != undefined){
+                clearTimeout($.processId);
+                $.processId = undefined;
+            }
 
             if(element.value < 1){
                 console.log("olmadiki", element.value)
                 return;
             }
 
-             const elementData = $(element).data();
-             elementData.productQuantity = element.value;
+            $.processId = setTimeout(function(){
 
+                const elementData = $(element).data();
+                elementData.Quantity = element.value;
 
-             console.log(elementData);
+                $.ajax({
+                    url: `@Url.Action("ChangeBasketQuantity","Shop")`,
+                    type: 'POST',
+                    data: elementData,
+                    contentType: 'application/x-www-form-urlencoded',
+                    success: function (response) {
+                        console.log(response)
+                        if (response.error == false) {
+
+                            if(response.value?.total == null){
+                                $(`.product-subtotal-${response.value.id}`).text(``)
+                            }else{
+                                $(`.product-subtotal-${response.value.id}`).text(`Total:${response.value.total}₼`)
+                            }
+
+                            if (response.value?.price == null) {
+                                $('.amount').text(``)
+                            } else {
+                                $('.amount').text(`Price:${response.value.price}₼`)
+                            }
+                            
+                            toastr.success(response.message, 'Success');
+                            return;
+                        }
+
+                        toastr.error(response.message, 'Error');
+                    },
+                    error: function (response, status, xhr) {
+                        console.log(response, status, xhr);
+                    }
+                });
+
+            },1500);
+
         }
 
     </script>

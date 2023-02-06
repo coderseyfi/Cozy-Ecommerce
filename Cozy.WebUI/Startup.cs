@@ -54,17 +54,6 @@ namespace Cozy.WebUI
                 cfg.UseSqlServer(configuration.GetConnectionString("cString"));
             });
 
-            services.ConfigureApplicationCookie(cfg =>
-            {
-                cfg.Cookie.Name = "Cozy";
-                cfg.ExpireTimeSpan = TimeSpan.FromMinutes(60);
-                cfg.SlidingExpiration = true;
-            });
-
-            services.AddHttpClient("MyClient", client =>
-            {
-                client.Timeout = TimeSpan.FromSeconds(60);
-            });
 
 
             services.Configure<EmailServiceOptions>(cfg =>
