@@ -59,6 +59,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         {
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name");
             ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name");
+            ViewData["CatalogId"] = new SelectList(db.ProductCatalogItems, "Id", "Name");
+
             return View();
         }
 
@@ -75,6 +77,7 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
 
                 ViewBag.BrandId = new SelectList(db.Brands, "Id", "Name", command.BrandId);
                 ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", command.CategoryId);
+                ViewData["CatalogId"] = new SelectList(db.ProductCatalogItems, "Id", "Name");
                 return View(command);
             }
 

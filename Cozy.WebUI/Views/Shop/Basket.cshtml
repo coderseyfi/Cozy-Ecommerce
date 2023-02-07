@@ -90,11 +90,11 @@
                         <div class="total-price-area mt-60 text-center">
                             <h2 class="font600">Cart totals</h2>
                             <ul class="pt-15 pb-25">
-                                <li class="d-flex justify-content-between align-items-center border-gray mb-1 pl-25 pr-25 pt-15 pb-15">
+                                @*<li class="d-flex justify-content-between align-items-center border-gray mb-1 pl-25 pr-25 pt-15 pb-15">
                                     <span>Subtotal</span><span>$480</span>
-                                </li>
+                                </li>*@
                                 <li class="d-flex justify-content-between align-items-center border-gray pl-25 pr-25 pt-15 pb-15">
-                                    <span>Totat: @Model.Sum(m=>m.Quantity * m.Product.Price).ToString("0.00₼")</span>
+                                    <span class="total-sum">Total:</span> <span id="summary">@Model.Sum(m=>m.Quantity * m.Product.Price).ToString("0.00₼")</span>
                                 </li>
                             </ul>
 
@@ -103,8 +103,8 @@
 
                     <div class="card">
                         <div class="card-body">
-                            <a asp-action="index" class="btn p-add-cart p-add-cart2 basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
-                            <a href="#" class="btn p-add-cart p-add-cart2  basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
+                            <a asp-controller="shop" asp-action="index" class="btn p-add-cart p-add-cart2 basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Continue Shopping</a>
+                            <a asp-controller="shop" asp-action="checkout" class="btn p-add-cart p-add-cart2  basket-btn pt-15 pb-15 mb-15 text-uppercase mt-15 px-5">Proceed to checkout</a>
                         </div>
                     </div>
 
@@ -141,6 +141,16 @@
     .basket-quantity:focus{
                 outline: 2px solid lightslategray;
     }*/
+
+    .total-sum{
+        font-size:30px;
+        font-weight:500;
+    }
+    #summary{
+            font-size: 21px;
+            color: #5c636a;
+            font-weight: 600;
+    }
     </style>
 }
 
@@ -217,6 +227,8 @@
                         console.log(response)
                         if (response.error == false) {
 
+                            $("#summary").text(`${response.value.summary},00₼`);
+
                             if(response.value?.total == null){
                                 $(`.product-subtotal-${response.value.id}`).text(``)
                             }else{
@@ -240,7 +252,7 @@
                     }
                 });
 
-            },1500);
+            },700);
 
         }
 

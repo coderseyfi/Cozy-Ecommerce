@@ -17,7 +17,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb justify-content-center bg-transparent">
                                     <li class="breadcrumb-item">
-                                        <a class="secondary-color" href="index.html">Home</a>
+                                        <a class="secondary-color" asp-controller="home" asp-action="index">Home</a>
                                     </li>
                                     <li class="breadcrumb-item active text-capitalize text-white"
                                         aria-current="page">
@@ -499,11 +499,7 @@
                    url: '@Url.Action("Filter")',
                    type: 'POST',
                    data: filterObj,
-                   //contentType: 'application/json',
                    dataType: 'html',
-                   //data: filterObj,
-                   //dataType: 'html',
-                   //contentType: 'application/json',
                    contentType: 'application/x-www-form-urlencoded',
                    beforeSend: function(){
                         $("div.list-products").html("<img src='/assets/imgs/pre-loader.gif'/>");

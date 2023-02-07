@@ -9,7 +9,6 @@ namespace Cozy.Domain.Models.Entites
         public string Name { get; set; }
         public string Description { get; set; }
         public int? CreatedByUserId { get; set; }
-        public int? DeletedByUserId { get; set; }
         public virtual ICollection<ProductCatalogItem> ProductCatalog { get; set; }
     }
 }

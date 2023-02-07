@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 namespace Cozy.WebUI.Controllers
 {
 
-    [AllowAnonymous]
+    
     public class ShopController : Controller
     {
         private readonly CozyDbContext db;
@@ -29,6 +29,7 @@ namespace Cozy.WebUI.Controllers
             this.mediator = mediator;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             var brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
@@ -64,6 +65,7 @@ namespace Cozy.WebUI.Controllers
 
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult Filter(ShopFilterFormModel model)
         {
             var query = db.Products
@@ -88,6 +90,7 @@ namespace Cozy.WebUI.Controllers
         }
 
 
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
             
@@ -148,7 +151,6 @@ namespace Cozy.WebUI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> RemoveFromBasket(RemoveFromBasketCommand command)
         {
             var response = await mediator.Send(command);
@@ -159,7 +161,6 @@ namespace Cozy.WebUI.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> ChangeBasketQuantity(ChangeBasketQuantityCommand command)
         {
             var response = await mediator.Send(command);
@@ -170,7 +171,6 @@ namespace Cozy.WebUI.Controllers
         #endregion
 
 
-        [AllowAnonymous]
         [Route("/checkout")]
         public IActionResult Checkout()
         {

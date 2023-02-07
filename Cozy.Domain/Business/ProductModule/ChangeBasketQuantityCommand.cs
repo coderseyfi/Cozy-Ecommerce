@@ -60,9 +60,8 @@ namespace Cozy.Domain.Business.BasketModule
                     {
                         Name = product.Name,
                         Price = product.Price,
-                        Total = basketItem.Quantity * product.Price
-                        //Total = (basketItem.Quantity * product.Price).ToString("0.00"),
-                        //Summary = await db.Basket.Where(b => b.UserId == userId).Include(b => b.Product).SumAsync(b => b.Quantity * b.Product.Price, cancellationToken),
+                        Summary = await db.Basket.Where(b => b.UserId == userId).Include(b => b.Product).SumAsync(b => b.Quantity * b.Product.Price, cancellationToken),
+                        Total = (basketItem.Quantity * product.Price).ToString("0.00"),
                         //Quantity = (await db.Basket.FirstOrDefaultAsync(b => b.UserId == userId && b.ProductId == product.Id)).Quantity
                     };
 
@@ -88,9 +87,8 @@ namespace Cozy.Domain.Business.BasketModule
                     Name = product2.Name,
                     Id = product2.Id,
                     Price = product2.Price,
-                    Total = basketItem.Quantity * product2.Price
-                    //Total = (basketItem.Quantity * product2.Price).ToString("0.00"),
-                    //Summary = await db.Basket.Where(b => b.UserId == userId).Include(b => b.Product).SumAsync(b => b.Quantity * b.Product.Price, cancellationToken),
+                    Total = (basketItem.Quantity * product2.Price).ToString("0.00"),
+                    Summary = await db.Basket.Where(b => b.UserId == userId).Include(b => b.Product).SumAsync(b => b.Quantity * b.Product.Price, cancellationToken),
                     //Quantity = (db.Basket.FirstOrDefault(b => b.UserId == userId && b.ProductId == product2.Id)).Quantity
                 };
 

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<Basket>
+
+@{
+    var info = Model.GroupBy(g => g.UserId)
+                                    .Select(g => new
+                                    {
+                                        TotalSum = g.Sum(m => m.Quantity * m.Product.Price),
+                                        TotalCount = g.Count()
+                                    })
+                                    .FirstOrDefault();
+}
+
+<div class="shopping-details open-shopping-info">
+    <div class="close-icon-shop">
+        <a href="javascript:void(0);">
+            <span class="icon-x fa fa-xmark"></span>
+        </a>
+    </div>
+    @if (info?.TotalCount > 0)
+    {
+        <div class="shop-cart-content">
+
+            @foreach (var item in Model)
+            {
+
+                <ul class="list d-flex">
+                    <li class="list__img">
+                        <a class="list__img__link d-block" asp-controller="shop" asp-action="details" asp-route-id="@item.ProductId">
+                            <img src="~/uploads/images/@item.Product.ProductImages.FirstOrDefault()?.Name" alt="basket-img" />
+                        </a>
+                    </li>
+                    <li class="item-info">
+                        <ul class="d-flex">
+                            <li>
+                                <h6 class="single-product-name">
+                                    <a asp-controller="shop" asp-action="details" asp-route-id="@item.ProductId">@item.Product.Name</a>
+                                </h6>
+                                <span>@item.Quantity x @item.Product.Price</span>
+                            </li>
+                            <li class="s-remove">
+                                <a class="d-inline-block" onclick="removeFromBasket(this,'@item.Product.Name');return;" data-product-id="@item.ProductId">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            }
+
+
+        </div>
+    }
+    <span>Showing all <span>@Model.Count()</span> result </span>
+
+    <div class="subtotal">
+        <span class="theme-color">Total:</span>
+        <span class="theme-color">@info?.TotalSum.ToString("0.00₼")</span>
+    </div>
+    <a asp-controller="shop" asp-action="basket" class="btn p-add-cart">view cart</a>
+    <a asp-controller="shop" asp-action="checkout" class="btn p-add-cart">checkout</a>
+
+
+</div>

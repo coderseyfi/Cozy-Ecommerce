@@ -170,66 +170,9 @@
     <div class="body-overlay"></div>
 
     <!-- shopping-details start -->
-    <div class="shopping-details open-shopping-info">
-        <div class="close-icon-shop">
-            <a href="javascript:void(0);">
-                <span class="icon-x fa fa-xmark"></span>
-            </a>
-        </div>
-        <div class="shop-cart-content">
-            <ul class="list d-flex">
-                <li class="list__img">
-                    <a class="list__img__link d-block" href="single-product.html">
-                        <img src="~/assets/imgs/home-product5.jpg" alt="">
-                    </a>
-                </li>
-                <li class="item-info">
-                    <ul class="d-flex">
-                        <li>
-                            <h6 class="single-product-name">
-                                <a href="single-product.html">Bottle Grinder with Steel Lid</a>
-                            </h6>
-                            <span>1<span>x</span>$320.00</span>
-                        </li>
-                        <li class="s-remove">
-                            <span class="d-inline-block">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="list d-flex">
-                <li class="list__img">
-                    <a class="list__img__link d-block" href="single-product.html">
-                        <img src="~/assets/imgs/home-product2.jpg" alt="">
-                    </a>
-                </li>
-                <li class="item-info">
-                    <ul class="d-flex">
-                        <li>
-                            <h6 class="single-product-name">
-                                <a href="single-product.html">Bottle Grinder with Steel Lid</a>
-                            </h6>
-                            <span>1<span>x</span>$320.00</span>
-                        </li>
-                        <li class="s-remove">
-                            <span class="d-inline-block">
-                                <i class="far fa-trash-alt"></i>
-                            </span>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="subtotal">
-            <span class="theme-color">Subtotal:</span>
-            <span class="theme-color"> $440.00</span>
-        </div>
-        <a asp-controller="shop" asp-action="basket" class="btn p-add-cart">view cart</a>
-        <a href="checkout.html" class="btn p-add-cart">checkout</a>
-    </div>
+    @await Component.InvokeAsync("BasketInfo")
     <!-- shopping-details end -->
+
     @RenderBody()
 
     <div class="modal-back"></div>
@@ -416,7 +359,7 @@
         </div>
     </div>
 
-     <div class="modal fade" id="modalLoginForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">

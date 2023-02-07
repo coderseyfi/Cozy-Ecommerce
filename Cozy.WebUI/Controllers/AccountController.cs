@@ -118,6 +118,7 @@ namespace Cozy.WebUI.Controllers
 			{
 				return Redirect(callbackUrl);
 			}
+
 			return RedirectToAction("Index", "Home");
 
 		end:

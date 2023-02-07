@@ -26,6 +26,7 @@ namespace Cozy.Domain.Business.ProductModule
                     .Include(p=>p.ProductImages)
                     .Include(p=>p.Brand)
                     .Include(p=>p.Category)
+                
                     .Where(m => m.DeletedDate == null)
                     .OrderByDescending(p=>p.Id)
                     .AsQueryable();
