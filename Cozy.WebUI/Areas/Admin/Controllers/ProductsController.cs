@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Cozy.Domain.AppCode.Extensions;
+using Cozy.Domain.Business.ProductModule;
+using Cozy.Domain.Models.DataContexts;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Cozy.Domain.Models.DataContexts;
-using Cozy.Domain.Models.Entites;
-using MediatR;
-using Cozy.Domain.Business.ProductModule;
-using Cozy.Domain.Business.BrandModule;
-using Microsoft.AspNetCore.Authorization;
-using Cozy.Domain.AppCode.Extensions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Cozy.WebUI.Areas.Admin.Controllers
@@ -28,6 +25,7 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             this.mediator = mediator;
         }
 
+        [Authorize(Policy = "admin.products.index")]
         public async Task<IActionResult> Index(ProductsPagedQuery query)
         {
             var response = await mediator.Send(query);
@@ -35,31 +33,22 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             return View(response);
         }
 
-        public async Task<IActionResult> Details(int? id)
+
+        [Authorize(Policy = "admin.products.details")]
+        public async Task<IActionResult> Details(ProductSingleQuery query)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var response = await mediator.Send(query);
 
-            var product = await db.Products
-                .Include(p => p.Brand)
-                .Include(p => p.Category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
+            return View(response);
         }
 
       
         public IActionResult Create()
         {
-            ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name");
-            ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name");
-            ViewData["CatalogId"] = new SelectList(db.ProductCatalogItems, "Id", "Name");
+            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Name");
+            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
+            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
+            ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
 
             return View();
         }
@@ -67,24 +56,35 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.products.create")]
         public async Task<IActionResult> Create(ProductCreateCommand command)
         {
-
-            var response = await mediator.Send(command);
-
-            if (response == null)
+            if (command.Images == null)
             {
+                ModelState.AddModelError("ImagePath", "Blog image should not be left empty");
+            }
+
+            if (ModelState.IsValid)
+            {
+                var response = await mediator.Send(command);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
 
                 ViewBag.BrandId = new SelectList(db.Brands, "Id", "Name", command.BrandId);
                 ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name", command.CategoryId);
-                ViewData["CatalogId"] = new SelectList(db.ProductCatalogItems, "Id", "Name");
-                return View(command);
-            }
+                ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
+                ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
 
-            return RedirectToAction(nameof(Index));
+
+                return View(command);
+
             
         }
 
+        [Authorize(Policy = "admin.products.edit")]
         public async Task<IActionResult> Edit(ProductSingleQuery query)
         {
             var product = await mediator.Send(query);
@@ -114,12 +114,15 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
 
             ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
             ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
+            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
+            ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
             return View(command);
         }
 
    
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "admin.products.edit")]
         public async Task<IActionResult> Edit(int id,ProductEditCommand command)
         {
          
@@ -136,6 +139,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
 
                 ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", command.BrandId);
                 ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", command.CategoryId);
+                ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
+                ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
                 return View(command);
 
             }

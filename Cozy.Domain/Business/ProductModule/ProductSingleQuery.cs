@@ -28,6 +28,8 @@ namespace Cozy.Domain.Business.ProductModule
             {
                 var data = await db.Products
                     .Include(p=>p.ProductImages.Where(i=>i.DeletedDate == null))
+                    .Include(p=>p.Brand)
+                    .Include(p=>p.Category)
                     .FirstOrDefaultAsync(m => m.Id == request.Id && m.DeletedDate == null,cancellationToken);
 
                 return data;

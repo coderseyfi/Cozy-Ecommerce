@@ -133,11 +133,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
 
                 if (response == null)
                 {
-                    return NotFound();
-                }
-
-                if (response.Error == false)
-                {
+                    ViewBag.CategoryId = new SelectList(db.Categories.Where(c => c.DeletedDate == null).ToList(), "Id", "Name", command.CategoryId);
+                    ViewBag.Tags = new SelectList(db.Tags.Where(p => p.DeletedDate == null).ToList(), "Id", "Text");
                     return RedirectToAction(nameof(Index));
                 }
             }

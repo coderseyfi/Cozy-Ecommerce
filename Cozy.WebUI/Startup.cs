@@ -164,7 +164,7 @@ namespace Cozy.WebUI
 
             app.UseEndpoints(cfg =>
             {
-				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=dashboard}/{action=index}/{id?}");
+				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=account}/{action=signin}/{id?}");
 
 				cfg.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
             });

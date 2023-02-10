@@ -9,24 +9,46 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cozy.Domain.Business.ProductModule
 {
     public class ProductCreateCommand : IRequest<Product>
     {
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
 
         public string StockKeepingUnit { get; set; }
 
+        [Required]
+
         public decimal Price { get; set; }
+
+        [Required]
 
         public string ShortDescription { get; set; }
 
+        [Required]
+
         public string Description { get; set; }
+
 
         public int BrandId { get; set; }
 
-        public int? CategoryId { get; set; }
+
+        public int CategoryId { get; set; }
+
+        //public int[] ItemIds { get; set; }
+        [Required]
+
+        public int ColorId { get; set; }
+        [Required]
+
+        public int MaterialId { get; set; }
+        [Required]
         public ImageItem[] Images { get; set; }
 
 
@@ -46,6 +68,7 @@ namespace Cozy.Domain.Business.ProductModule
                 try
                 {
                     var model = new Product();
+                    model.ProductCatalog = new List<ProductCatalogItem>();
                     model.Name = request.Name;
                     model.StockKeepingUnit = request.StockKeepingUnit;
                     model.Price = request.Price;
@@ -78,6 +101,14 @@ namespace Cozy.Domain.Business.ProductModule
                             model.ProductImages.Add(image);
                         }
                     }
+
+                   
+
+                    var itemIn = new ProductCatalogItem();
+                    itemIn.ColorId = request.ColorId;
+                    itemIn.MaterialId = request.MaterialId;
+
+                    model.ProductCatalog.Add(itemIn);
 
                     await db.Products.AddAsync(model, cancellationToken);
                     await db.SaveChangesAsync(cancellationToken);

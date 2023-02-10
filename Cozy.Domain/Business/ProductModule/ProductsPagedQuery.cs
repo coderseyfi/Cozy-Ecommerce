@@ -23,7 +23,7 @@ namespace Cozy.Domain.Business.ProductModule
             public async Task<PagedViewModel<Product>> Handle(ProductsPagedQuery request, CancellationToken cancellationToken)
             {
                 var query = db.Products
-                    .Include(p=>p.ProductImages)
+                    .Include(p => p.ProductImages.Where(i => i.DeletedDate == null))
                     .Include(p=>p.Brand)
                     .Include(p=>p.Category)
                 

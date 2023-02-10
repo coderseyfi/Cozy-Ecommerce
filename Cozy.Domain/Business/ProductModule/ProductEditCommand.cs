@@ -12,25 +12,39 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cozy.Domain.Business.ProductModule
 {
     public class ProductEditCommand : IRequest<Product>
     {
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
 
         public string StockKeepingUnit { get; set; }
+        [Required]
 
         public decimal Price { get; set; }
+        [Required]
 
         public string ShortDescription { get; set; }
+        [Required]
 
         public string Description { get; set; }
 
         public int BrandId { get; set; }
 
-        public int? CategoryId { get; set; }
+        public int CategoryId { get; set; }
+        [Required]
+
+        public int ColorId { get; set; }
+        [Required]
+
+        public int MaterialId { get; set; }
+        [Required]
+
         public ImageItem[] Images { get; set; }
 
 

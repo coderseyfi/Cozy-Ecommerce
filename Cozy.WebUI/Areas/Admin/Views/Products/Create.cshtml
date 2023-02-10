@@ -20,7 +20,7 @@
                         <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
-                        <a asp-action="index">All brands</a>
+                        <a asp-action="index">All Products</a>
                     </li>
                     <li class="breadcrumb-item" style="float: left;">
                         <span>Create</span>
@@ -62,6 +62,19 @@
                             <select class="form-control select2" asp-for="CategoryId" asp-items="@ViewBag.CategoryId"></select>
                             <span asp-validation-for="CategoryId" class="text-danger"></span>
                         </div>
+
+                        <div class="form-group">
+                            <label asp-for="ColorId" class="form-label"></label>
+                            <label asp-for="ColorId" class="form-label"></label>
+                            <select name="ColorId" class="form-control select2" asp-items="@ViewBag.ColorId"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="MaterialId" class="form-label"></label>
+                            <label asp-for="MaterialId" class="form-label"></label>
+                            <select name="MaterialId" class="form-control select2" asp-items="@ViewBag.MaterialId"></select>
+                        </div>
+
                         <div class="form-group">
                             <label asp-for="ShortDescription" class="form-label"></label>
                             <input asp-for="ShortDescription" class="form-control" />
@@ -73,6 +86,8 @@
                         <div style="width: 100%;" class="imager-container" id="viewer1" name="images">
                            
                         </div>
+                        <span asp-validation-for="Images" class="text-danger"></span>
+
                     </div>
                 </div>
 
@@ -116,7 +131,7 @@
             plusBtnClass: undefined
         });
 
-        
+        $(".select2").select2();
 
     </script>
 }

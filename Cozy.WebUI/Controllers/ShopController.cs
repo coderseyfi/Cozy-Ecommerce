@@ -44,7 +44,7 @@ namespace Cozy.WebUI.Controllers
             var materials = await db.Materials.Where(c => c.DeletedDate == null).ToListAsync();
 
             var products = await db.Products
-                .Include(p=>p.ProductImages.Where(i=>i.IsMain == true))
+                .Include(p=>p.ProductImages.Where(i=>i.IsMain == true && i.DeletedDate == null))
                 .Include(c => c.Brand)
                 .Where(b => b.DeletedDate == null)
                 .ToListAsync();
@@ -68,10 +68,11 @@ namespace Cozy.WebUI.Controllers
         [AllowAnonymous]
         public IActionResult Filter(ShopFilterFormModel model)
         {
+
             var query = db.Products
                 .Include(p => p.ProductImages.Where(i => i.IsMain == true))
-                //.Include(c=>c.Category)
                 .Include(p => p.Brand)
+                .Include(p => p.Category)
                 .Where(p => p.DeletedDate == null)
                 .AsQueryable();
 
@@ -80,13 +81,41 @@ namespace Cozy.WebUI.Controllers
                 query = query.Where(p => model.Brands.Contains(p.BrandId));
             }
 
-            if (model?.Colors?.Count() > 0)
+            if (model?.Categories?.Count() > 0)
             {
-                query = query.Where(p => model.Colors.Contains(p.BrandId));
+                query = query.Where(p => model.Categories.Contains(p.CategoryId));
             }
 
+            if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
+            {
+                query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
+            }
 
             return PartialView("_ProductsContainer", query.ToList());
+
+
+            //var query = db.Products
+            //    .Include(p => p.ProductImages.Where(i => i.IsMain == true))
+            //    .Include(c => c.Category)
+            //    //.Include(c => c.ProductCatalog)
+            //    .Include(p => p.Brand)
+            //    .Where(p => p.DeletedDate == null)
+            //    .AsQueryable();
+
+
+            //if (model?.Brands?.Count() > 0)
+            //{
+            //    query = query.Where(p => model.Brands.Contains(p.BrandId));
+            //}
+
+            //if (model?.Colors?.Count() > 0)
+            //{
+            //    query = query.Where(p => model.Colors.Contains(p.ProductCatalog));
+            //}
+
+
+            //return PartialView("_ProductsContainer", query.ToList());
+
         }
 
 

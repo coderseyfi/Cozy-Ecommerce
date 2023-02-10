@@ -7,9 +7,13 @@ namespace Cozy.Domain.Models.FormModels
     {
         public List<int> Brands { get; set; }
         public List<int> Colors { get; set; }
-        //public List<int> Categories { get; set; }
+        public List<int> Materials { get; set; }
 
-        //public int[] Prices { get; set; }
+        public List<int> Categories { get; set; }
+
+        public int[] Prices { get; set; }
+
+      
 
     }
 }

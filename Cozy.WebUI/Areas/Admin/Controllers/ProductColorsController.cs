@@ -50,9 +50,7 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             return View();
         }
 
-        // POST: Admin/ProductColors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("HexCode,Name,Description,CreatedByUserId,DeletedByUserId,Id,CreatedDate,DeletedDate")] ProductColor productColor)
