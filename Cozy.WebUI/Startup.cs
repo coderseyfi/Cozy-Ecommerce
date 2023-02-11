@@ -82,7 +82,7 @@ namespace Cozy.WebUI
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredUniqueChars = 1; //123
-                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 1, 0);
+                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(1, 0, 0);
                 cfg.Lockout.MaxFailedAccessAttempts = 3;
                 cfg.Password.RequiredLength = 3;
 
@@ -95,7 +95,7 @@ namespace Cozy.WebUI
 
                 cfg.Cookie.Name = "Cozy";
                 cfg.Cookie.HttpOnly = true;
-                cfg.ExpireTimeSpan = new TimeSpan(4, 15, 0);
+                cfg.ExpireTimeSpan = new TimeSpan(0, 15, 0);
             });
 
 

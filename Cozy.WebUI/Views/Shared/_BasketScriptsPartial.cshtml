@@ -1,0 +1,121 @@
+﻿
+
+
+    <script class="removeable" src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script class="removeable" src="~/libs/toastr.js/toastr.min.js"></script>
+    <script class="removeable" src="~/libs/toastr.js/toastr.customize.js"></script>
+    <script>
+
+        function removeFromBasket(element, name) {
+
+            swal(`Əminsiniz ki '${name}' silinsin?`, {
+                title: "Diqqət!",
+                text: `Əminsiniz ki '${name}' silinsin?`,
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                buttons: ["Xeyr", "Bəli"],
+            })
+                .then((value) => {
+
+                    if (value == true) {
+                        const elementData = $(element).data();
+                        console.log(elementData);
+
+                        $.ajax({
+                            url: `@Url.Action("RemoveFromBasket","Shop")`,
+                            type: 'POST',
+                            data: elementData,
+                            contentType: 'application/x-www-form-urlencoded',
+                            success: function (response) {
+                                if (response.error == false) {
+
+                                    const removeTarget = $(element).attr('area-remove-target');
+                                    if(removeTarget != undefined){
+                                        $(removeTarget).remove();
+                                    }
+
+                                    if (response.value.count == undefined){
+                                        $('.cart-counter').text('')
+                                    }
+                                    else{
+                                        $('.cart-counter').text(`${response.value.count}`) //basket header
+                                    }
+                                     
+
+                                
+
+                                    $(element).closest('div.card').remove();
+                                    toastr.success(response.message, 'Success');
+                                    return;
+                                }
+
+                                toastr.error(response.message, 'Error');
+                            },
+                            error: function (response, status, xhr) {
+                                console.log(response, status, xhr);
+                            }
+                        });
+                    }
+                });
+
+
+        }
+
+
+        function changeQuantity(event, element) {
+
+            if ($.processId != undefined) {
+                clearTimeout($.processId);
+                $.processId = undefined;
+            }
+
+            if (element.value < 1) {
+                console.log("olmadiki", element.value)
+                return;
+            }
+
+            $.processId = setTimeout(function () {
+
+                const elementData = $(element).data();
+                elementData.Quantity = element.value;
+
+                $.ajax({
+                    url: `@Url.Action("ChangeBasketQuantity","Shop")`,
+                    type: 'POST',
+                    data: elementData,
+                    contentType: 'application/x-www-form-urlencoded',
+                    success: function (response) {
+                        console.log(response)
+                        if (response.error == false) {
+
+                            $("#summary").text(`${response.value.summary},00₼`);
+
+                            if (response.value?.total == null) {
+                                $(`.product-subtotal-${response.value.id}`).text(``)
+                            } else {
+                                $(`.product-subtotal-${response.value.id}`).text(`Total:${response.value.total}₼`)
+                            }
+
+                            if (response.value?.price == null) {
+                                $('.amount').text(``)
+                            } else {
+                                $('.amount').text(`Price:${response.value.price}₼`)
+                            }
+
+                            toastr.success(response.message, 'Success');
+                            return;
+                        }
+
+                        toastr.error(response.message, 'Error');
+                    },
+                    error: function (response, status, xhr) {
+                        console.log(response, status, xhr);
+                    }
+                });
+
+            }, 700);
+
+        }
+
+    </script>

@@ -13,6 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.ComponentModel.DataAnnotations;
+using Cozy.Domain.Migrations;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Cozy.Domain.Business.ProductModule
 {
@@ -48,6 +50,7 @@ namespace Cozy.Domain.Business.ProductModule
         public ImageItem[] Images { get; set; }
 
 
+
         public class ProductEditCommandHandler : IRequestHandler<ProductEditCommand, Product>
         {
             private readonly CozyDbContext db;
@@ -66,12 +69,23 @@ namespace Cozy.Domain.Business.ProductModule
                 try
                 {
                     var model = await db.Products
-                     .Include(p => p.ProductImages.Where(i => i.DeletedByUserId == null))   
+                     .Include(p => p.ProductImages.Where(i => i.DeletedByUserId == null))
                      .FirstOrDefaultAsync(p =>
                      p.Id == request.Id
                      && p.DeletedDate == null
                     , cancellationToken);
+                    var data = await db.ProductCatalogItems.FirstOrDefaultAsync(p => p.ProductId == request.Id && p.DeletedDate == null, cancellationToken);
+                    if (request.ColorId != data.ColorId || request.MaterialId != data.MaterialId)
+                    {
+                        db.ProductCatalogItems.Remove(data);
+                        await db.SaveChangesAsync();
 
+                        var Item = new ProductCatalogItem();
+                        Item.ProductId = request.Id;
+                        Item.ColorId = request.ColorId;
+                        Item.MaterialId = request.MaterialId;
+                        await db.ProductCatalogItems.AddAsync(Item);
+                    }
                     if (model == null)
                     {
                         return null;
@@ -144,11 +158,10 @@ namespace Cozy.Domain.Business.ProductModule
                                 item.IsMain = fromForm.IsMain;
                             }
 
-                          
+
                         }
                         #endregion
                     }
-
                     await db.SaveChangesAsync(cancellationToken);
 
 

@@ -48,7 +48,7 @@
 
                     @foreach (var item in Model)
                     {
-                        <div class="card basket-card rounded-3 mb-4">
+                        <div class="card basket-card rounded-3 mb-4 basket-item-@item.ProductId">
                             <div class="card-body p-4">
                                 <div class="row d-flex justify-content-between align-items-center">
                                     <div class="col-md-2 col-lg-2 col-xl-2">
@@ -77,7 +77,11 @@
                                         <h5 class="mb-0 mb-sm-3 product-subtotal-@item.ProductId">Total:@((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
                                     </div>
                                     <div class="col-md-4 col-lg-3 col-xl-1">
-                                        <a onclick="removeFromBasket(this, '@item.Product.Name');return" class="text-danger" data-product-id="@item.ProductId">
+                                        <a onclick="removeFromBasket(this, '@item.Product.Name');return" 
+                                        class="text-danger" 
+                                        data-product-id="@item.ProductId"
+                                         area-remove-target=".basket-item-@item.ProductId" 
+                                        >
                                             <i class="fas fa-trash fa-lg" aria-hidden="true"></i>
                                         </a>
                                     </div>
@@ -117,145 +121,41 @@
 
 @section addcss{
     <style>
-    .card-body{
-        display:flex;
-        flex-wrap:wrap;
-        justify-content:space-around;
+        .card-body {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
 
-    }
+            .card-body .basket-btn {
+                width: 300px;
+            }
 
-    .card-body .basket-btn {
-        width:300px;
-    }
-
-    .basket-quantity{
+        .basket-quantity {
             width: 110px;
             height: 43px;
             padding: 0 20px;
-            background-color:lightgray;
-            border:none;
+            background-color: lightgray;
+            border: none;
             border-radius: 8px;
-            outline:none;
-    }
-   /* .basket-quantity:hover,
-    .basket-quantity:focus{
-                outline: 2px solid lightslategray;
-    }*/
+            outline: none;
+        }
+        /* .basket-quantity:hover,
+            .basket-quantity:focus{
+                        outline: 2px solid lightslategray;
+            }*/
 
-    .total-sum{
-        font-size:30px;
-        font-weight:500;
-    }
-    #summary{
+        .total-sum {
+            font-size: 30px;
+            font-weight: 500;
+        }
+
+        #summary {
             font-size: 21px;
             color: #5c636a;
             font-weight: 600;
-    }
+        }
     </style>
 }
 
-@section addjs{
-    <script class="removeable" src="~/libs/sweetalert/sweetalert.min.js"></script>
-    <script class="removeable" src="~/libs/toastr.js/toastr.min.js"></script>
-    <script class="removeable" src="~/libs/toastr.js/toastr.customize.js"></script>
-    <script>
-
-        function removeFromBasket(element, name) {
-
-            swal(`Əminsiniz ki '${name}' silinsin?`, {
-                title: "Diqqət!",
-                text: `Əminsiniz ki '${name}' silinsin?`,
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                buttons: ["Xeyr", "Bəli"],
-            })
-                .then((value) => {
-
-                    if (value == true) {
-                        const elementData = $(element).data();
-                        console.log(elementData);
-
-                        $.ajax({
-                            url: `@Url.Action("RemoveFromBasket","Shop")`,
-                            type: 'POST',
-                            data: elementData,
-                            contentType: 'application/x-www-form-urlencoded',
-                            success: function (response) {
-                                if (response.error == false) {
-                                    $(element).closest('div.card').remove();
-                                    toastr.success(response.message, 'Success');
-                                    return;
-                                }
-
-                                toastr.error(response.message, 'Error');
-                            },
-                            error: function (response, status, xhr) {
-                                console.log(response, status, xhr);
-                            }
-                        });
-                    }
-                });
-
-
-        }
-
-
-        function changeQuantity(event, element){
-
-            if ($.processId != undefined){
-                clearTimeout($.processId);
-                $.processId = undefined;
-            }
-
-            if(element.value < 1){
-                console.log("olmadiki", element.value)
-                return;
-            }
-
-            $.processId = setTimeout(function(){
-
-                const elementData = $(element).data();
-                elementData.Quantity = element.value;
-
-                $.ajax({
-                    url: `@Url.Action("ChangeBasketQuantity","Shop")`,
-                    type: 'POST',
-                    data: elementData,
-                    contentType: 'application/x-www-form-urlencoded',
-                    success: function (response) {
-                        console.log(response)
-                        if (response.error == false) {
-
-                            $("#summary").text(`${response.value.summary},00₼`);
-
-                            if(response.value?.total == null){
-                                $(`.product-subtotal-${response.value.id}`).text(``)
-                            }else{
-                                $(`.product-subtotal-${response.value.id}`).text(`Total:${response.value.total}₼`)
-                            }
-
-                            if (response.value?.price == null) {
-                                $('.amount').text(``)
-                            } else {
-                                $('.amount').text(`Price:${response.value.price}₼`)
-                            }
-                            
-                            toastr.success(response.message, 'Success');
-                            return;
-                        }
-
-                        toastr.error(response.message, 'Error');
-                    },
-                    error: function (response, status, xhr) {
-                        console.log(response, status, xhr);
-                    }
-                });
-
-            },700);
-
-        }
-
-    </script>
- }
 

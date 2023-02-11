@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -85,16 +86,18 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         }
 
         [Authorize(Policy = "admin.products.edit")]
-        public async Task<IActionResult> Edit(ProductSingleQuery query)
+        public async Task<IActionResult> Edit(ProductSingleQuery query ,int? id)
         {
-            var product = await mediator.Send(query);
-
+            var product1 = await mediator.Send(query);
+            var product = await db.Products.FirstOrDefaultAsync(p=>p.Id == id);
             if (product == null)
             {
                 return NotFound();
             }
 
+            var data = db.ProductCatalogItems.Where(p=>p.ProductId == id).ToList();
             var command = new ProductEditCommand();
+            command.Id = product.Id;
             command.Name = product.Name;
             command.Price = product.Price;
             command.ShortDescription = product.ShortDescription;
@@ -102,12 +105,14 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             command.BrandId = product.BrandId;
             command.CategoryId = product.CategoryId;
             command.StockKeepingUnit = product.StockKeepingUnit;
+            command.ColorId = data.First().ColorId;
+            command.MaterialId = data.First().MaterialId;
 
-            command.Images = product.ProductImages.Select(x=> new ImageItem
+            command.Images = product1.ProductImages.Select(x => new ImageItem
             {
-                    Id = x.Id,
-                    TempPath = x.Name,
-                    IsMain= x.IsMain,
+                Id = x.Id,
+                TempPath = x.Name,
+                IsMain = x.IsMain,
 
 
             }).ToArray();
@@ -116,6 +121,8 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
             ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
             ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
+            ViewBag.GetColorId = new Func<int, int>(GetColorId);
+            ViewBag.GetMaterialId = new Func<int, int>(GetMaterialId);
             return View(command);
         }
 
@@ -182,6 +189,17 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         private bool ProductExists(int id)
         {
             return db.Products.Any(e => e.Id == id);
+        }
+
+        public int GetColorId(int id)
+        {
+            var data = db.ProductCatalogItems.FirstOrDefault(p=>p.ProductId== id);
+            return data.ColorId;
+        }
+        public int GetMaterialId(int id)
+        {
+            var data = db.ProductCatalogItems.FirstOrDefault(p => p.ProductId == id);
+            return data.MaterialId;
         }
     }
 }

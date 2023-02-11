@@ -23,7 +23,7 @@
             @foreach (var item in Model)
             {
 
-                <ul class="list d-flex">
+                <ul class="list d-flex single-cart-box basket-item-@item.ProductId" >
                     <li class="list__img">
                         <a class="list__img__link d-block" asp-controller="shop" asp-action="details" asp-route-id="@item.ProductId">
                             <img src="~/uploads/images/@item.Product.ProductImages.FirstOrDefault()?.Name" alt="basket-img" />
@@ -38,7 +38,12 @@
                                 <span>@item.Quantity x @item.Product.Price</span>
                             </li>
                             <li class="s-remove">
-                                <a class="d-inline-block" onclick="removeFromBasket(this,'@item.Product.Name');return;" data-product-id="@item.ProductId">
+                                <a 
+                                    class="d-inline-block del-icon" 
+                                             area-remove-target=".basket-item-@item.ProductId" 
+                                             data-product-id="@item.ProductId"
+                           onclick="removeFromBasket(this,'@item.Product.Name');return;">
+                                    
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </li>

@@ -34,7 +34,15 @@
     <!-- CSS only -->
     <link rel="stylesheet" href="~/assets/css/style.css" />
     <link rel="stylesheet" href="~/assets/css/style.min.css">
+    <style>
+        .modal-backdrop {
+            z-index: 0;
+        }
 
+        #modalLoginForm {
+            top: 20%;
+        }
+    </style>
     @RenderSection("addcss", required: false)
 
     <title>Home</title>
@@ -380,7 +388,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" form="loginModal" class="btn btn-success">Log in</button>
-                    @*<a asp-controller="account" asp-action="register"  class="btn btn-dark">Register</a>*@
+                    <a asp-controller="account" asp-action="register"  class="btn btn-dark">Register</a>
                 </div>
             </div>
         </div>
@@ -416,15 +424,7 @@
     <!-- main js -->
     <script src="~/assets/js/main.js"></script>
      
-     <style>
-         .modal-backdrop{
-             z-index:0;
-         }
-
-        #modalLoginForm {
-            top:20%;
-        }
-    </style>
+   
 
     <script class="removable">
         $(document).ready(function (){
@@ -503,6 +503,8 @@
             
         })
     </script>
+
+    <partial name="_BasketScriptsPartial" />
 
 
    
