@@ -34,6 +34,9 @@ namespace Cozy.WebUI
         }
 
 
+
+
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews(
