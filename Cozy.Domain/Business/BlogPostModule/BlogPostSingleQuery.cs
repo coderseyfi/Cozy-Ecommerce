@@ -29,6 +29,7 @@ namespace Cozy.Domain.Business.BlogPostModule
             public async Task<BlogPost> Handle(BlogPostSingleQuery request, CancellationToken cancellationToken)
             {
                 var query = db.BlogPosts
+                    .Include(bp =>bp.Likes)
                      .Include(bp => bp.Comments.Where(bpc => bpc.DeletedDate == null))
                      .ThenInclude(c=>c.CreatedByUser)
 

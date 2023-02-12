@@ -1,9 +1,11 @@
 ﻿using Cozy.Domain.AppCode.Extensions;
 using Cozy.Domain.Business.BlogPostModule;
 using Cozy.Domain.Models.DataContexts;
+using Cozy.Domain.Models.ViewModels.BlogPostItemsViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,14 +41,22 @@ namespace Cozy.WebUI.Controllers
         [Route("/blog/{slug}")]
         public async Task<IActionResult> Details(BlogPostSingleQuery query)
         {
-            var entity = await mediator.Send(query);
+            var blogPost = await mediator.Send(query);
 
-            if (entity == null)
+            var blogPostLikes = await db.BlogPostLikes.Where(bpl => bpl.BlogPostId == blogPost.Id).ToListAsync();
+
+            var vm = new BlogPostItemsViewModel()
+            {
+                BlogPost = blogPost,
+                BlogPostLikes = blogPostLikes
+            };
+
+            if (blogPost == null)
             {
                 return NotFound();
             }
 
-            return View(entity);
+            return View(vm);
         }
 
         [HttpPost]
@@ -74,5 +84,21 @@ namespace Cozy.WebUI.Controllers
             }
 
         }
+
+        [HttpPost]
+        [Route("/like-unlike-blog-post")]
+        public async Task<IActionResult> LikeUnlikeBlogPost(BlogPostLikeUnlikeCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return Json(response);
+        }
+
+
     }
 }

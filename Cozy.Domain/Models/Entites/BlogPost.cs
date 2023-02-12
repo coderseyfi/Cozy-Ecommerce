@@ -30,6 +30,7 @@ namespace Cozy.Domain.Models.Entites
         public int? CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
+        public ICollection<BlogPostLike> Likes { get; set; }
 
     }
 }

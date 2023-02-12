@@ -1,4 +1,4 @@
-﻿@model BlogPost
+﻿@model BlogPostItemsViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -73,12 +73,12 @@
         <div class="container-wrapper ">
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="blog-banner-left mb-30">
-                    <img src="~/uploads/images/@Model.ImagePath" alt="">
+                    <img src="~/uploads/images/@Model.BlogPost.ImagePath" alt="">
                 </div>
             </div>
             <ul class="blog-post-data">
                 <li class="post-date pr-35">
-                    Post date:<a class="" href="#">@Model.PublishedDate?.ToString("dd MMM yyy")</a>
+                    Post date:<a class="" href="#">@Model.BlogPost.PublishedDate?.ToString("dd MMM yyy")</a>
                 </li>
                 <li class="post-view pr-20">
                     <span class="fa fa-eye pr-1"></span>533 Views
@@ -86,8 +86,21 @@
                 <li class="post-comments">
                     <span>
                         <i class="far fa-comment"></i>
-                    </span><span class="px-1">@Model.Comments?.Count</span>
+                    </span><span class="px-1">@Model.BlogPost.Comments?.Count</span>
                 </li>
+                <li >
+                    @if (User.Identity.IsAuthenticated)
+                {
+                    <input type="hidden" data-user-id="@User.GetCurrentUserId()" data-blogpost-id="@Model.BlogPost.Id" />
+                    <button class="like-button dark @(Model.BlogPostLikes.Any(bpl => bpl.BlogPostId == Model.BlogPost.Id && bpl.CreatedByUserId == User.GetCurrentUserId()) ? "liked" : " ")">
+                        <div class="hand">
+                            <div class="thumb"></div>
+                        </div>
+                        <span>Like<span>d</span></span>
+                    </button>
+                }
+                </li>
+                <p class="post-like"><i class="fa-sharp fa-regular fa-heart" style="padding-right:5px"></i>@Model.BlogPost.Likes.Count Likes</p>
             </ul>
         </div>
     </div>
@@ -98,14 +111,14 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="blog-content pl-55 pr-55">
-                        <h3>@Model.Title</h3>
+                        <h3>@Model.BlogPost.Title</h3>
                         <p class="pb-15">
-                            @Html.Raw(Model.Body)
+                            @Html.Raw(Model.BlogPost.Body)
                         </p>
 
                         <div class="blog-footer d-sm-flex justify-content-between pt-50">
                             <ul class="post-tag pb-20">
-                                @foreach (var item in Model.TagCloud)
+                                @foreach (var item in Model.BlogPost.TagCloud)
                                 {
                                     <li class="tag-cloud-link">
                                         <a>@item.Tag.Text</a>
@@ -152,7 +165,7 @@
                         </ul>
                         <div class="author-post-details comments gray-bg2 pl-30 pr-30 pt-30 pb-20">
                             <div class="row">
-                                @foreach (var comment in Model.Comments.Where(c => c.ParentId == null))
+                                @foreach (var comment in Model.BlogPost.Comments.Where(c => c.ParentId == null))
                                 {
                                     <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 mb-20 cmnt-border comment" id="c-@comment.Id" data-comment-id="@comment.Id">
                                         <div class="author-post pt-20 pb-20">
@@ -210,7 +223,7 @@
 
                         <form method="post" class="mt-40" id="replyForm">
                             <div id="replyToComment"></div>
-                            <input type="hidden" name="postId" value="@Model.Id" />
+                            <input type="hidden" name="postId" value="@Model.BlogPost.Id" />
                             <div class="comment mb-30">
                                 <textarea name="Comment"
                                           class="form-control"
@@ -226,7 +239,7 @@
     </div>
     <!-- blog-area-end -->
     <!-- blog section start -->
-    @await Component.InvokeAsync("RecentPosts", new {id = @Model.Id})
+    @await Component.InvokeAsync("RecentPosts", new {id = @Model.BlogPost.Id})
     <!-- blog section end -->
 
 </main>
@@ -270,6 +283,205 @@
                 font-size: 2rem;
                 right: 18%;
                 top: 10px;
+            }
+
+
+        .like-button {
+            --color: #1E2235;
+            --color-hover: #1E2235;
+            --color-active: #fff;
+            --icon: #BBC1E1;
+            --icon-hover: #8A91B4;
+            --icon-active: #fff;
+            --background: #fff;
+            --background-hover: #fff;
+            --background-active: #362A89;
+            --border: #E1E6F9;
+            --border-active: #362A89;
+            --shadow: rgba(0, 17, 119, 0.025);
+            display: block;
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            border: 0;
+            background: none;
+            padding: 8px 12px 8px 23px;
+            border-radius: 35px;
+            line-height: 27px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--color);
+            -webkit-appearance: none;
+            margin: 0 14px;
+            -webkit-tap-highlight-color: transparent;
+            transition: color .2s linear;
+        }
+
+            .like-button.dark {
+                --color: #c96;
+                --color-hover: #fff;
+                --color-active: #fff;
+                --icon: #c96;
+                --icon-hover: #fff;
+                --icon-active: #fff;
+                --background: #fff;
+                --background-hover: #dfcab5;
+                --background-active: #c96;
+                --border: transparent;
+                --border-active: transparent;
+                --shadow: rgba(0, 7, 1, 0.05);
+            }
+
+            .like-button:hover {
+                --icon: var(--icon-hover);
+                --color: var(--color-hover);
+                --background: var(--background-hover);
+                --border-width: 2px;
+            }
+
+            .like-button:active {
+                --scale: .95;
+            }
+
+            .like-button:not(.liked):hover {
+                --hand-rotate: 8;
+                --hand-thumb-1: -12deg;
+                --hand-thumb-2: 36deg;
+            }
+
+            .like-button.liked {
+                --span-x: 2px;
+                --span-d-o: 1;
+                --span-d-x: 0;
+                --icon: var(--icon-active);
+                --color: var(--color-active);
+                --border: var(--border-active);
+                --background: var(--background-active);
+            }
+
+            .like-button:before {
+                content: '';
+                min-width: 103px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                border-radius: inherit;
+                transition: background .2s linear, transform .2s, box-shadow .2s linear;
+                transform: scale(var(--scale, 1)) translateZ(0);
+                background: var(--background);
+                box-shadow: inset 0 0 0 var(--border-width, 1px) var(--border), 0 4px 8px var(--shadow), 0 8px 20px var(--shadow);
+            }
+
+            .like-button .hand {
+                width: 11px;
+                height: 11px;
+                border-radius: 2px 0 0 0;
+                background: var(--icon);
+                position: relative;
+                margin: 10px 8px 0 0;
+                transform-origin: -5px -1px;
+                transition: transform .25s, background .2s linear;
+                transform: rotate(calc(var(--hand-rotate, 0) * 1deg)) translateZ(0);
+            }
+
+                .like-button .hand:before, .button .hand:after {
+                    content: '';
+                    background: var(--icon);
+                    position: absolute;
+                    transition: background .2s linear, box-shadow .2s linear;
+                }
+
+                .like-button .hand:before {
+                    left: -5px;
+                    bottom: 0;
+                    height: 12px;
+                    width: 4px;
+                    border-radius: 1px 1px 0 1px;
+                }
+
+                .like-button .hand:after {
+                    right: -3px;
+                    top: 0;
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 0 2px 2px 0;
+                    background: var(--icon);
+                    box-shadow: -0.5px 4px 0 var(--icon), -1px 8px 0 var(--icon), -1.5px 12px 0 var(--icon);
+                    transform: scaleY(0.6825);
+                    transform-origin: 0 0;
+                }
+
+                .like-button .hand .thumb {
+                    background: var(--icon);
+                    width: 10px;
+                    height: 4px;
+                    border-radius: 2px;
+                    transform-origin: 2px 2px;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    transition: transform .25s, background .2s linear;
+                    transform: scale(0.85) translateY(-0.5px) rotate(var(--hand-thumb-1, -45deg)) translateZ(0);
+                }
+
+                    .like-button .hand .thumb:before {
+                        content: '';
+                        height: 4px;
+                        width: 7px;
+                        border-radius: 2px;
+                        transform-origin: 2px 2px;
+                        background: var(--icon);
+                        position: absolute;
+                        left: 7px;
+                        top: 0;
+                        transition: transform .25s, background .2s linear;
+                        transform: rotate(var(--hand-thumb-2, -45deg)) translateZ(0);
+                    }
+
+            .like-button .hand,
+            .like-button span {
+                display: inline-block;
+                vertical-align: top;
+            }
+
+                .like-button .hand span,
+                .like-button span span {
+                    opacity: var(--span-d-o, 0);
+                    transition: transform .25s, opacity .2s linear;
+                    transform: translateX(var(--span-d-x, 4px)) translateZ(0);
+                }
+
+            .like-button > span {
+                transition: transform .25s;
+                transform: translateX(var(--span-x, 4px)) translateZ(0);
+            }
+
+        body .dribbble {
+            position: fixed;
+            display: block;
+            right: 20px;
+            bottom: 20px;
+        }
+
+            body .dribbble img {
+                display: block;
+                height: 28px;
+            }
+
+        body .twitter {
+            position: fixed;
+            display: block;
+            right: 64px;
+            bottom: 14px;
+        }
+
+            body .twitter svg {
+                width: 32px;
+                height: 32px;
+                fill: #1da1f2;
             }
 
     </style>
@@ -334,5 +546,70 @@
         function removeSelectedReply(el) {
             $("#replyToComment").html("");
         }
+
+
+            $(document).ready(function () {
+
+                $(".like-button").click(function (e) {
+                    e.preventDefault();
+
+                    let obj = $("input[data-blogpost-id][data-user-id]").data();
+
+                    obj.isLiked = $(".like-button").hasClass("liked");
+
+
+                    $.ajax({
+                        url: `@Url.Action("LikeUnlikeBlogPost", "Blog")`,
+                        type: "POST",
+                        data: obj,
+                        dataType: "json",
+                        contentType: "application/x-www-form-urlencoded",
+                        success: function (res) {
+
+                            if (res.error == false) {
+                                $(".post-like").html(`<i class="fa-sharp fa-regular fa-heart" style="padding-right:5px"></i>${res.value} Likes`)
+                            }
+
+
+                        },
+                        error: function (res) {
+
+                            if (res.error == true) {
+                                toastr.error(res.message, "Xəta");
+                            }
+
+                        }
+                    })
+
+                })
+            })
+
+        //document.querySelectorAll('.like-button').forEach(button => {
+
+        //    button.addEventListener('click', e => {
+        //        button.classList.toggle('liked');
+        //        if (button.classList.contains('liked')) {
+        //            gsap.fromTo(button, {
+        //                '--hand-rotate': 8
+        //            }, {
+        //                ease: 'none',
+        //                keyframes: [{
+        //                    '--hand-rotate': -45,
+        //                    duration: .16,
+        //                    ease: 'none'
+        //                }, {
+        //                    '--hand-rotate': 15,
+        //                    duration: .12,
+        //                    ease: 'none'
+        //                }, {
+        //                    '--hand-rotate': 0,
+        //                    duration: .2,
+        //                    ease: 'none',
+        //                    clearProps: true
+        //                }]
+        //            });
+        //        }
+        //    })
+        //})
     </script>
 }
