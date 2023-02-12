@@ -22,8 +22,7 @@
     <div class="slider-area over-hidden">
         <div class="single-page blog-none page-height-2 position-relative d-flex
           align-items-center"
-             style="background-image:
-          url(./assets/imgs/blog-slidebar-none-banner.jpg); min-height: 900px;">
+             style="background-image:url(~/assets/imgs/blog-slidebar-none-banner.jpg); min-height: 900px;">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex
@@ -100,7 +99,9 @@
                     </button>
                 }
                 </li>
-                <p class="post-like"><i class="fa-sharp fa-regular fa-heart" style="padding-right:5px"></i>@Model.BlogPost.Likes.Count Likes</p>
+                <li>
+                    <p class="post-like"><i class="fa-sharp fa-regular fa-heart" style="padding-right:5px"></i>@Model.BlogPost.Likes.Count Likes</p>
+                </li>
             </ul>
         </div>
     </div>
@@ -584,32 +585,32 @@
                 })
             })
 
-        //document.querySelectorAll('.like-button').forEach(button => {
+        document.querySelectorAll('.like-button').forEach(button => {
 
-        //    button.addEventListener('click', e => {
-        //        button.classList.toggle('liked');
-        //        if (button.classList.contains('liked')) {
-        //            gsap.fromTo(button, {
-        //                '--hand-rotate': 8
-        //            }, {
-        //                ease: 'none',
-        //                keyframes: [{
-        //                    '--hand-rotate': -45,
-        //                    duration: .16,
-        //                    ease: 'none'
-        //                }, {
-        //                    '--hand-rotate': 15,
-        //                    duration: .12,
-        //                    ease: 'none'
-        //                }, {
-        //                    '--hand-rotate': 0,
-        //                    duration: .2,
-        //                    ease: 'none',
-        //                    clearProps: true
-        //                }]
-        //            });
-        //        }
-        //    })
-        //})
+            button.addEventListener('click', e => {
+                button.classList.toggle('liked');
+                if (button.classList.contains('liked')) {
+                    gsap.fromTo(button, {
+                        '--hand-rotate': 8
+                    }, {
+                        ease: 'none',
+                        keyframes: [{
+                            '--hand-rotate': -45,
+                            duration: .16,
+                            ease: 'none'
+                        }, {
+                            '--hand-rotate': 15,
+                            duration: .12,
+                            ease: 'none'
+                        }, {
+                            '--hand-rotate': 0,
+                            duration: .2,
+                            ease: 'none',
+                            clearProps: true
+                        }]
+                    });
+                }
+            })
+        })
     </script>
 }

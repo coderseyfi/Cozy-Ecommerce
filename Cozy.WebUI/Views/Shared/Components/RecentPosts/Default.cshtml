@@ -26,11 +26,11 @@
                                         <span>Post date:</span>
                                     </li>
                                     <li class="blog-slider__item__content--item">
-                                        <a class="date" href="#">@item.PublishedDate?.ToString("dd MMM yyy")</a>
+                                        <a class="date" asp-action="details">@item.PublishedDate?.ToString("dd MMM yyy")</a>
                                     </li>
                                 </ul>
                                 <h4>
-                                    <a class="blog-slider__item__content__link" href="blog-details.html">@item.Title</a>
+                                    <a class="blog-slider__item__content__link" asp-action="details" asp-route-id="@item.Id">@item.Title</a>
                                 </h4>
                                 <p> @Html.Raw(item.Body)</p>
 

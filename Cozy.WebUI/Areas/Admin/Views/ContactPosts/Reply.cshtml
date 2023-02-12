@@ -40,10 +40,10 @@
 
 
 
-        <div class="form-group row">
+        <div class="form-group row ">
             <label asp-for="Content" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <p class="form-control">
+                <p class="form-control content-box">
                     @Model.Content
                 </p>
             </div>
@@ -98,6 +98,12 @@
 
 @section addcss{
 <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+  
+ <style>
+     .content-box{
+     height:auto;
+}
+</style>
 }
 
 @section addjs{
