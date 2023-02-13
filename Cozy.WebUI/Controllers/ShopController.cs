@@ -2,22 +2,16 @@
 using Cozy.Domain.Business.BasketModule;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
-using Cozy.Domain.Models.Entites;
-using Cozy.Domain.Models.FormModels;
-using Cozy.Domain.Models.ViewModels.ProductViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Cozy.WebUI.Controllers
 {
 
-    
+
     public class ShopController : Controller
     {
         private readonly CozyDbContext db;
@@ -29,94 +23,76 @@ namespace Cozy.WebUI.Controllers
             this.mediator = mediator;
         }
 
+
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ProductFilterQuery query)
         {
-            var brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
+            var response = await mediator.Send(query);
 
-            var categories = await db.Categories
-                .Include(c => c.Children)
-                .ThenInclude(c => c.Children)
-                .Where(b => b.DeletedDate == null && b.ParentId == null)
-                .ToListAsync();
-
-            var colors = await db.Colors.Where(c => c.DeletedDate == null).ToListAsync();
-            var materials = await db.Materials.Where(c => c.DeletedDate == null).ToListAsync();
-
-            var products = await db.Products
-                .Include(p=>p.ProductImages.Where(i=>i.IsMain == true && i.DeletedDate == null))
-                .Include(c => c.Brand)
-                .Where(b => b.DeletedDate == null)
-                .ToListAsync();
-
-
-            var vm = new ProductViewModel()
+            if (Request.IsAjaxRequest())
             {
-                Brands = brands,
-                Categories = categories,
-                Colors = colors,
-                Materials= materials,
-                Products = products
-            };
+                //return Json(response);
+                return PartialView("_Products", response);
+            }
 
-            return View(vm);
+            return View(response);
         }
 
 
 
-        [HttpPost]
-        [AllowAnonymous]
-        public IActionResult Filter(ShopFilterFormModel model)
-        {
+        //[HttpPost]
+        //[AllowAnonymous]
+        //public IActionResult Filter(ShopFilterFormModel model)
+        //{
 
-            var query = db.Products
-                .Include(p => p.ProductImages.Where(i => i.IsMain == true))
-                .Include(p => p.Brand)
-                .Include(p => p.Category)
-                .Where(p => p.DeletedDate == null)
-                .AsQueryable();
+        //    var query = db.Products
+        //        .Include(p => p.ProductImages.Where(i => i.IsMain == true))
+        //        .Include(p => p.Brand)
+        //        .Include(p => p.Category)
+        //        .Where(p => p.DeletedDate == null)
+        //        .AsQueryable();
 
-            if (model?.Brands?.Count() > 0)
-            {
-                query = query.Where(p => model.Brands.Contains(p.BrandId));
-            }
+        //    if (model?.Brands?.Count() > 0)
+        //    {
+        //        query = query.Where(p => model.Brands.Contains(p.BrandId));
+        //    }
 
-            if (model?.Categories?.Count() > 0)
-            {
-                query = query.Where(p => model.Categories.Contains(p.CategoryId));
-            }
+        //    if (model?.Categories?.Count() > 0)
+        //    {
+        //        query = query.Where(p => model.Categories.Contains(p.CategoryId));
+        //    }
 
-            if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
-            {
-                query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
-            }
+        //    if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
+        //    {
+        //        query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
+        //    }
 
-            return PartialView("_ProductsContainer", query.ToList());
-
-
-            //var query = db.Products
-            //    .Include(p => p.ProductImages.Where(i => i.IsMain == true))
-            //    .Include(c => c.Category)
-            //    //.Include(c => c.ProductCatalog)
-            //    .Include(p => p.Brand)
-            //    .Where(p => p.DeletedDate == null)
-            //    .AsQueryable();
+        //    return PartialView("_ProductsContainer", query.ToList());
 
 
-            //if (model?.Brands?.Count() > 0)
-            //{
-            //    query = query.Where(p => model.Brands.Contains(p.BrandId));
-            //}
-
-            //if (model?.Colors?.Count() > 0)
-            //{
-            //    query = query.Where(p => model.Colors.Contains(p.ProductCatalog));
-            //}
+        //    //var query = db.Products
+        //    //    .Include(p => p.ProductImages.Where(i => i.IsMain == true))
+        //    //    .Include(c => c.Category)
+        //    //    //.Include(c => c.ProductCatalog)
+        //    //    .Include(p => p.Brand)
+        //    //    .Where(p => p.DeletedDate == null)
+        //    //    .AsQueryable();
 
 
-            //return PartialView("_ProductsContainer", query.ToList());
+        //    //if (model?.Brands?.Count() > 0)
+        //    //{
+        //    //    query = query.Where(p => model.Brands.Contains(p.BrandId));
+        //    //}
 
-        }
+        //    //if (model?.Colors?.Count() > 0)
+        //    //{
+        //    //    query = query.Where(p => model.Colors.Contains(p.ProductCatalog));
+        //    //}
+
+
+        //    //return PartialView("_ProductsContainer", query.ToList());
+
+        //}
 
 
         [AllowAnonymous]

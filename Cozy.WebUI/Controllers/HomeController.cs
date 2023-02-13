@@ -31,6 +31,13 @@ namespace Cozy.WebUI.Controllers
             return View();
         }
 
+        public IActionResult About()
+        {
+            
+            return View();
+
+        }
+
         public IActionResult Faq()
         {
             var data = db.Faqs.Where(f => f.DeletedDate == null).ToList();
@@ -199,6 +206,14 @@ namespace Cozy.WebUI.Controllers
         end:
             return View();
 
+
+        }
+
+
+        public IActionResult NotFoundPage()
+        {
+
+            return View();
 
         }
 

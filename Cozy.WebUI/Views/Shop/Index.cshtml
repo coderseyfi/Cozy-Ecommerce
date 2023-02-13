@@ -1,4 +1,4 @@
-﻿@model ProductViewModel
+﻿@model PagedViewModel<Product>
 
 @{
     ViewData["Title"] = "Index";
@@ -53,84 +53,15 @@
                                    class="product-filter-btn position-relative d-inline-block">Filter <span>+</span></a>
                             </div>
 
-                            <!--Mobile version-->
-                            <div class="product-filter-details position-absolute bg-white  over-hidden">
-                                <div class="container-wrapper pl-15 pr-15">
-                                    <div class="product-filter-details-wrapper pt-35 pb-15 pl-30 pr-30">
-                                        <div class="row">
-                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-   mb-30">
-                                                <div class="f-category">
-                                                    <h4>Filter By Categories</h4>
-                                                    @* @Html.Raw(Model.Categories.GetCategoriesRaw())*@
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-  mb-30">
-                                                <div class="f-choose-color">
-                                                    <h4>Filter By Choose Color</h4>
-                                                    <ul class="product-menubar mt-30 mb-15  over-x-hidden over-x-scroll" data-entity-name="colors">
-                                                        @foreach (var item in Model.Colors)
-                                                        {
-                                                            <li>
-                                                                <div class="d-flex align-items-center mb-3">
-                                                                    <input type="checkbox" class="option-input radio color-1" name="example">
-                                                                    <a href="#">
-                                                                        <span class="pl-15">@item.Name</span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-mb-30">
-                                                <div class="f-choose-color mr-4">
-                                                    <h4>Filter By Brand</h4>
-                                                    <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll">
-                                                        @foreach (var item in Model.Brands)
-                                                        {
-                                                            <li>
-                                                                <div class="d-flex align-items-center mb-3">
-                                                                    <input type="checkbox" class="option-input radio" name="example">
-                                                                    <a href="#">
-                                                                        <span class="pl-15">
-                                                                            @item.Name
-                                                                        </span>
-                                                                    </a>
-                                                                </div>
-                                                            </li>
-                                                        }
-
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-3 col-lg-3 col-md- col-sm- col-mb-35">
-                                                @*<div class="product-menubar border-bottom pl-10 pr-10">
-                                                <h4>Filter by price</h4>
-                                                <div class="f-price-filter mt-45 mb-15">
-                                                <div id="slider-range2" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-                                                </div>
-                                                <div class="fitler-input d-flex align-items-center justify-content-between mt-40">
-                                                <div class="pn">
-                                                <label class="">Price:</label>
-                                                <input type="text" id="amount2"
-                                                class="border-0 ">
-                                                </div>
-                                                <a href="#" class="border py-2 px-4">Filter</a>
-                                                </div>
-                                                </div>
-                                                </div>*@
 
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 d-none d-md-block text-center">
                         <div class="shop-title p-title pb-50">
-                            <h5 class="mb-0 mt-2">Showing all @Model.Products.Count results</h5>
+                            @*  <h5 class="mb-0 mt-2">Showing all @Model.Products.Count() results</h5>*@
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 col-sm-4 col-12 d-flex justify-content-md-end position-static">
@@ -158,116 +89,19 @@
             <div class="container-wrapper pl-15 pr-15">
                 <div class="row">
                     <div class="col-xl-3 col-lg- col-md- col-sm- col-">
-                        <div class="product-filter-details product-filter-block d-none d-xl-block bg-white over-hidden">
-                            <div class="product-filter-details-wrapper pt-35 pb-15 pr-30">
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col-  pb-30 mb-35">
-                                        <div class="f-category">
-                                            <h4>Filter By Categories</h4>
-                                            <div class="widget widget-categories">
-                                                @Html.Raw(Model.Categories.GetCategoriesRaw())
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md- 12 col-sm- col-mb-35 mb-20">
-                                        @* <div class="product-menubar border-bottom pl-10 pr-10">
-                                        <h4>Filter by price</h4>
-                                        <div class="f-price-filter mt-45 mb-15">
-                                        <div id="slider-range1" class="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content">
-                                        </div>
-                                        <div class="fitler-input d-flex align-items-center justify-content-between mt-40">
-                                        <div class="pn">
-                                        <label class="">Price:</label>
-                                        <input type="text" id="amount1" class="border-0">
-                                        </div>
-                                        <a href="#" class="border py-2 px-4">Filter</a>
-                                        </div>
-                                        </div>
-                                        </div>*@
-
-                                        <div class="widget widget_filter_price">
-                                            <h4 class="widgettitle mb-20">Price</h4>
-                                            <div class="price-slider-wrapper">
-                                                <div data-label-reasult="Range:"
-                                                     data-min="0"
-                                                     data-max="@((int)Math.Ceiling(Model.Products.Select(p => p.Price).Max()))"
-                                                     data-unit="₼"
-                                                     class="slider-range-price"
-                                                     data-value-min="0"
-                                                     data-value-max="@((int)Math.Ceiling(Model.Products.Select(p => p.Price).Max()))"></div>
-                                                <div class="price-slider-amount" data-entity-name="prices">
-                                                    <span class="from price-number">0<b>₼</b> </span>
-                                                    <span class="to price-number">@((int)Math.Ceiling(Model.Products.Select(p => p.Price).Max()))<b>₼</b> </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col- pb-30 mb-20">
-                                        <div class="f-choose-color">
-                                            <!-- Desktop version -->
-                                            <h4>Filter By Choose Color</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name="colors">
-                                                @foreach (var item in Model.Colors)
-                                                {
-                                                    <li>
-                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
-                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
-                                                            <a>
-                                                                <span class="pl-15">@item.Name</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                        <div class="f-choose-color">
-                                            <!-- Desktop version -->
-                                            <h4>Filter By Choose Material</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name="materials">
-                                                @foreach (var item in Model.Materials)
-                                                {
-                                                    <li>
-                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
-                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
-                                                            <a>
-                                                                <span class="pl-15">@item.Name</span>
-                                                            </a>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm- col- pb-30 mb-25">
-                                        <div class="f-choose-color mr-4">
-                                            <!-- Desktop version -->
-                                            <h4>Filter By Brand</h4>
-                                            <ul class="product-menubar mt-30 mb-15 over-x-hidden over-x-scroll" data-entity-name="brands">
-                                                @foreach (var item in Model.Brands)
-                                                {
-                                                    <li>
-                                                        <div class="d-flex align-items-center mb-3 ml-20 mt-10">
-                                                            <input class='category-input' type='checkbox' data-entity-id="@item.Id" />
-                                                            <a><span class="pl-15">@item.Name</span></a>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @await Component.InvokeAsync("SearchPanel")
                     </div>
                     <div class="col-xl-9 col-lg- col-md- col-sm- col- pl-0">
                         <div class="row">
                             <div class="col-xl-12 col-lg- col-md- col-sm- col-">
                                 <div id="col-4" class="bestsellers broducts-area">
                                     <div class="container-wrapper pl-15 pr-15">
-                                        <div class="row list-products">
+                                        <div class="list-products">
 
+                                            <div id="products" class="row">
 
-                                            <partial name="_ProductsContainer" model="@Model.Products" />
+                                                <partial name="_Products" model="@Model" />
+                                            </div>
 
                                         </div>
                                     </div>
@@ -397,13 +231,83 @@
         </div>
     </div>
     <!-- Modal end -->
-
+    <!-- Pagination -->
+   
 </main>
 
 @section addcss{
 
     <style>
 
+
+        .pagination {
+            display: inline-block;
+            padding-left: 12px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+            .pagination li {
+                display: inline-block;
+                text-transform: uppercase;
+            }
+
+            .pagination > li:first-child > a, .pagination > li:first-child > span, .pagination > li:last-child > a, .pagination > li:last-child > span {
+                border-radius: 0;
+            }
+
+            .pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span, pagination > li > a:hover {
+                color: #777;
+                cursor: not-allowed;
+                background-color: #fff;
+                border-color: #ddd;
+            }
+
+            .pagination > li a {
+                font-size: 15px;
+                font-weight: bold;
+                padding: 6px 14px;
+                transition: all 0.15s linear;
+            }
+
+            .pagination > li > a, .pagination > li > span {
+                position: relative;
+                float: left;
+                padding: 6px 12px;
+                margin-left: -1px;
+                line-height: 1.42857143;
+                color: #337ab7;
+                text-decoration: none;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                color: #888;
+                border-radius: 50%;
+            }
+
+            .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+                z-index: 2;
+                color: #fff;
+                cursor: default;
+                background-color: black;
+                border-color: black;
+            }
+
+            .pagination a {
+                color: #fff;
+                font-size: 12px;
+                margin: 0 10px;
+            }
+
+            .pagination > li > a:hover {
+                color: #fff;
+                background-color: black;
+                transition: all 0.15s linear;
+            }
+
+
+            .pagination a i {
+                margin: 0 5px;
+            }
 
         .widget li {
             list-style: none;
@@ -437,6 +341,9 @@
             position: absolute;
             right: 10px;
         }
+
+
+
 
         .border-none {
             border: none;
@@ -482,15 +389,15 @@
             overflow: hidden;
         }
 
-         .price-slider-amount span {
-        display: inline-block;
-        font-size: 15px;
-        color: #0a0a0a;
-        border: 1px solid #eeeeee;
-        padding: 4px 10px;
-        font-weight: 600;
-        border-radius: 0;
-    }
+        .price-slider-amount span {
+            display: inline-block;
+            font-size: 15px;
+            color: #0a0a0a;
+            border: 1px solid #eeeeee;
+            padding: 4px 10px;
+            font-weight: 600;
+            border-radius: 0;
+        }
 
 
 
@@ -505,45 +412,114 @@
             margin-right: 10px;
         }
 
-.widget_filter_price .ui-widget-content {
-    background: #ddd;
-    border-radius: 2px;
-    height: 4px;
-    border: none;
-}
+        .widget_filter_price .ui-widget-content {
+            background: #ddd;
+            border-radius: 2px;
+            height: 4px;
+            border: none;
+        }
 
-.widget_filter_price .ui-slider .ui-slider-range {
-    background: #ab8e66;
-}
+        .widget_filter_price .ui-slider .ui-slider-range {
+            background: #ab8e66;
+        }
 
-.widget_filter_price .ui-slider .ui-slider-handle {
-    width: 0;
-    height: 0;
-    border: none;
-    top: -6px;
-    border-radius: 1em;
-    cursor: ew-resize;
-    margin-left: -0.3em;
-    outline: 0 none;
-    position: absolute;
-    z-index: 2;
-    border-color: #ab8e66 transparent;
-}
+        .widget_filter_price .ui-slider .ui-slider-handle {
+            width: 0;
+            height: 0;
+            border: none;
+            top: -6px;
+            border-radius: 1em;
+            cursor: ew-resize;
+            margin-left: -0.3em;
+            outline: 0 none;
+            position: absolute;
+            z-index: 2;
+            border-color: #ab8e66 transparent;
+        }
 
-    .widget_filter_price .ui-slider .ui-slider-handle::before {
-        content: "";
-        border-style: solid;
-        border-width: 8px 6px 0 6px;
-        border-color: #ab8e66 transparent;
-    }
+            .widget_filter_price .ui-slider .ui-slider-handle::before {
+                content: "";
+                border-style: solid;
+                border-width: 8px 6px 0 6px;
+                border-color: #ab8e66 transparent;
+            }
 
-.widget_filter_price .price-slider-amount {
-    margin-top: 25px;
-    font-size: 13px;
-    color: #666666;
-    overflow: hidden;
-}
+        .widget_filter_price .price-slider-amount {
+            margin-top: 25px;
+            font-size: 13px;
+            color: #666666;
+            overflow: hidden;
+        }
 
+
+        [data-entity-type] {
+            position: relative;
+            padding-left: 30px;
+            display: block;
+            cursor: pointer;
+        }
+
+            [data-entity-type]:not(.filled)::before {
+                content: "";
+                font-size: 0.7em;
+                font-weight: 900;
+                font-family: "Font Awesome 5 Free";
+                position: absolute;
+                border: 1px solid #cccccc85;
+                width: 18px;
+                height: 18px;
+                border-radius: 2px;
+                top: 50%;
+                left: 0px;
+                transform: translateY(-50%);
+                text-align: center;
+                text-indent: 1px;
+                line-height: 1.7em;
+            }
+
+            [data-entity-type].active:not(.filled)::before {
+                content: "\f00c";
+                color: #ffffff;
+                background-color: #cccccc85;
+                border-color: #cccccc85;
+            }
+
+            [data-entity-type].filled {
+                width: 30px;
+                height: 25px;
+                border-radius: 2px;
+                border: 1px solid #cccccc85;
+            }
+
+                [data-entity-type].filled::before {
+                    content: "";
+                    display: inline-block;
+                    padding-left: 1px;
+                    line-height: 7pt;
+                    font-size: 5pt;
+                    font-weight: 900;
+                    font-family: "Font Awesome 5 Free";
+                    position: absolute;
+                    top: 1px;
+                    right: 1px;
+                }
+
+                [data-entity-type].filled.active::before {
+                    content: "\f00c";
+                    color: #000000c4;
+                    background-color: #ffffff;
+                    border: 1px solid #000000c4;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 100%;
+                }
+
+        #price-range[range]::before {
+            content: attr(range);
+            display: flex;
+            justify-content: center;
+            padding-top: 5px;
+        }
     </style>
 
 }
@@ -588,98 +564,179 @@
             });
         })
 
-        $('.slider-range-price').each(function () {
-            var min = $(this).data('min');
-            var max = $(this).data('max');
-            var unit = $(this).data('unit');
-            var value_min = $(this).data('value-min');
-            var value_max = $(this).data('value-max');
-            var t = $(this);
-            $(this).slider({
-                range: true,
-                min: min,
-                max: max,
-                values: [value_min, value_max],
-                slide: function (event, ui) {
-                    var result = ' <span class="price-number">' + ui.values[0] + '<b>' + unit + '</b>' + '</span>  <span class="price-number"> ' + ui.values[1] + '<b>' + unit + '</b>' + '</span>';
-                    t.closest('.price-slider-wrapper').find('.price-slider-amount').html(result);
-                    setFilter();
-                }
-            });
-        });
+        const priceRangeData = $("#price-range").data();
 
-        function setFilter() {
+        const searchModel = {
+            categories: [],
+            brands: [],
+            colors: [],
+            materials: [],
+            min: priceRangeData.priceMin,
+            max: priceRangeData.priceMax
+        };
 
-            if ($.setFilterProcessId != undefined) {
-                clearTimeout($.setFilterProcessId);
-            }
+        $(document).ready(function () {
+            $('.blog-pagination.ptb-20')
+                .removeClass('blog-pagination')
+                .removeClass('ptb-20')
+                .addClass('list-inline');
 
-            $.setFilterProcessId = setTimeout(function () {
+            $("#price-range")
+                .attr('range', `${searchModel.min}₼ - ${searchModel.max}₼`)
+                .slider({
+                    range: true,
+                    min: searchModel.min,
+                    max: searchModel.max,
+                    values: [searchModel.min, searchModel.max],
+                    slide: function (e, ui) {
+                        $(e.target).attr('range', `${ui.values[0]}₼ - ${ui.values[1]}₼`);
+                        searchModel.min = ui.values[0];
+                        searchModel.max = ui.values[1];
 
-                const filterObj = {};
-
-                $("[data-entity-name]").each(function (index, item) {
-                    const entityPropertyName = $(item).data('entity-name');
-
-                    filterObj[entityPropertyName] = [];
-
-                    $(item).find('li div input:checked').each(function (indexLi, itemLi) {
-                        const entityId = $(itemLi).data('entity-id');
-                        filterObj[entityPropertyName].push(entityId);
-                    })
-
-                    $(item).find("label.checked").each(function (indexLabel, itemLabel) {
-                        const entityId = $(itemLabel).data("entity-id");
-                        filterObj[entityPropertyName].push(entityId);
-                    });
-
-                    $(item).find(".price-number").each(function(indexSpan, itemSpan){
-                      const priceNumber = parseInt($(itemSpan).text());
-
-                      filterObj[entityPropertyName].push(priceNumber);
-                  });
-
+                        filterProducts();
+                    }
                 });
 
 
-                console.log(filterObj);
+            $('[data-entity-type]').click(function (e) {
 
+                e.preventDefault();
+
+                let model = $(e.currentTarget).data();  //entityType  id
+
+                if ($(e.currentTarget).hasClass('active') == true) {
+                    $(e.currentTarget).removeClass('active');
+                    searchModel[`${model.entityType}`] = searchModel[`${model.entityType}`].filter(item => item != model.id);
+                }
+                else {
+                    $(e.currentTarget).addClass('active');
+
+                    if (searchModel[`${model.entityType}`].filter(item => item == model.id).length == 0) {
+                        searchModel[`${model.entityType}`].push(model.id);
+                    }
+                }
+
+                filterProducts();
+            });
+        });
+
+        function filterProducts() {
+            if ($.pid != undefined) {
+                clearTimeout($.pid);
+            }
+
+            $.pid = setTimeout(function () {
+                console.log(searchModel);
 
                 $.ajax({
-
-                    url: '@Url.Action("Filter")',
                     type: 'POST',
-                    data: filterObj,
-                    dataType: 'html',
+                    data: searchModel,
                     contentType: 'application/x-www-form-urlencoded',
-                    beforeSend: function () {
-                        $("div.list-products").html("<img src='/assets/imgs/pre-loader.gif'/>");
-                    },
                     success: function (response) {
-                        console.log(response)
 
-                        setTimeout(function () {
-                            $("div.list-products").html(response);
-
-                            if ($('div.list-products').children().length == 0) {
-                                $("div.list-products").html("<img src='/assets/imgs/no-product-found.png'/>");
-                            }
-
-                        }, 1000);
+                        $('#products').html(response);
+                        //console.log(response);
                     },
                     error: function (response) {
                         console.log(response);
                     }
-
-                })
-                    .always(function () {
-                        console.log('sorgudan sonra');
-                    });
-
-
-
-            }, 2000);
+                });
+            }, 1500);
         }
+
+        //$('.slider-range-price').each(function () {
+        //    var min = $(this).data('min');
+        //    var max = $(this).data('max');
+        //    var unit = $(this).data('unit');
+        //    var value_min = $(this).data('value-min');
+        //    var value_max = $(this).data('value-max');
+        //    var t = $(this);
+        //    $(this).slider({
+        //        range: true,
+        //        min: min,
+        //        max: max,
+        //        values: [value_min, value_max],
+        //        slide: function (event, ui) {
+        //            var result = ' <span class="price-number">' + ui.values[0] + '<b>' + unit + '</b>' + '</span>  <span class="price-number"> ' + ui.values[1] + '<b>' + unit + '</b>' + '</span>';
+        //            t.closest('.price-slider-wrapper').find('.price-slider-amount').html(result);
+        //            setFilter();
+        //        }
+        //    });
+        //});
+
+                //function setFilter() {
+
+                //    if ($.setFilterProcessId != undefined) {
+                //        clearTimeout($.setFilterProcessId);
+                //    }
+
+                //    $.setFilterProcessId = setTimeout(function () {
+
+                //        const filterObj = {};
+
+                //        $("[data-entity-name]").each(function (index, item) {
+                //            const entityPropertyName = $(item).data('entity-name');
+
+                //            filterObj[entityPropertyName] = [];
+
+                //            $(item).find('li div input:checked').each(function (indexLi, itemLi) {
+                //                const entityId = $(itemLi).data('entity-id');
+                //                filterObj[entityPropertyName].push(entityId);
+                //            })
+
+                //            $(item).find("label.checked").each(function (indexLabel, itemLabel) {
+                //                const entityId = $(itemLabel).data("entity-id");
+                //                filterObj[entityPropertyName].push(entityId);
+                //            });
+
+                //            $(item).find(".price-number").each(function(indexSpan, itemSpan){
+                //              const priceNumber = parseInt($(itemSpan).text());
+
+                //              filterObj[entityPropertyName].push(priceNumber);
+                //          });
+
+                //        });
+
+
+                //        console.log(filterObj);
+
+
+                //        $.ajax({
+
+                //            url: '@Url.Action("Filter")',
+                //            type: 'POST',
+                //            data: filterObj,
+                //            dataType: 'html',
+                //            contentType: 'application/x-www-form-urlencoded',
+                //            beforeSend: function () {
+                //                $("div.list-products").html("<img src='/assets/imgs/pre-loader.gif'/>");
+                //            },
+                //            success: function (response) {
+                //                console.log(response)
+
+                //                setTimeout(function () {
+                //                    $("div.list-products").html(response);
+
+                //                    if ($('div.list-products').children().length == 0) {
+                //                        $("div.list-products").html("<img src='/assets/imgs/no-product-found.png'/>");
+                //                    }
+
+                //                }, 1000);
+                //            },
+                //            error: function (response) {
+                //                console.log(response);
+                //            }
+
+                //        })
+                //            .always(function () {
+                //                console.log('sorgudan sonra');
+                //            });
+
+
+
+                //    }, 2000);
+                //}
+
 
     </script>
 

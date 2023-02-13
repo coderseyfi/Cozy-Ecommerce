@@ -42,6 +42,10 @@
         #modalLoginForm {
             top: 20%;
         }
+        .user-drop-icon{
+            display:flex;
+            align-items:center;
+        }
     </style>
     @RenderSection("addcss", required: false)
 
@@ -67,27 +71,6 @@
             </a>
         </div>
         <div class="header-search-content">
-            <h4 class="text-center">Searching</h4>
-            <ul class="list">
-                <li class="list__item">
-                    <a class="active-blue" href="shop.html">All categories</a>
-                </li>
-                <li class="list__item">
-                    <a class="list__item__link" href="shop.html">Bedroom</a>
-                </li>
-                <li class="list__item">
-                    <a class="list__item__link" href="shop.html">Decor</a>
-                </li>
-                <li class="list__item">
-                    <a class="list__item__link" href="shop.html">Decoration</a>
-                </li>
-                <li class="list__item">
-                    <a class="list__item__link" href="shop.html">Kitchen</a>
-                </li>
-                <li class="list__item">
-                    <a class="list__item__link" href="shop.html">Lamp</a>
-                </li>
-            </ul>
             <form class="side-form position-relative">
                 <input class="side-form--input" type="text" placeholder="Search Products...">
                 <a class="side-form--link" href="javascript:void(0)">
@@ -100,25 +83,28 @@
                 <nav class="mean-nav">
                     <ul class="mean-nav__list d-block">
                         <li class="mean-nav__list__item">
-                            <a class="active" href="index.html">Home</a>
+                            <a class="active" asp-controller="home" asp-action="index">Home</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="shop.html">Shop</a>
+                            <a asp-controller="shop" asp-action="index">Shop</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="about.html">About</a>
+                            <a asp-controller="home" asp-action="about" >About</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="blog.html">Blog</a>
+                            <a asp-controller="blog" asp-action="index">Blog</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="faq.html">Faqs</a>
+                            <a asp-controller="home" asp-action="faq">Faqs</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="contact.html">Contact</a>
+                            <a asp-controller="home" asp-action="contact">Contact</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a href="about-me.html">About-me</a>
+                            <a asp-controller="home" asp-action="about-me">About-me</a>
+                        </li>
+                        <li class="mean-nav__list__item">
+                            <a asp-controller="home" asp-action="notfoundpage">404 Not Found</a>
                         </li>
                     </ul>
                 </nav>
@@ -127,21 +113,43 @@
 
         <div class="menu-login">
             <ul class="header-login d-flex justify-content-between">
-                <li>
-                    <a href="login.html">Login / register</a>
-                </li>
-                <li>
-                    <a href="login.html">
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                   <li>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                @User.GetPrincipalName()
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a></li>
+                            </ul>
+                        </div>
+                   </li>
+                   <li class="user-drop-icon">
                         <span class="fa fa-users"></span>
-                    </a>
-                </li>
+                   </li>
+
+                }
+                else
+                {
+                    <li>
+                        <a asp-controller="account" asp-action="signin">Login / register</a>
+                    </li>
+                    <li>
+                        <a asp-controller="account" asp-action="signin">
+                            <span class="fa fa-users"></span>
+                        </a>
+                    </li>
+                }
+                
             </ul>
             <ul class="header-heart d-flex justify-content-between">
                 <li>
-                    <a href="wishlist.html">Wishlist</a>
+                    <a asp-controller="shop" asp-action="wishlist">Wishlist</a>
                 </li>
                 <li>
-                    <a href="wishlist.html">
+                    <a asp-controller="shop" asp-action="wishlist">
                         <span class="fa-regular fa-heart"></span>
                     </a>
                 </li>

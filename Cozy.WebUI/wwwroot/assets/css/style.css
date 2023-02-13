@@ -1363,15 +1363,30 @@ h6 {
     justify-content: flex-end;
 }
 
+
+.header-top__container__right__items{
+    align-items:center;
+    gap:10px;
+}
+
+
 .header-top__container__right__items__link {
     font-size: 17px;
     color: #fff;
     padding-right: 12px;
+    display:flex;
+    align-items: center;
 }
 
-    .header-top__container__right__items__link i {
-        font-size: 17px;
-    }
+.header-top__container__right__item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-top__container__right__items__link i {
+    font-size: 17px;
+}
 
     .header-top__container__right__items__link .icon-sup {
         font-size: 12px;
@@ -1379,7 +1394,9 @@ h6 {
 
 .header-top__container__right__item__link {
     color: #fff;
-    padding-left: 26px;
+   /* padding-left: 26px;*/
+    text-align: center;
+    margin-left:10px !important;
 }
 
     .header-top__container__right__item__link i {

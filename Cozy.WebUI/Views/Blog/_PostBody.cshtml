@@ -32,7 +32,7 @@
                     <span class="fa fa-eye pr-5"></span>443 views
                 </li>
                 <li class="post-comments">
-                    <span><i class="far fa-comment"></i></span><span class="px-1">0</span>Comments
+                    <span><i class="far fa-comment"></i></span><span class="px-1">@item.Comments?.Count()</span>Comments
                 </li>
             </ul>
             @*<a asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="btn-1 read-more">Read More</a>*@

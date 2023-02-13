@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Product>
+﻿@model PagedViewModel<Product>
 
-@foreach (var item in Model)
+@foreach (var item in Model.Items)
 {
     var imagePath = item.ProductImages.FirstOrDefault()?.Name;
 
@@ -50,6 +50,15 @@
     </div>
 }
 
+
+<div class="div mb-40" style="text-align:center">
+        <div class="col-12">
+            @Model.GetPager(Url, "Index")
+        </div>
+</div>
+
+
+
 <script>
     function addToFavorites(productId) {
         const favorites = ($.cookie('favorites') || '').split(',').filter(item => item.length > 0);
@@ -57,10 +66,10 @@
         if (favorites.filter(item => item == productId).length == 0) {
             favorites.push(productId);
 
-            $.cookie('favorites', favorites.toString(),{ path: '/' });
+            $.cookie('favorites', favorites.toString(), { path: '/' });
         }
 
-         console.log($.cookie('favorites'))
+        console.log($.cookie('favorites'))
 
 
 

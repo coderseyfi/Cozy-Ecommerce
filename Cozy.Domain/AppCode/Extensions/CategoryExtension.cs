@@ -33,7 +33,7 @@ namespace Cozy.Domain.AppCode.Extensions
 
                 if (category.ParentId != null)
                 {
-                    sb.Append($"<input class='category-input category-input-{category.Id}' type='checkbox' id='cb-{category.Id}' />");
+                    sb.Append($"<input type='checkbox' id='cb-{category.Id}' />");
                 }
 
                 sb.Append($"<label for='cb-{category.Id}' class='label-text-category label-text-category-{category.Id}' data-entity-id='{category.Id}' >{category.Name}</label>");
@@ -72,7 +72,7 @@ namespace Cozy.Domain.AppCode.Extensions
                 }
             }
 
+
         }
     }
 }
-

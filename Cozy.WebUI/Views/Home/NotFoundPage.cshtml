@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "NotFoundPage";
+}
+
+@{
+    var backgroundImageUrl = Url.Content("~/assets/imgs/not-found.jpg");
+}
+
+<main>
+    <div class="slider-area-notfound over-hidden">
+        <div class="single-page no-page-height d-flex align-items-center
+          justify-content-center"
+             style="background-image: url('@backgroundImageUrl')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-content text-center">
+                            <h1 class="pt-70 pb-45">404</h1>
+                            <h3 class="pb-10 text-white">Page Not Found.</h3>
+                            <p class="not-found-text">
+                                Sorry for the inconvenience. Go to our homepage or check out
+                                our latest collections for Fashion, Chair, Decoration...
+                            </p>
+                            <a href="index.html" class="btn mt-40">Back to homepage</a>
+                        </div>
+                    </div>
+                    <!-- /col -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /container -->
+        </div>
+    </div>
+</main>
+
