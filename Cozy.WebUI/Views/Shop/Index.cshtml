@@ -99,7 +99,6 @@
                                         <div class="list-products">
 
                                             <div id="products" class="row">
-
                                                 <partial name="_Products" model="@Model" />
                                             </div>
 
@@ -682,6 +681,15 @@
                     success: function (response) {
 
                         $('#products').html(response);
+
+                        console.log($('#products').children().length)
+
+                        if ($('#products').children().length <= 2) {
+                            $("#products").html("<div style='display: flex; justify-content: center;'><img src='/assets/imgs/no-product-found.png'/></div>");
+                            console.log("test")
+                        }
+
+
                         //console.log(response);
                     },
                     error: function (response) {
@@ -690,100 +698,6 @@
                 });
             }, 1500);
         }
-
-        //$('.slider-range-price').each(function () {
-        //    var min = $(this).data('min');
-        //    var max = $(this).data('max');
-        //    var unit = $(this).data('unit');
-        //    var value_min = $(this).data('value-min');
-        //    var value_max = $(this).data('value-max');
-        //    var t = $(this);
-        //    $(this).slider({
-        //        range: true,
-        //        min: min,
-        //        max: max,
-        //        values: [value_min, value_max],
-        //        slide: function (event, ui) {
-        //            var result = ' <span class="price-number">' + ui.values[0] + '<b>' + unit + '</b>' + '</span>  <span class="price-number"> ' + ui.values[1] + '<b>' + unit + '</b>' + '</span>';
-        //            t.closest('.price-slider-wrapper').find('.price-slider-amount').html(result);
-        //            setFilter();
-        //        }
-        //    });
-        //});
-
-                //function setFilter() {
-
-                //    if ($.setFilterProcessId != undefined) {
-                //        clearTimeout($.setFilterProcessId);
-                //    }
-
-                //    $.setFilterProcessId = setTimeout(function () {
-
-                //        const filterObj = {};
-
-                //        $("[data-entity-name]").each(function (index, item) {
-                //            const entityPropertyName = $(item).data('entity-name');
-
-                //            filterObj[entityPropertyName] = [];
-
-                //            $(item).find('li div input:checked').each(function (indexLi, itemLi) {
-                //                const entityId = $(itemLi).data('entity-id');
-                //                filterObj[entityPropertyName].push(entityId);
-                //            })
-
-                //            $(item).find("label.checked").each(function (indexLabel, itemLabel) {
-                //                const entityId = $(itemLabel).data("entity-id");
-                //                filterObj[entityPropertyName].push(entityId);
-                //            });
-
-                //            $(item).find(".price-number").each(function(indexSpan, itemSpan){
-                //              const priceNumber = parseInt($(itemSpan).text());
-
-                //              filterObj[entityPropertyName].push(priceNumber);
-                //          });
-
-                //        });
-
-
-                //        console.log(filterObj);
-
-
-                //        $.ajax({
-
-                //            url: '@Url.Action("Filter")',
-                //            type: 'POST',
-                //            data: filterObj,
-                //            dataType: 'html',
-                //            contentType: 'application/x-www-form-urlencoded',
-                //            beforeSend: function () {
-                //                $("div.list-products").html("<img src='/assets/imgs/pre-loader.gif'/>");
-                //            },
-                //            success: function (response) {
-                //                console.log(response)
-
-                //                setTimeout(function () {
-                //                    $("div.list-products").html(response);
-
-                //                    if ($('div.list-products').children().length == 0) {
-                //                        $("div.list-products").html("<img src='/assets/imgs/no-product-found.png'/>");
-                //                    }
-
-                //                }, 1000);
-                //            },
-                //            error: function (response) {
-                //                console.log(response);
-                //            }
-
-                //        })
-                //            .always(function () {
-                //                console.log('sorgudan sonra');
-                //            });
-
-
-
-                //    }, 2000);
-                //}
-
 
     </script>
 

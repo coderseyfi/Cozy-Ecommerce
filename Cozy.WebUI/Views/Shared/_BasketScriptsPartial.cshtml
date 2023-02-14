@@ -98,9 +98,9 @@
                             }
 
                             if (response.value?.price == null) {
-                                $('.amount').text(``)
+                                $(`.amount-${response.value.id}`).text(``)
                             } else {
-                                $('.amount').text(`Price:${response.value.price}₼`)
+                            $(`.amount-${response.value.id}`).text(`Price:${response.value.price}₼`)
                             }
 
                             toastr.success(response.message, 'Success');
@@ -117,5 +117,48 @@
             }, 700);
 
         }
+
+
+    //function changeQuantity(event, element) {
+
+    //    if ($.processId != undefined) {
+    //        clearTimeout($.processId);
+    //        $.processId = undefined;
+    //    }
+
+    //    if (element.value < 1) {
+    //        console.log('olmadikiii', element.value);
+    //        return false;
+    //    }
+
+    //    $.processId = setTimeout(function () {
+
+    //        const elementData = $(element).data();
+    //        elementData.Quantity = element.value;
+
+    //        $.ajax({
+    //            url: `@Url.Action("ChangeBasketQuantity","Book")`,
+    //            type: 'POST',
+    //            data: elementData,
+    //            contentType: 'application/x-www-form-urlencoded',
+    //            success: function (response) {
+    //                if (response.error == false) {
+
+    //                    $(element).closest('div').find('.amount').text(`${response.value.price}₼`);
+    //                    $(element).closest('div').find('.product-subtotal').text(`${response.value.total}₼`);
+    //                    $('#summary').text(`${response.value.summary}₼`);
+    //                    toastr.success(response.message, 'Success');
+    //                    return;
+    //                }
+
+    //                toastr.error(response.message, 'Error');
+    //            },
+    //            error: function (response, status, xhr) {
+    //                console.log(response, status, xhr);
+    //            }
+    //        });
+
+    //    }, 700);
+    //}
 
     </script>

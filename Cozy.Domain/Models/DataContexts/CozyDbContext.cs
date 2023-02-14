@@ -46,6 +46,7 @@ namespace Cozy.Domain.Models.DataContexts
         public DbSet<Tag> Tags { get; set; }
 
         public DbSet<BlogPostTagItem> BlogPostTagCloud { get; set; }
+
         public DbSet<BlogPostLike> BlogPostLikes { get; set; }
 
 
