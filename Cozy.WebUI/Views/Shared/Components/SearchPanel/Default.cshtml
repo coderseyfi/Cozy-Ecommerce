@@ -1,64 +1,67 @@
 ﻿@model SearchPanelViewModel
 <div class="sidebar white-bg">
     <div class="border-default universal-padding mb-40 sidebar-widget">
-        <div class="group-title">
-            <h2>Categories</h2>
+        <div class="group-title mb-25">
+            <h2 class="def-cap">Filter By Categories</h2>
         </div>
-        <ul class="manufactures-list">
+        <ul class="manufactures-list def-list">
             @foreach (var item in Model.Categories)
             {
-                <li>
-                    <a data-id="@item.Id" data-entity-type="categories">
+                <li class="def-item">
+                    <a class="def-link" data-id="@item.Id" data-entity-type="categories">
                         @item.Name
                     </a>
                 </li>
             }
         </ul>
     </div>
-    <div class="border-default universal-padding mb-40 sidebar-widget">
-        <div class="group-title">
-            <h2>Availability</h2>
-        </div>
-        <ul class="manufactures-list">
-            <li>
-                <input type="checkbox" name="filter.v.availability" value="1" id="Filter-availability-1">
-                <label for="Filter-availability-1">In stock (42)</label>
-            </li>
-            <li>
-                <input type="checkbox" name="filter.v.availability" value="0" id="Filter-availability-2">
-                <label for="Filter-availability-2">Out of stock (4)</label>
-            </li>
-        </ul>
+    @* <div class="border-default universal-padding mb-40 sidebar-widget">
+    <div class="group-title">
+    <h2>Availability</h2>
     </div>
+    <ul class="manufactures-list">
+    <li>
+    <input type="checkbox" name="filter.v.availability" value="1" id="Filter-availability-1">
+    <label for="Filter-availability-1">In stock (42)</label>
+    </li>
+    <li>
+    <input type="checkbox" name="filter.v.availability" value="0" id="Filter-availability-2">
+    <label for="Filter-availability-2">Out of stock (4)</label>
+    </li>
+    </ul>
+    </div>*@
     <div class="border-default universal-padding mb-40">
-        <div class="group-title">
-            <h2>Colors</h2>
+        <div class="group-title mb-25">
+            <h2 class="def-cap">Filter By Choose Color</h2>
         </div>
-        <ul class="color-option">
+        <ul class="color-option def-list">
             @foreach (var item in Model.Colors)
             {
-                <li>
-                    <a class="filled" style="background-color:@item.HexCode" data-id="@item.Id" data-entity-type="colors">
+                <li class="def-item">
+                    <a class="filled def-link" style="background-color:@item.HexCode" data-id="@item.Id" data-entity-type="colors">
+                        <span class="def-color-name">
+                            @item.Name
+                        </span>
                     </a>
                 </li>
             }
         </ul>
     </div>
-    <div class="border-default universal-padding mb-40">
-        <div class="group-title">
-            <h2>Filter by Price</h2>
+    <div class="border-default universal-padding mb-70">
+        <div class="group-title mb-25">
+            <h2 class="def-cap">Filter by Price</h2>
         </div>
         <div id="price-range" data-price-min="@Model.Min" data-price-max="@Model.Max"></div>
     </div>
     <div class="border-default universal-padding mb-40 sidebar-widget">
-        <div class="group-title">
-            <h2>Brand</h2>
+        <div class="group-title mb-25">
+            <h2 class="def-cap">Filter By Brand</h2>
         </div>
-        <ul class="manufactures-list">
+        <ul class="manufactures-list def-list">
             @foreach (var item in Model.Brands)
             {
-                <li>
-                    <a data-id="@item.Id" data-entity-type="brands">
+                <li class="def-item">
+                    <a class="def-link" data-id="@item.Id" data-entity-type="brands">
                         @item.Name
                     </a>
                 </li>
@@ -66,19 +69,19 @@
         </ul>
     </div>
     <div class="border-default universal-padding mb-40 sidebar-widget">
-        <div class="group-title">
-            <h2>Material</h2>
+        <div class="group-title mb-25">
+            <h2 class="def-cap">Material</h2>
         </div>
-        <ul class="manufactures-list">
+        <ul class="manufactures-list def-list">
             @foreach (var item in Model.Materials)
             {
-                <li>
-                    <a data-id="@item.Id" data-entity-type="materials">
+                <li class="def-item">
+                    <a class="def-link" data-id="@item.Id" data-entity-type="materials">
                         @item.Name
                     </a>
                 </li>
             }
         </ul>
     </div>
-   
+
 </div>
