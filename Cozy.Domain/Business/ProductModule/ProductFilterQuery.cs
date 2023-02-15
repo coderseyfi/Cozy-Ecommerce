@@ -33,7 +33,7 @@ namespace Cozy.Domain.Business.ProductModule
             {
                 var query = db.ProductCatalogItems.AsQueryable();
 
-               
+
 
                 if (request.Colors != null && request.Colors.Length > 0)
                 {
@@ -46,7 +46,7 @@ namespace Cozy.Domain.Business.ProductModule
                 }
 
 
-               
+
 
 
                 var productIds = await query.Select(q => q.ProductId)
@@ -68,7 +68,7 @@ namespace Cozy.Domain.Business.ProductModule
                     productQuery = productQuery.Where(q => request.Brands.Contains(q.BrandId));
                 }
 
-              
+
                 if (request.Min > 0 && request.Min <= request.Max)
                 {
                     productQuery = productQuery.Where(q => q.Price >= request.Min && q.Price <= request.Max);
@@ -84,3 +84,4 @@ namespace Cozy.Domain.Business.ProductModule
         }
     }
 }
+

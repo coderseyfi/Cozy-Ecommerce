@@ -46,10 +46,10 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
       
         public IActionResult Create()
         {
-            ViewBag.BrandId = new SelectList(db.Brands, "Id", "Name");
-            ViewBag.CategoryId = new SelectList(db.Categories, "Id", "Name");
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
-            ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
+            ViewBag.BrandId = new SelectList(db.Brands.Where(p => p.DeletedDate == null), "Id", "Name");
+            ViewBag.CategoryId = new SelectList(db.Categories.Where(p => p.DeletedDate == null), "Id", "Name");
+            ViewBag.ColorId = new SelectList(db.Colors.Where(p => p.DeletedDate == null), "Id", "Name");
+            ViewBag.MaterialId = new SelectList(db.Materials.Where(p => p.DeletedDate == null), "Id", "Name");
 
             return View();
         }
@@ -117,10 +117,10 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
 
             }).ToArray();
 
-            ViewData["BrandId"] = new SelectList(db.Brands, "Id", "Name", product.BrandId);
-            ViewData["CategoryId"] = new SelectList(db.Categories, "Id", "Name", product.CategoryId);
-            ViewBag.ColorId = new SelectList(db.Colors, "Id", "Name");
-            ViewBag.MaterialId = new SelectList(db.Materials, "Id", "Name");
+            ViewData["BrandId"] = new SelectList(db.Brands.Where(p => p.DeletedDate == null), "Id", "Name", product.BrandId);
+            ViewData["CategoryId"] = new SelectList(db.Categories.Where(p => p.DeletedDate == null), "Id", "Name", product.CategoryId);
+            ViewBag.ColorId = new SelectList(db.Colors.Where(p => p.DeletedDate == null), "Id", "Name");
+            ViewBag.MaterialId = new SelectList(db.Materials.Where(p => p.DeletedDate == null), "Id", "Name");
             ViewBag.GetColorId = new Func<int, int>(GetColorId);
             ViewBag.GetMaterialId = new Func<int, int>(GetMaterialId);
             return View(command);

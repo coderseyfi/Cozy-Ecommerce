@@ -48,6 +48,8 @@ namespace Cozy.Domain.Models.DataContexts
         public DbSet<BlogPostTagItem> BlogPostTagCloud { get; set; }
 
         public DbSet<BlogPostLike> BlogPostLikes { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderProduct> OrderProducts { get; set; }
 
 
 

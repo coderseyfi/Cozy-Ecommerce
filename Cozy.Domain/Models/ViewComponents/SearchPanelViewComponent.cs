@@ -25,16 +25,18 @@ namespace Cozy.Domain.Models.ViewComponents
             vm.Colors = await db.ProductCatalogItems
                 .Include(pc => pc.Color)
                 .Select(pc => pc.Color)
+                .Where(pc => pc.DeletedDate == null)
                 .Distinct()
                 .ToArrayAsync();
 
-          
+
 
             vm.Materials = await db.ProductCatalogItems
                 .Include(pc => pc.Material)
                 .Select(pc => pc.Material)
+                .Where(pc => pc.DeletedDate == null)
                 .Distinct()
-               .ToArrayAsync();
+                .ToArrayAsync();
 
 
 
@@ -42,6 +44,7 @@ namespace Cozy.Domain.Models.ViewComponents
                 .Include(pc => pc.Product)
                 .ThenInclude(pc => pc.Brand)
                 .Select(pc => pc.Product.Brand)
+                .Where(pc => pc.DeletedDate == null)
                 .Distinct()
                 .ToArrayAsync();
 
@@ -49,6 +52,7 @@ namespace Cozy.Domain.Models.ViewComponents
                .Include(pc => pc.Product)
                .ThenInclude(pc => pc.Category)
                .Select(pc => pc.Product.Category)
+               .Where(pc => pc.DeletedDate == null)
                .Distinct()
                .ToArrayAsync();
 
@@ -66,3 +70,5 @@ namespace Cozy.Domain.Models.ViewComponents
         }
     }
 }
+
+

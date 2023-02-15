@@ -42,9 +42,9 @@
                     </div>
                 </div>
 
-                <partial name="_WishlistBody"  model="Model"/>
+                <partial name="_WishlistBody" model="Model" />
 
-              
+
 
             </div>
             <div class="card col-10 p-0">
@@ -69,7 +69,6 @@
             .card-body .basket-btn {
                 width: 300px;
             }
-           
     </style>
 }
 
@@ -89,7 +88,7 @@
                 },
                 success: function (response) {
                     $('#dynamic-content').html(response);
-                  
+
                 },
                 error: function (response) {
                 }
@@ -109,6 +108,37 @@
                 success: function (response) {
                     if (response.error == false) {
                         //$(e.target).closest('div.card').remove();
+
+                        //var newBasketProduct = `<ul class='list d-flex single-cart-box basket-item-${res.value.product.productId}' >
+                        //    <li class='list__img'>
+                        //        <a class='list__img__link d-block' asp-controller='shop' asp-action='details' asp-route-id='${res.value.product.productId}'>
+                        //                    <img src='~/uploads/images/${res.value.product.product.images[0].name}' alt='basket-img' />
+                        //        </a>
+                        //    </li>
+                        //    <li class='item-info'>
+                        //        <ul class='d-flex'>
+                        //            <li>
+                        //                <h6 class='single-product-name'>
+                        //                   <a asp-controller='shop' asp-action='details' asp-route-id='${res.value.product.productId}'>${res.value.product.product.name}</a>
+                        //                </h6>
+                        //                                <span>${res.value.product.quantity} x ${res.value.product.product.price}₼</span>
+                        //            </li>
+                        //            <li class='s-remove'>
+                        //                <a
+                        //                    class='d-inline-block del-icon'
+                        //                                     aria-remove-target='.basket-item-${res.value.product.productId}'
+                        //                                     data-product-id='${res.value.product.productId}'
+                        //                   onclick='removeFromBasket(this,"${res.value.product.product.name}");return;'>
+
+                        //                    <i class='far fa-trash-alt'></i>
+                        //                </a>
+                        //            </li>
+                        //        </ul>
+                        //    </li>
+                        //</ul>`;
+
+                        //$(".shop-cart-content").append(newBasketProduct);
+
                         toastr.success(response.message, 'Success');
                         return;
 

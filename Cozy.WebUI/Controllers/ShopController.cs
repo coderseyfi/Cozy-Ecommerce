@@ -176,10 +176,15 @@ namespace Cozy.WebUI.Controllers
         #endregion
 
 
+
+
         [Route("/checkout")]
-        public IActionResult Checkout()
+        public async Task<IActionResult> Checkout(ProductBasketQuery query)
         {
-            return View();
+            var response = await mediator.Send(query);
+
+            return View(response);
+
         }
 
 
