@@ -1,4 +1,5 @@
 ﻿
+@model OrderViewModel
 @{
     ViewData["Title"] = "Checkout";
 }
@@ -116,210 +117,53 @@
             <div class="row">
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="checkbox-form">
-                        <h4 class="pb-10 mb-20 border-b-light-gray3">Billing Details</h4>
-                        <div class="row">
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="country-select mb-30">
-                                    <label>Country <span class="theme-color">*</span></label>
-                                    <select class="w-100 primary-bg2 mb-20">
-                                        <option value="volvo">bangladesh</option>
-                                        <option value="saab">Algeria</option>
-                                        <option value="mercedes">Afghanistan</option>
-                                        <option value="audi">Ghana</option>
-                                        <option value="audi2">Albania</option>
-                                        <option value="audi3">Bahrain</option>
-                                        <option value="audi4">Colombia</option>
-                                        <option value="audi5">Dominican Republic</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>First Name <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Last Name <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Company Name</label>
-                                    <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Address <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="Street address"
-                                           class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <input type="text" placeholder="Apartment, suite, unit etc. (optional)" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Town / City <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="Town / City"
-                                           class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>State / County <span class="theme-color">*</span></label>
-                                    <input type="text" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Postcode / Zip <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="Postcode / Zip"
-                                           class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Email Address <span class="theme-color">*</span></label>
-                                    <input type="email" placeholder="" class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                <div class="checkout-form-list mb-20">
-                                    <label>Phone <span class="theme-color">*</span></label>
-                                    <input type="text" placeholder="Postcode / Zip"
-                                           class="form-control primary-bg2 ">
-                                </div>
-                            </div>
-                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                <div class="checkout-form-list create-acc mr-1">
-                                    <div class="save-info d-inline-block">
-                                        <input id="cbox-account" class="p-0 pr-2"
-                                               type="checkbox">
-                                        <p class="mb-0 d-inline-block text-uppercase">
-                                            Create an
-                                            account?
-                                        </p>
-                                    </div>
-                                    <div id="cbox-account-info" class="checkout-form-list create-account">
-                                        <p>
-                                            Create an account by entering the information below.
-                                            If you are a returning
-                                            customer please login at the top of the page.
-                                        </p>
-                                        <label>Account password <span class="theme-color">*</span></label>
-                                        <input type="password" placeholder="password"
-                                               class="form-control primary-bg2 ">
+                        <h4 class="pb-10 mb-20 border-b-light-gray3">Order Details</h4>
+                        <form id="checkout-form" novalidate>
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="checkout-form-list mb-20">
+                                        <label class="text">First Name <span class="theme-color">*</span></label>
+                                        <input asp-for="@Model.OrderDetails.Firstname" type="text" placeholder="" class="form-control primary-bg2 input-text">
+                                        <span asp-validation-for="@Model.OrderDetails.Firstname" class="text-danger validation-error"></span>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="different-address">
-                            <div class="ship-different-title pb-15 pt-1">
-                                <div class="save-info pb-10 border-b-light-gray">
-                                    <p class="mb-0 d-inline-block text-uppercase pr-15">
-                                        Ship
-                                        to a different address?
-                                    </p>
-                                    <input id="ship-box" class="p-0" type="checkbox"
-                                           aria-label="Checkbox for following text input">
-                                </div>
-                            </div>
-                            <div id="ship-box-info">
-                                <div class="row">
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="country-select mb-30">
-                                            <label>Country <span class="required primary-bg2">*</span></label>
-                                            <select class="form-control">
-                                                <option value="volvo">bangladesh</option>
-                                                <option value="saab">Algeria</option>
-                                                <option value="mercedes">Afghanistan</option>
-                                                <option value="audi">Ghana</option>
-                                                <option value="audi2">Albania</option>
-                                                <option value="audi3">Bahrain</option>
-                                                <option value="audi4">Colombia</option>
-                                                <option value="audi5">Dominican Republic</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mt-30 mb-30">
-                                            <label>First Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mt-30 mb-30">
-                                            <label>Last Name <span class="required">*</span></label>
-                                            <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Company Name</label>
-                                            <input type="text" placeholder="" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="checkout-form-list mb-40">
-                                            <label>Address <span class="required">*</span></label>
-                                            <input type="text" placeholder="Street address"
-                                                   class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <input type="text" placeholder="Apartment, suite, unit etc. (optional)" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Town / City <span class="required">*</span></label>
-                                            <input type="text" placeholder="Town / City"
-                                                   class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>State / County <span class="required">*</span></label>
-                                            <input type="text" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Postcode / Zip <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip"
-                                                   class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Email Address <span class="required">*</span></label>
-                                            <input type="email" placeholder="" class="form-control primary-bg2 ">
-                                        </div>
-                                    </div>
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                        <div class="checkout-form-list mb-30">
-                                            <label>Phone <span class="required">*</span></label>
-                                            <input type="text" placeholder="Postcode / Zip"
-                                                   class="form-control primary-bg2 ">
-                                        </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="checkout-form-list mb-20">
+                                        <label class="text">Last Name <span class="theme-color">*</span></label>
+                                        <input asp-for="@Model.OrderDetails.Lastname" type="text" placeholder="" class="form-control primary-bg2 input-text">
+                                        <span asp-validation-for="@Model.OrderDetails.Firstname" class="text-danger validation-error"></span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="order-notes">
-                                <div class="checkout-form-list mb-40">
-                                    <label>Order Notes</label>
-                                    <textarea id="checkout-mess" placeholder="Notes about your order, e.g. special notes for delivery."
-                                              class="form-control pt-20 pl-20 primary-bg2 "></textarea>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="checkout-form-list mb-20">
+                                        <label class="text">Address <span class="theme-color">*</span></label>
+                                        <input asp-for="@Model.OrderDetails.Address" type="text" placeholder="Street address"
+                                               class="form-control primary-bg2 input-text">
+                                        <span asp-validation-for="@Model.OrderDetails.Address" class="text-danger validation-error"></span>
+
+                                    </div>
                                 </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                                    <div class="checkout-form-list mb-20">
+                                        <label class="text">Phone Number <span class="theme-color">*</span></label>
+                                        <input asp-for="@Model.OrderDetails.PhoneNumber" type="text" placeholder="Phone Number" class="form-control primary-bg2 input-text">
+                                        <span asp-validation-for="@Model.OrderDetails.PhoneNumber" class="text-danger validation-error"></span>
+
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
+                            <button type="submit" class="button button-payment btn p-add-cart p-add-cart2 pt-15 pb-15 mb-10 text-uppercase mt-2 w-100 mr-2">Place Order</button>
+                            <input asp-for="OrderDetails.TotalAmount" value="@Model.BasketProducts.Sum(p => (p.Product.Price * p.Quantity))" hidden />
+                            <input asp-for="OrderDetails.UserId" value="@User.GetCurrentUserId()" hidden />
+                            @for (int i = 0; i < Model.BasketProducts.Count(); i++)
+                            {
+                                <input type="hidden" name="productIds" value="@Model.BasketProducts.ElementAt(i).ProductId">
+                                <input type="hidden" name="quantities" value="@Model.BasketProducts.ElementAt(i).Quantity">
+                            }
+                        </form>
+                    
+                       
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
@@ -327,59 +171,32 @@
                         <h4 class="pb-10 mb-20 border-b-light-gray3">Your order</h4>
                         <div class="your-order-table table-responsive">
                             <table class="width100">
-                                <thead>
-                                    <tr>
-                                        <th class="product-name">Product</th>
-                                        <th class="product-total">Total</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            Vestibulum suscipit <strong class="product-quantity">
-                                                × 1
-                                            </strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="amount">$165.00</span>
-                                        </td>
-                                    </tr>
-                                    <tr class="cart_item">
-                                        <td class="product-name">
-                                            Vestibulum dictum magna <strong class="product-quantity"> × 1</strong>
-                                        </td>
-                                        <td class="product-total">
-                                            <span class="amount">$50.00</span>
-                                        </td>
-                                    </tr>
+                                    @foreach (var item in Model.BasketProducts)
+                                    {
+                                        <tr class="product-item-order product-item-order-@item.ProductId">
+                                            <td class="product-thumb">
+                                                <a target="_blank" asp-action="details" asp-controller="shop" asp-route-id="@item.ProductId">
+                                                    <img src="~/uploads/images/@item.Product.ProductImages.FirstOrDefault()?.Name" alt="img" />
+                                                </a>
+                                            </td>
+                                            <td class="product-order-inner">
+                                                <h5 class="product-name">
+                                                    <a class="order-link-name" target="_blank" asp-action="details" asp-controller="shop" asp-route-id="@item.ProductId">@item.Product.Name</a>
+                                                </h5>
+                                                <div class="price">
+                                                    @item.Product.Price.ToString("0.00₼")
+                                                    <span class="count">x @item.Quantity</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                                 <tfoot>
-                                    <tr class="cart-subtotal">
-                                        <th>Cart Subtotal</th>
-                                        <td><span class="amount">$215.00</span></td>
-                                    </tr>
-                                    <tr class="shipping">
-                                        <th>Shipping</th>
-                                        <td>
-                                            <ul>
-                                                <li class="d-flex">
-                                                    <input type="radio" class="r-inpt mb-2 mr-1">
-                                                    <label>
-                                                        Flat Rate: <span class="amount">$8.00</span>
-                                                    </label>
-                                                </li>
-                                                <li class="d-flex">
-                                                    <input type="radio" class="r-inpt mb-2 mr-1">
-                                                    <label>Free Shipping:</label>
-                                                </li>
-                                                <li></li>
-                                            </ul>
-                                        </td>
-                                    </tr>
                                     <tr class="order-total">
-                                        <th>Order Total</th>
+                                        <th>Order Total : </th>
                                         <td>
-                                            <strong><span class="amount text-danger"><b>$215.00</b></span></strong>
+                                            <strong><span class="amount text-danger"><b> @Model.BasketProducts.Sum(p => (p.Product.Price * p.Quantity)) ₼</b></span></strong>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -463,9 +280,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="order-button-payment mt-20">
-                                <a href="#" class="btn p-add-cart p-add-cart2 pt-15 pb-15 mb-10 text-uppercase mt-2 w-100 mr-2">Place order</a>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -476,3 +290,106 @@
 
 </main>
 
+
+
+@section addcss{
+    <link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+    <style>
+        input[Name].novalidated,
+        textarea[Name].novalidated {
+            border: 1px solid rgb(223, 53,69);
+        }
+        .product-thumb{
+            float: left;
+            width: 100px;
+            margin-right: 30px;
+        }
+        .order-total{
+            display: flex;
+            align-items: center;
+            width: 200px;
+        }
+        .product-item-order{
+            display:flex;
+            align-items:center;
+        }
+
+        .order-link-name{
+            color:black;
+        }
+
+           .order-link-name:hover{
+            color:slategrey;
+        }
+    </style>
+}
+
+@section addjs{
+    <script src="~/libs/sweetalert/sweetalert.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.min.js"></script>
+    <script src="~/libs/toastr.js/toastr.customize.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#checkout-form").submit(function (ev) {
+                ev.preventDefault();
+
+                let fd = new FormData(ev.currentTarget); // form => formData
+
+                $.ajax({
+                    url: '@Url.Action("Checkout")',
+                    type: "POST",
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+
+                        $("#checkout-form span.text-danger").remove();
+                        $("#checkout-form input[Name]").removeClass("novalidated");
+                        //console.log(response, "SUCCESS");
+
+                        if (response.error == true) {
+
+                            toastr.error(response.message);
+                            showError(response.state);
+
+                            return;
+                        }
+
+                        swal({
+                           title: "Success!",
+                           text: "Your order has been completed, you will receive message in few days",
+                           icon: "success",
+                           button: "Ok",
+                        });
+
+                        ev.currentTarget.reset();
+                    },
+                    error: function (errResponse) {
+                       console.log(errResponse, "ERROR");
+                    }
+
+                })
+
+
+            })
+        });
+
+        function showError(state) {
+
+            state.forEach(item => {
+                //console.log(item)
+
+                let errorInput = $(`#checkout-form input[name='${item.fieldName}']`);
+                let errorSpan = $("<span/>", {
+                    class: 'text-danger validation-error',
+                    html: item.message
+                });
+
+                $(errorInput.parent()).append(errorSpan);
+                $(errorInput).addClass("novalidated")
+            });
+        }
+    </script>
+}

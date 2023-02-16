@@ -1,0 +1,83 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5 style="font-size: 26px">Order ID #@Model.Id</h5>
+
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table table-framed">
+                <thead>
+                    <tr>
+                        <th>Products summary</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.OrderProducts)
+                    {
+                        <tr>
+                            <th scope="row" class="d-flex">
+                                <div class="order-image-container">
+                                    <img class="order-product-image" src="~/uploads/images/@item.Product.ProductImages.FirstOrDefault().Name">
+                                </div>
+                                <span class="product-name-center">@item.Product.Name</span>
+                            </th>
+                            <td>x @item.Quantity</td>
+                            <td>@item.Product.Price ₼</td>
+                            <td>@(item.Quantity * item.Product.Price) ₼</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-block">
+        <div class="table-responsive">
+            <table class="table table-xl">
+                <thead>
+                    <tr>
+                        <th>Customer And Order Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">Customer Name</th>
+                        <td>@Model.Firstname @Model.Lastname</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Phone Number</th>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Shipping Address</th>
+                        <td>@Model.Address</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Account email</th>
+                        <td>@Model.User.Email</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<div class="form-group row">
+    <div class="col-12 d-flex justify-content-end">
+        <a class="btn btn-info mr-2" asp-action="Index">Back to List</a>
+    </div>
+</div>
+

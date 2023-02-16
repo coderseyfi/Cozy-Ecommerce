@@ -1,0 +1,200 @@
+﻿@model IEnumerable<Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Orders</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>Delivered Orders</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Order ID
+            </th>
+            <th>
+                Ordered Date
+            </th>
+            <th>
+                Order Price
+            </th>
+            <th>
+                Order Status
+            </th>
+            <th class="operations">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td class="ellipse">
+                    @if (item.IsDelivered)
+                    {
+                        <span class="badge badge-success badge-secondary" style="scale: 1.3">Delivered</span>
+                    }
+                    else
+                    {
+                        <span class="badge badge-warning badge-secondary" style="scale: 1.3; color: #f3f3f3;">Pending</span>
+                    }
+                <td class="operations" style="max-width: 191px">
+
+                        @if (User.HasAccess("admin.orders.deliveredordersbacktoindex"))
+                        {
+                         <a class="btn btn-sm btn-success" onclick="removeEntityBack(@item.Id, '@item.Id')"><i class="fa-solid fa-rotate-left"></i></a>
+                        }
+
+                        @if (User.HasAccess("admin.orders.details"))
+                        {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                            <i class="fa fa-eye"></i>
+                        </a>
+                        }
+
+
+                        @if (User.HasAccess("admin.contactposts.delete"))
+                        {
+                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Id')">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        }
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.AntiForgeryToken()
+
+@section addcss{
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+}
+
+@section addjs{
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
+    function removeEntity(id, name){
+        swal(`${name} nömrəli sifarişi silmək istədiyinizdən əminsiniz?`, {
+              title: "Diqqət!",
+              text: `${name} nömrəli sifarişi silmək istədiyinizdən əminsiniz?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("Delete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        //console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message);
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+
+    function removeEntityBack(id, name) {
+        swal(`${name} adlı sifarişi geri qaytarmaq istəyirsiniz mi?`, {
+            title: "Diqqet!",
+            text: `${name} adlı sifarişi geri qaytarmaq istəyirsiniz mi?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: ["No", "Yes"]
+        })
+            .then((value) => {
+
+                if (value == true) {
+
+                    let vToken = $('[name=__RequestVerificationToken]').val();
+
+                    let formData = new FormData();
+                    formData.set('__RequestVerificationToken', vToken);
+                    formData.set('id', id);
+
+                    $.ajax({
+                        url: `@Url.Action("DeliveredOrdersBackToIndex")`,
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function (response) {
+                            console.log(response)
+                            if (response.error == true) {
+                                toaster.error(response.message, "Xeta");
+                                return;
+                            }
+                            location.reload();
+                        },
+                        error: function (errorResponse) {
+                            console.error(errorResponse);
+                        }
+                    });
+                }
+
+
+            });
+    }
+</script>
+}
+

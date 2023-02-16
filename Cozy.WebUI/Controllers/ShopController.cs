@@ -2,10 +2,13 @@
 using Cozy.Domain.Business.BasketModule;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
+using Cozy.Domain.Models.Entites;
+using Cozy.Domain.Models.ViewModels.OrderViewModel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Cozy.WebUI.Controllers
@@ -38,61 +41,6 @@ namespace Cozy.WebUI.Controllers
             return View(response);
         }
 
-
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public IActionResult Filter(ShopFilterFormModel model)
-        //{
-
-        //    var query = db.Products
-        //        .Include(p => p.ProductImages.Where(i => i.IsMain == true))
-        //        .Include(p => p.Brand)
-        //        .Include(p => p.Category)
-        //        .Where(p => p.DeletedDate == null)
-        //        .AsQueryable();
-
-        //    if (model?.Brands?.Count() > 0)
-        //    {
-        //        query = query.Where(p => model.Brands.Contains(p.BrandId));
-        //    }
-
-        //    if (model?.Categories?.Count() > 0)
-        //    {
-        //        query = query.Where(p => model.Categories.Contains(p.CategoryId));
-        //    }
-
-        //    if (model.Prices[0] >= 0 && model.Prices[0] <= model.Prices[1])
-        //    {
-        //        query = query.Where(q => q.Price >= model.Prices[0] && q.Price <= model.Prices[1]);
-        //    }
-
-        //    return PartialView("_ProductsContainer", query.ToList());
-
-
-        //    //var query = db.Products
-        //    //    .Include(p => p.ProductImages.Where(i => i.IsMain == true))
-        //    //    .Include(c => c.Category)
-        //    //    //.Include(c => c.ProductCatalog)
-        //    //    .Include(p => p.Brand)
-        //    //    .Where(p => p.DeletedDate == null)
-        //    //    .AsQueryable();
-
-
-        //    //if (model?.Brands?.Count() > 0)
-        //    //{
-        //    //    query = query.Where(p => model.Brands.Contains(p.BrandId));
-        //    //}
-
-        //    //if (model?.Colors?.Count() > 0)
-        //    //{
-        //    //    query = query.Where(p => model.Colors.Contains(p.ProductCatalog));
-        //    //}
-
-
-        //    //return PartialView("_ProductsContainer", query.ToList());
-
-        //}
 
 
         [AllowAnonymous]
@@ -183,10 +131,53 @@ namespace Cozy.WebUI.Controllers
         {
             var response = await mediator.Send(query);
 
-            return View(response);
-
+            return View(new OrderViewModel
+            {
+                BasketProducts = response
+            });
         }
 
+        [HttpPost]
+        [Route("/checkout")]
+        public async Task<IActionResult> Checkout(OrderViewModel vm, int[] productIds, int[] quantities)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Orders.Add(vm.OrderDetails);
+
+                await db.SaveChangesAsync();
+
+                vm.OrderDetails.OrderProducts = new List<OrderProduct>();
+
+                for (int i = 0; i < productIds.Length; i++)
+                {
+                    var product = db.Products.Find(productIds[i]);
+                    vm.OrderDetails.OrderProducts.Add(new OrderProduct
+                    {
+                        OrderId = vm.OrderDetails.Id,
+                        ProductId = product.Id,
+                        Quantity = quantities[i]
+                    });
+                }
+                await db.SaveChangesAsync();
+
+                var response = new
+                {
+                    error = false,
+                    message = "Your order was completed"
+                };
+
+                return Json(response);
+            }
+
+            var responseError = new
+            {
+                error = true,
+                message = "The error was occurred while completing your order",
+                state = ModelState.GetError()
+            };
+            return Json(responseError);
+        }
 
     }
 }

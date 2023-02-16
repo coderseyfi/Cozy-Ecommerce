@@ -1,0 +1,185 @@
+﻿@model IEnumerable<Tag>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+<div class="page-header">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <div class="d-inline">
+                    <h4>Tags</h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item" style="float: left;">
+                        <a asp-controller="Dashboard" asp-action="index"> <i class="feather icon-home"></i> </a>
+                    </li>
+                    <li class="breadcrumb-item" style="float: left;">
+                        <span>All tags</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="card">
+        <div class="card-block table-border-style">
+            <div class="table-responsive">
+                <table class="table table-framed tree">
+
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Text)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.CreatedDate)
+                            </th>
+                            <th class="operations">
+                                @if (User.HasAccess("admin.tags.create"))
+                                {
+                                    <a asp-action="Create" class="btn btn-sm btn-primary">
+                                        <i class="fa fa-pen-to-square"></i>
+                                    </a>
+                                }
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Text)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                                </td>
+                                <td class="operations">
+
+                                    @if (User.HasAccess("admin.tags.edit"))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </a>
+                                    }
+
+
+                                    @if (User.HasAccess("admin.tags.details"))
+                                    {
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    }
+
+
+                                    @if (User.HasAccess("admin.tags.delete"))
+                                    {
+                                        <a class="btn btn-sm btn-danger" onclick="removeEntity(@item.Id, '@item.Text')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Horizontal-border table end -->
+    @Html.AntiForgeryToken()
+</div>
+
+
+@section addcss{
+<link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
+<link rel="stylesheet" href="~/lib/jquery-treegrid/css/jquery.treegrid.css" />
+
+<style>
+    th.operations,
+    td.operations {
+        max-width: 148px;
+        width: 148px;
+        text-align: right;
+        color: #ffffff;
+    }
+
+        th.operations i,
+        td.operations i {
+            margin: 0;
+        }
+</style>
+}
+
+@section addjs{
+<script src="~/lib/sweetalert/sweetalert.min.js"></script>
+<script src="~/lib/toastr.js/toastr.min.js"></script>
+<script src="~/lib/toastr.js/toastr.customize.js"></script>
+<script src="~/lib/jquery-treegrid/js/jquery.treegrid.js"></script>
+
+<script type="text/javascript">
+    $('.tree').treegrid();
+</script>
+
+
+@if (User.HasAccess("admin.categories.remove")){
+<script class="removable">
+    function removeEntity(id, name){
+        swal(`Əminsiniz ki, '${name}' silinsin?`, {
+              title: "Diqqət!",
+              text: `Əminsiniz ki, '${name}' silinsin?`,
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+              buttons: ["Xeyr", "Bəli"]
+        })
+        .then((value) => {
+
+            if(value == true){
+
+                let vToken = $("[name=__RequestVerificationToken]").val();
+
+                let formData = new FormData();
+
+                formData.set("__RequestVerificationToken", vToken);
+                formData.set("id", id);
+
+                $.ajax({
+                    url: `@Url.Action("Delete")`,
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response){
+                        //console.log(response);
+
+                        if(response.error == true){
+                            toastr.error(response.message, "Xeta!");
+                            return;
+                        }
+
+                        location.reload();
+                    },
+                    error: function(errorResponse){
+                        console.error(errorResponse);
+                    }
+                });
+            }
+        });
+    }
+</script>
+}
+
+}
