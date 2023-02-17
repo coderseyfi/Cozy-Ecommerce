@@ -207,14 +207,14 @@ $(document).ready(function () {
             arrows: true,
             prevArrow: $('.testimonial-area .prev'),
             nextArrow: $('.testimonial-area .next'),
-            appendDots:$(".testimonial--dots"),
+            appendDots: $(".testimonial--dots"),
             responsive: [
                 {
                     breakpoint: 1400,
                     settings: {
                         slidesToShow: 1,
                         slidesToScroll: 1,
-                        
+
                     },
                 },
                 {
@@ -311,7 +311,7 @@ $(document).ready(function () {
 
 
     $(".body-overlay").on("click", function () {
-        $(".side-mobile-menu").css("left","-200%");
+        $(".side-mobile-menu").css("left", "-200%");
         $(".body-overlay").removeClass("opened");
     });
 
@@ -328,29 +328,29 @@ $(document).ready(function () {
     })
 
 
-    $('.eye').on('click',()=>{
-        $('.modal').css('display','block')
+    $('.eye').on('click', () => {
+        $('.modal').css('display', 'block')
         $('body').addClass('modal-open')
         $('.modal-back').addClass('not-fade')
     })
 
 
-    $('.close-modal').on('click',()=>{
-        $('.modal').css('display','none')
+    $('.close-modal').on('click', () => {
+        $('.modal').css('display', 'none')
         $('body').removeClass('modal-open')
         $('.modal-back').removeClass('not-fade')
     })
-    
+
 
     let tabs = document.querySelectorAll('.single-pr'),
         contents = document.querySelectorAll('.arm')
-        
-    tabs.forEach((tab,index)=>{
-        tab.addEventListener('click',()=>{
-            contents.forEach((content)=>{
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            contents.forEach((content) => {
                 content.classList.remove('active')
             });
-            tabs.forEach((tab)=>{
+            tabs.forEach((tab) => {
                 tab.classList.remove('nav-link-active')
             })
 
@@ -382,7 +382,7 @@ $(document).ready(function () {
     }
 
 
-     /* Price filter active 2*/
+    /* Price filter active 2*/
     //---------------------------------------------------------------------------
     if ($("#slider-range2").length) {
         $("#slider-range2").slider({
@@ -404,106 +404,106 @@ $(document).ready(function () {
     }
 
 
-    if($('.product-filter-details')){
-        $('.product-filter-btn').on('click',()=>{
+    if ($('.product-filter-details')) {
+        $('.product-filter-btn').on('click', () => {
             $('.product-filter-details').toggleClass('active-filter')
         })
     }
 
 
-    $('.custom-next').on('click',()=>{
-      let inpVal = Number($('.quantity-input-arrow').val())
-      $('.quantity-input-arrow').val(inpVal+1)
-    })
-
-
-    $('.custom-prev').on('click',()=>{
+    $('.custom-next').on('click', () => {
         let inpVal = Number($('.quantity-input-arrow').val())
-        if (inpVal <=0) {
-            return; 
-        }
-        $('.quantity-input-arrow').val(inpVal-1)
+        $('.quantity-input-arrow').val(inpVal + 1)
     })
 
-    
+
+    $('.custom-prev').on('click', () => {
+        let inpVal = Number($('.quantity-input-arrow').val())
+        if (inpVal <= 0) {
+            return;
+        }
+        $('.quantity-input-arrow').val(inpVal - 1)
+    })
+
+
 
     var QtyInput = (function () {
         var $qtyInputs = $(".qty-input");
-    
+
         if (!$qtyInputs.length) {
             return;
         }
-    
+
         var $inputs = $qtyInputs.find(".product-qty");
         var $countBtn = $qtyInputs.find(".qty-count");
         var qtyMin = parseInt($inputs.attr("min"));
         var qtyMax = parseInt($inputs.attr("max"));
-    
+
         $inputs.change(
             function () {
-            var $this = $(this);
-            var $minusBtn = $this.siblings(".qty-count--minus");
-            var $addBtn = $this.siblings(".qty-count--add");
-            var qty = parseInt($this.val());
-    
-            if (isNaN(qty) || qty <= qtyMin) {
-                $this.val(qtyMin);
-                $minusBtn.attr("disabled", true);
-            } else {
-                $minusBtn.attr("disabled", false);
-                
-                if(qty >= qtyMax){
-                    $this.val(qtyMax);
-                    $addBtn.attr('disabled', true);
+                var $this = $(this);
+                var $minusBtn = $this.siblings(".qty-count--minus");
+                var $addBtn = $this.siblings(".qty-count--add");
+                var qty = parseInt($this.val());
+
+                if (isNaN(qty) || qty <= qtyMin) {
+                    $this.val(qtyMin);
+                    $minusBtn.attr("disabled", true);
                 } else {
-                    $this.val(qty);
-                    $addBtn.attr('disabled', false);
+                    $minusBtn.attr("disabled", false);
+
+                    if (qty >= qtyMax) {
+                        $this.val(qtyMax);
+                        $addBtn.attr('disabled', true);
+                    } else {
+                        $this.val(qty);
+                        $addBtn.attr('disabled', false);
+                    }
                 }
-            }
-        });
-    
+            });
+
         $countBtn.click(function () {
             var operator = this.dataset.action;
             var $this = $(this);
             var $input = $this.siblings(".product-qty");
             var qty = parseInt($input.val());
-    
+
             if (operator == "add") {
                 qty += 1;
                 if (qty >= qtyMin + 1) {
                     $this.siblings(".qty-count--minus").attr("disabled", false);
                 }
-    
+
                 if (qty >= qtyMax) {
                     $this.attr("disabled", true);
                 }
             } else {
                 qty = qty <= qtyMin ? qtyMin : (qty -= 1);
-                
+
                 if (qty == qtyMin) {
                     $this.attr("disabled", true);
                 }
-    
+
                 if (qty < qtyMax) {
                     $this.siblings(".qty-count--add").attr("disabled", false);
                 }
             }
-    
+
             $input.val(qty);
         });
     })();
-    
+
 
 
     let modalPrs = document.querySelectorAll('.m-pr'),
         mImgs = document.querySelectorAll('.m-img')
-        
-        modalPrs.forEach((modal,index)=>{
-            modal.addEventListener('click',()=>{
-            mImgs.forEach((img)=>{
+
+    modalPrs.forEach((modal, index) => {
+        modal.addEventListener('click', () => {
+            mImgs.forEach((img) => {
                 img.classList.remove('img-active')
             });
-            modalPrs.forEach((modal)=>{
+            modalPrs.forEach((modal) => {
                 modal.classList.remove('nav-link-active')
             })
 
@@ -512,6 +512,108 @@ $(document).ready(function () {
         })
     })
 
+
+    //chatbox
+
+    $(function () {
+        var INDEX = 0;
+        $("#chat-submit").click(function (e) {
+            e.preventDefault();
+            var msg = $("#chat-input").val();
+            if (msg.trim() == '') {
+                return false;
+            }
+            generate_message(msg, 'self');
+            var buttons = [
+                {
+                    name: 'Existing User',
+                    value: 'existing'
+                },
+                {
+                    name: 'New User',
+                    value: 'new'
+                }
+            ];
+            setTimeout(function () {
+                generate_message(msg, 'user');
+            }, 1000)
+
+        })
+
+        function generate_message(msg, type) {
+            INDEX++;
+            var str = "";
+            str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg " + type + "\">";
+            str += "          <span class=\"msg-avatar\">";
+            str += "            <img src=\"https:\/\/image.crisp.im\/avatar\/operator\/196af8cc-f6ad-4ef7-afd1-c45d5231387c\/240\/?1483361727745\">";
+            str += "          <\/span>";
+            str += "          <div class=\"cm-msg-text\">";
+            str += msg;
+            str += "          <\/div>";
+            str += "        <\/div>";
+            $(".chat-logs").append(str);
+            $("#cm-msg-" + INDEX).hide().fadeIn(300);
+            if (type == 'self') {
+                $("#chat-input").val('');
+            }
+            $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);
+        }
+
+        function generate_button_message(msg, buttons) {
+            /* Buttons should be object array 
+              [
+                {
+                  name: 'Existing User',
+                  value: 'existing'
+                },
+                {
+                  name: 'New User',
+                  value: 'new'
+                }
+              ]
+            */
+            INDEX++;
+            var btn_obj = buttons.map(function (button) {
+                return "              <li class=\"button\"><a href=\"javascript:;\" class=\"btn btn-primary chat-btn\" chat-value=\"" + button.value + "\">" + button.name + "<\/a><\/li>";
+            }).join('');
+            var str = "";
+            str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg user\">";
+            str += "          <span class=\"msg-avatar\">";
+            str += "            <img src=\"https:\/\/image.crisp.im\/avatar\/operator\/196af8cc-f6ad-4ef7-afd1-c45d5231387c\/240\/?1483361727745\">";
+            str += "          <\/span>";
+            str += "          <div class=\"cm-msg-text\">";
+            str += msg;
+            str += "          <\/div>";
+            str += "          <div class=\"cm-msg-button\">";
+            str += "            <ul>";
+            str += btn_obj;
+            str += "            <\/ul>";
+            str += "          <\/div>";
+            str += "        <\/div>";
+            $(".chat-logs").append(str);
+            $("#cm-msg-" + INDEX).hide().fadeIn(300);
+            $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);
+            $("#chat-input").attr("disabled", true);
+        }
+
+        $(document).delegate(".chat-btn", "click", function () {
+            var value = $(this).attr("chat-value");
+            var name = $(this).html();
+            $("#chat-input").attr("disabled", false);
+            generate_message(name, 'self');
+        })
+
+        $("#chat-circle").click(function () {
+            $("#chat-circle").toggle('scale');
+            $(".chat-box").toggle('scale');
+        })
+
+        $(".chat-box-toggle").click(function () {
+            $("#chat-circle").toggle('scale');
+            $(".chat-box").toggle('scale');
+        })
+
+    })
 });
 
 

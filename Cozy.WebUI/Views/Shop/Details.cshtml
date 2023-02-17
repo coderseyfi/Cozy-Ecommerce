@@ -69,7 +69,7 @@
                         <div class="product-view-info">
                             <div class="product-left-img-info">
                                 <h3>@Model.Name</h3>
-                                <div class="price pb-20 pt-10"><span>$862.00</span></div>
+                                <div class="price pb-20 pt-10"><span>@Model.Price ₼</span></div>
                                 <div class="available">
                                     <p> Availability: <span class="blue-color">In Stock</span></p>
                                 </div>
@@ -79,17 +79,7 @@
                                 </p>
                                 <div class="all-info d-md-flex d-lg-block align-items-center">
                                     <div class="quick-add-to-cart d-lg-flex align-items-center pt-10">
-                                        <div class="quantity d-inline-block">Quantity :</div>
-                                        <div class="quantity-field position-relative d-inline-block pl-40 pr-10 pb-2 pb-lg-0">
-                                           <span class="custom-prev enable">
-                                              <i class="fas fa-chevron-down"></i>
-                                           </span> 
-                                           <input type="number" name="select1" value="0" class="quantity-input-arrow quantity-input-2  border-gray inp-asp" min="0">
-                                           <span class="custom-next">
-                                              <i class="fas fa-chevron-up"></i>
-                                           </span>  
-                                        </div>
-                                        <a href="#" class="btn dark-black-bg d-inline-block text-white">Add to cart</a>
+                                        <a onclick="addToBasket(event)" data-product-id="@Model.Id" class="btn dark-black-bg d-inline-block text-white">Add to cart</a>
                                     </div>
                                     <ul class="single-product-list-button d-flex align-items-center mt-40">
                                         <li class="tool text-dark border p-3 ml-2">

@@ -16,13 +16,18 @@
     }
 }
 
+
+@{
+    var backgroundImageUrl = Url.Content("~/assets/imgs/blog-slidebar-none-banner.jpg");
+}
+
 <main>
 
     <!-- slider-area-start -->
     <div class="slider-area over-hidden">
         <div class="single-page blog-none page-height-2 position-relative d-flex
           align-items-center"
-             style="background-image:url(~/assets/imgs/blog-slidebar-none-banner.jpg); min-height: 900px;">
+             style="background-image:url('@backgroundImageUrl'); min-height: 900px;">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex

@@ -42,10 +42,74 @@
         #modalLoginForm {
             top: 20%;
         }
-        .user-drop-icon{
-            display:flex;
-            align-items:center;
+
+        .user-drop-icon {
+            display: flex;
+            align-items: center;
         }
+
+        .search-box-view {
+            overflow: unset;
+        }
+
+            .search-box-view > #search-result {
+                padding: 0;
+                margin: 0;
+                top: 50px;
+                position: absolute;
+                width: 100%;
+                background-color: whitesmoke;
+                border-radius: 5px;
+                box-shadow: -1px 6px 20px 2px rgb(0 0 0 / 57%);
+            }
+
+                .search-box-view > #search-result > a {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px;
+                    cursor: pointer;
+                }
+
+                    .search-box-view > #search-result > a:not(:last-child) {
+                        border-bottom: 1px dashed #dddddd;
+                    }
+
+                    .search-box-view > #search-result > a:hover {
+                        background-color: #e9e9e9;
+                    }
+
+                    .search-box-view > #search-result > a > img {
+                        width: 70px;
+                        margin-right: 5px;
+                    }
+
+                .search-box-view > #search-result:empty {
+                    display: none;
+                }
+
+        .cart-counter:empty {
+            display: none;
+        }
+
+        .chatbox {
+            width: 300px;
+            position: fixed;
+            right: 10px;
+            bottom: 0;
+            border: 1px solid teal;
+            border-radius: 5px;
+            z-index: 999999;
+            background-color: #ffffff;
+            padding: 20px;
+        }
+
+            .chatbox .message {
+                resize: none;
+                min-height: 200px;
+                overflow-y: auto;
+            }
+
+       
     </style>
     @RenderSection("addcss", required: false)
 
@@ -89,7 +153,7 @@
                             <a asp-controller="shop" asp-action="index">Shop</a>
                         </li>
                         <li class="mean-nav__list__item">
-                            <a asp-controller="home" asp-action="about" >About</a>
+                            <a asp-controller="home" asp-action="about">About</a>
                         </li>
                         <li class="mean-nav__list__item">
                             <a asp-controller="blog" asp-action="index">Blog</a>
@@ -116,7 +180,7 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                   <li>
+                    <li>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 @User.GetPrincipalName()
@@ -125,10 +189,10 @@
                                 <li><a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a></li>
                             </ul>
                         </div>
-                   </li>
-                   <li class="user-drop-icon">
+                    </li>
+                    <li class="user-drop-icon">
                         <span class="fa fa-users"></span>
-                   </li>
+                    </li>
 
                 }
                 else
@@ -142,7 +206,7 @@
                         </a>
                     </li>
                 }
-                
+
             </ul>
             <ul class="header-heart d-flex justify-content-between">
                 <li>
@@ -188,10 +252,11 @@
     <!-- shopping-details start -->
     @await Component.InvokeAsync("BasketInfo")
     <!-- shopping-details end -->
-
     @RenderBody()
 
     <div class="modal-back"></div>
+
+
 
     <!-- footer start -->
     <footer>
@@ -292,21 +357,21 @@
                                     </p>
                                     <partial name="_SubscribeForm" />
 
-                                   @* <form id="newsletter-subscribe" class="newsletter-form-wrap">
-                                        <div class="list">
-                                            Sign up for our free video course and <br />
-                                            urban garden inspiration
-                                        </div>
-                                        <input type="email"
-                                               name="email"
-                                               class="input-text email email-newsletter"
-                                               placeholder="Your email letter" />
-                                        <button type="submit" class="button btn-submit submit-newsletter">
-                                            SUBSCRIBE
-                                        </button>
+                                    @* <form id="newsletter-subscribe" class="newsletter-form-wrap">
+                                    <div class="list">
+                                    Sign up for our free video course and <br />
+                                    urban garden inspiration
+                                    </div>
+                                    <input type="email"
+                                    name="email"
+                                    class="input-text email email-newsletter"
+                                    placeholder="Your email letter" />
+                                    <button type="submit" class="button btn-submit submit-newsletter">
+                                    SUBSCRIBE
+                                    </button>
                                     </form>*@
 
-                                    
+
 
 
                                     <ul class="footer__address">
@@ -319,6 +384,9 @@
                     </div>
                 </div>
             </div>
+
+
+
 
             <div class="footer-area__bottom">
                 <div class="container-wrapper">
@@ -396,7 +464,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" form="loginModal" class="btn btn-success">Log in</button>
-                    <a asp-controller="account" asp-action="register"  class="btn btn-dark">Register</a>
+                    <a asp-controller="account" asp-action="register" class="btn btn-dark">Register</a>
                 </div>
             </div>
         </div>
@@ -431,11 +499,12 @@
 
     <!-- main js -->
     <script src="~/assets/js/main.js"></script>
-     
-   
+
+    <script src="~/libs/signalr/dist/browser/signalr.min.js"></script>
+
 
     <script class="removable">
-        $(document).ready(function (){
+        $(document).ready(function () {
             $("#newsletter-subscribe").submit(function (e) {
                 e.preventDefault();
 
@@ -448,13 +517,13 @@
                     data: formData,
                     processData: false,
                     contentType: false,
-                    success: function (response){
+                    success: function (response) {
 
-                        if(response.error == false){
+                        if (response.error == false) {
                             toastr["success"](response.message, "Uğur")
                         }
 
-                        if(response.error == true){
+                        if (response.error == true) {
                             toastr["error"](response.message, "Xəta");
                         }
 
@@ -462,15 +531,50 @@
                     }
                 });
             });
+
+
+            $("#chatbox").submit(function (e) {
+                e.preventDefault();
+
+                console.log('sending....');
+
+                const formData = new FormData(e.currentTarget);
+
+                connection.invoke('SendMessage', formData.get("message"))
+                    .then(r => {
+                        e.currentTarget.reset();
+                    })
+                    .catch(response => {
+                        console.log(response);
+                    });
+
+
+            });
+
+            var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+
+            connection.on("ReceiveFromClient", function (json) {
+                console.log(json);
+            });
+
+            connection.start().then(function () {
+
+                console.log('loaded!');
+
+                $('#chatbox').css("display", "inline-block");
+
+            }).catch(function (err) {
+                return console.error(err.toString());
+            });
         });
 
-    
+
     </script>
     <script class="removable">
-        $(document).ready(function() {
+        $(document).ready(function () {
             $.ajaxSetup({
                 statusCode: {
-                    401: function() {
+                    401: function () {
                         $('#modalLoginForm').modal({
                             //backdrop: 'static',
                             keyboard: true
@@ -480,10 +584,10 @@
             });
 
             $("#postComment").click(function () {
-              })
+            })
 
 
-            $('#loginModal').submit(function(e) {
+            $('#loginModal').submit(function (e) {
                 e.preventDefault();
 
                 var formData = new FormData(e.currentTarget);
@@ -494,13 +598,14 @@
                     data: formData,
                     contentType: false,
                     processData: false,
-                    success: function(response) {
-                        if(response.error == false){
-                             $('#modalLoginForm').modal('hide');
-                             toastr.success(response.message, "Uğur!");
+                    success: function (response) {
+                        if (response.error == false) {
+                            $('#modalLoginForm').modal('hide');
+
+                            location.reload();
+                            toastr.success(response.message, "Uğur!");
                         }
-                        else
-                        {
+                        else {
                             toastr.error(response.message, "Xəta");
                         }
 
@@ -508,14 +613,19 @@
                 });
             });
 
-            
+
+
         })
     </script>
 
     <partial name="_BasketScriptsPartial" />
 
 
-   
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <partial name="_Chatbox" />
+    }
 
 
     @RenderSection("addjs", required: false)

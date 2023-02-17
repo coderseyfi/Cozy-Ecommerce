@@ -1,4 +1,5 @@
 ﻿using Cozy.Domain.Models.Entites;
+using Cozy.Domain.Models.Entites.Chat;
 using Cozy.Domain.Models.Entities.Membership;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,10 @@ namespace Cozy.Domain.Models.DataContexts
         public DbSet<BlogPostLike> BlogPostLikes { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
+
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Group> ChatGroups { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
 
 

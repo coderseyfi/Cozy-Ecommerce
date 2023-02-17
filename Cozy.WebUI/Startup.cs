@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cozy.Domain.AppCode.Hubs;
 
 namespace Cozy.WebUI
 {
@@ -139,7 +140,9 @@ namespace Cozy.WebUI
             var asemblies = AppDomain.CurrentDomain.GetAssemblies().AsEnumerable().Where(a => a.FullName.StartsWith("Cozy."));
 
             services.AddMediatR(asemblies.ToArray());
-            
+
+            services.AddSignalR();
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<CozyRole> roleManager)
@@ -170,6 +173,8 @@ namespace Cozy.WebUI
 				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=account}/{action=signin}/{id?}");
 
 				cfg.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
+
+                cfg.MapHub<ChatHub>("/chathub");
             });
         }
     }
