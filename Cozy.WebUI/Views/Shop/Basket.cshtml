@@ -64,17 +64,18 @@
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                         <div class="qnt-input">
                                             <input 
+                                                
                                                 type="number" 
                                                 data-product-id="@item.ProductId" 
                                                 onchange="changeQuantity(event, this)" 
                                                 value="@item.Quantity" 
-                                                name="select1"  
-                                                class="quantity-input-arrow quantity-input-2 basket-quantity border-gray"
+                                                name="select1"
+                                                class="quantity-input-arrow quantity-input-2 basket-quantity border-gray @*info-product-@item.ProductId*@"
                                                 min="1" />
                                         </div>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 bj">
-                                        <h5 class="mb-0 mb-sm-3 product-subtotal-@item.ProductId">Total:@((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
+                                        <h5 class="mb-0 mb-sm-3 amount product-subtotal-@item.ProductId" >Total:@((item.Product.Price * item.Quantity).ToString("0.00₼"))</h5>
                                     </div>
                                     <div class="col-md-4 col-lg-3 col-xl-1">
                                         <a  onclick="removeFromBasket(this,'@item.Product.Name');return;" 
@@ -96,7 +97,7 @@
                             <ul class="pt-15 pb-25">
                               
                                 <li class="d-flex justify-content-between align-items-center border-gray pl-25 pr-25 pt-15 pb-15">
-                                    <span class="total-sum">Total:</span> <span id="summary">@Model.Sum(m=>m.Quantity * m.Product.Price).ToString("0.00₼")</span>
+                                    <span class="total-sum">Total:</span> <span id="summary" class="Price-amount">@Model.Sum(m=>m.Quantity * m.Product.Price).ToString("0.00₼")</span>
                                 </li>
                             </ul>
 

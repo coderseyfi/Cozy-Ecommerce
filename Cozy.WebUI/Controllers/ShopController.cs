@@ -77,9 +77,7 @@ namespace Cozy.WebUI.Controllers
 
 
 
-        #region BasketRegion
-
-
+        
 
         [Route("/basket")]
         public async Task<IActionResult> Basket(ProductBasketQuery query)
@@ -120,10 +118,6 @@ namespace Cozy.WebUI.Controllers
 
             return Json(response);
         }
-
-        #endregion
-
-
 
 
         [Route("/checkout")]

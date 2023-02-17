@@ -17,12 +17,12 @@
                 </div>
                 <ul class="single-product-button d-flex position-absolute">
                     <li>
-                        <a asp-action="index">
+                        <a data-product-id="@item.Id" onclick="addToBasket(event)">
                             <i class="fa-solid fa-bag-shopping"></i>
                         </a>
                     </li>
                     <li class="eye">
-                        <a href="javascript:void(0)">
+                        <a >
                             <i class="fa-solid fa-eye"></i>
                         </a>
                     </li>
@@ -60,18 +60,5 @@
 
 
 <script>
-    function addToFavorites(productId) {
-        const favorites = ($.cookie('favorites') || '').split(',').filter(item => item.length > 0);
-
-        if (favorites.filter(item => item == productId).length == 0) {
-            favorites.push(productId);
-
-            $.cookie('favorites', favorites.toString(), { path: '/' });
-        }
-
-        console.log($.cookie('favorites'))
-
-
-
-    }
+ 
 </script>

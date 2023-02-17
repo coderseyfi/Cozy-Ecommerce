@@ -35,7 +35,7 @@
                                 <h6 class="single-product-name">
                                     <a asp-controller="shop" asp-action="details" asp-route-id="@item.ProductId">@item.Product.Name</a>
                                 </h6>
-                                <span>@item.Quantity x @item.Product.Price</span>
+                                <span class="info-product-@item.ProductId">@item.Quantity x @item.Product.Price ₼</span>
                             </li>
                             <li class="s-remove">
                                 <a 
@@ -55,11 +55,14 @@
 
         </div>
     }
-    <span>Showing all <span>@Model.Count()</span> result </span>
+    @*<span class="item-count">Showing all <span>@Model.Count()</span> result </span>*@
 
     <div class="subtotal">
         <span class="theme-color">Total:</span>
-        <span class="theme-color">@info?.TotalSum.ToString("0.00₼")</span>
+
+         <span class="total-price">
+                        <span id="#summary" class="info-amount"> @info?.TotalSum.ToString("0.00₼") </span>
+         </span>
     </div>
     <a asp-controller="shop" asp-action="basket" class="btn p-add-cart">view cart</a>
     <a asp-controller="shop" asp-action="checkout" class="btn p-add-cart">checkout</a>

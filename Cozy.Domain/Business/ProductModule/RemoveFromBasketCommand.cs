@@ -4,34 +4,33 @@ using Cozy.Domain.Models.DataContexts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Cozy.Domain.Business.ProductModule
+namespace Cozy.Domain.Business.BasketModule
 {
     public class RemoveFromBasketCommand : IRequest<JsonResponse>
     {
         public int ProductId { get; set; }
 
-        public class RemoveFromBasketCommandHandler : IRequestHandler<RemoveFromBasketCommand, JsonResponse>
+        public class RemoveFromBasketHandler : IRequestHandler<RemoveFromBasketCommand, JsonResponse>
         {
             private readonly CozyDbContext db;
             private readonly IActionContextAccessor ctx;
 
-            public RemoveFromBasketCommandHandler(CozyDbContext db, IActionContextAccessor ctx)
+            public RemoveFromBasketHandler(CozyDbContext db, IActionContextAccessor ctx)
             {
                 this.db = db;
                 this.ctx = ctx;
             }
 
-
             public async Task<JsonResponse> Handle(RemoveFromBasketCommand request, CancellationToken cancellationToken)
             {
                 var userId = ctx.GetCurrentUserId();
 
-                var basketItem = await db.Basket.FirstOrDefaultAsync(b => b.ProductId == request.ProductId
-                                            && b.UserId == userId, cancellationToken);
+                var basketItem = await db.Basket.FirstOrDefaultAsync(b => b.ProductId == request.ProductId && b.UserId == userId, cancellationToken);
 
                 if (basketItem == null)
                 {
@@ -53,13 +52,13 @@ namespace Cozy.Domain.Business.ProductModule
                                       b.UserId,
                                       SubTotal = p.Price * b.Quantity
                                   })
-                                .GroupBy(g => g.UserId)
-                                .Select(g => new
-                                {
-                                    Total = g.Sum(m => m.SubTotal),
-                                    Count = g.Count()
-                                })
-                                .FirstOrDefaultAsync(cancellationToken);
+                                  .GroupBy(g => g.UserId)
+                                  .Select(g => new
+                                  {
+                                      Total = g.Sum(m => m.SubTotal),
+                                      Count = g.Count()
+                                  })
+                                  .FirstOrDefaultAsync(cancellationToken);
 
                 return new JsonResponse
                 {
@@ -68,6 +67,8 @@ namespace Cozy.Domain.Business.ProductModule
                     Value = info
                 };
             }
+
+
         }
     }
 }

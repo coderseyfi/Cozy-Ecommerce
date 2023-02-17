@@ -1,124 +1,239 @@
 ﻿
 
+<script class="removeable" src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script class="removeable" src="~/libs/toastr.js/toastr.min.js"></script>
+<script class="removeable" src="~/libs/toastr.js/toastr.customize.js"></script>
+<script>
 
-    <script class="removeable" src="~/libs/sweetalert/sweetalert.min.js"></script>
-    <script class="removeable" src="~/libs/toastr.js/toastr.min.js"></script>
-    <script class="removeable" src="~/libs/toastr.js/toastr.customize.js"></script>
-    <script>
+    function removeFromBasket(element, name) {
 
-        function removeFromBasket(element, name) {
+        swal(`Are you sure to delete '${name}' from your cart?`, {
+            title: "Delete",
+            text: `Are you sure to delete '${name}' from your cart?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+            buttons: ["No", "Yes"]
+        })
+            .then((value) => {
 
-            swal(`Əminsiniz ki '${name}' silinsin?`, {
-                title: "Diqqət!",
-                text: `Əminsiniz ki '${name}' silinsin?`,
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                buttons: ["Xeyr", "Bəli"],
-            })
-                .then((value) => {
+                if (value == true) {
+                    const elementData = $(element).data();
+                    console.log(elementData);
 
-                    if (value == true) {
-                        const elementData = $(element).data();
-                        console.log(elementData);
+                    $.ajax({
+                        url: `@Url.Action("RemoveFromBasket","Shop")`,
+                        type: 'POST',
+                        data: elementData,
+                        contentType: 'application/x-www-form-urlencoded',
+                        success: function (response) {
+                            if (response.error == false) {
 
-                        $.ajax({
-                            url: `@Url.Action("RemoveFromBasket","Shop")`,
-                            type: 'POST',
-                            data: elementData,
-                            contentType: 'application/x-www-form-urlencoded',
-                            success: function (response) {
-                                if (response.error == false) {
+                                const removeTarget = $(element).attr('area-remove-target');
 
-                                    const removeTarget = $(element).attr('area-remove-target');
-                                    if(removeTarget != undefined){
-                                        $(removeTarget).remove();
-                                    }
-
-                                    if (response.value.count == undefined){
-                                        $('.cart-counter').text('')
-                                    }
-                                    else{
-                                        $('.cart-counter').text(`${response.value.count}`) //basket header
-                                    }
-                                     
-
-                                
-
-                                    $(element).closest('div.card').remove();
-                                    toastr.success(response.message, 'Success');
-                                    return;
+                                if (removeTarget != undefined) {
+                                    $(removeTarget).remove();
                                 }
 
-                                toastr.error(response.message, 'Error');
-                            },
-                            error: function (response, status, xhr) {
-                                console.log(response, status, xhr);
+                                //if (response.value.count == undefined) {
+                                //    $('.cart-counter').text('')
+                                //}
+                                //else {
+                                //    $('.cart-counter').text(`${response.value.count}`) //basket header
+                                //}
+
+
+                                if (response.value?.count == null) {
+                                    $('.item-count').text("");
+                                } else {
+                                    $('.item-count').text(response.value.count);
+                                }
+
+                                if (response.value?.total == null) {
+                                    $('.total-price').add(".Price-amount").text("0.00₼");
+                                } else {
+                                    $('.total-price').add(".Price-amount").text(`${response.value.total}₼`);
+                                }
+
+                                $(element).closest('div.card').remove();
+                                toastr.success(response.message, 'Success');
+                                return;
                             }
-                        });
-                    }
-                });
+
+                            toastr.error(response.message, 'Error');
+                        },
+                        error: function (response, status, xhr) {
+                            console.log(response, status, xhr);
+                        }
+                    });
+                }
+            });
 
 
+    }
+
+
+    function changeQuantity(event, element) {
+
+        if ($.processId != undefined) {
+            clearTimeout($.processId);
+            $.processId = undefined;
         }
 
+        if (element.value < 1) {
+            console.log("olmadiki", element.value)
+            return;
+        }
 
-        function changeQuantity(event, element) {
+        $.processId = setTimeout(function () {
 
-            if ($.processId != undefined) {
-                clearTimeout($.processId);
-                $.processId = undefined;
-            }
+            const elementData = $(element).data();
+            elementData.Quantity = element.value;
 
-            if (element.value < 1) {
-                console.log("olmadiki", element.value)
-                return;
-            }
+            console.log(elementData)
 
-            $.processId = setTimeout(function () {
+            $.ajax({
+                url: `@Url.Action("ChangeBasketQuantity","Shop")`,
+                type: 'POST',
+                data: elementData,
+                contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    console.log(response)
 
-                const elementData = $(element).data();
-                elementData.Quantity = element.value;
+                    if (response.error == false) {
+                      
+                        $("#summary").text(`${response.value.summary},00₼`);
 
-                $.ajax({
-                    url: `@Url.Action("ChangeBasketQuantity","Shop")`,
-                    type: 'POST',
-                    data: elementData,
-                    contentType: 'application/x-www-form-urlencoded',
-                    success: function (response) {
-                        console.log(response)
-                        if (response.error == false) {
-
-                            $("#summary").text(`${response.value.summary},00₼`);
-
-                            if (response.value?.total == null) {
-                                $(`.product-subtotal-${response.value.id}`).text(``)
-                            } else {
-                                $(`.product-subtotal-${response.value.id}`).text(`Total:${response.value.total}₼`)
-                            }
-
-                            if (response.value?.price == null) {
-                                $(`.amount-${response.value.id}`).text(``)
-                            } else {
-                            $(`.amount-${response.value.id}`).text(`Price:${response.value.price},00₼`)
-                            }
-
-                            toastr.success(response.message, 'Success');
-                            return;
+                        if (response.value?.total == null) {
+                            $(`.product-subtotal-${response.value.id}`).text(``)
+                        } else {
+                            $(`.product-subtotal-${response.value.id}`).text(`Total:${response.value.total}₼`)
                         }
 
-                        toastr.error(response.message, 'Error');
-                    },
-                    error: function (response, status, xhr) {
-                        console.log(response, status, xhr);
+                        if (response.value?.price == null) {
+                            $(`.amount-${response.value.id}`).text(``)
+                        } else {
+                            $(`.amount-${response.value.id}`).text(`Price:${response.value.price},00₼`)
+                        }
+
+                        if(response.value?.quantity == null){
+                            $(`.info-product-${response.value.product.product.id}`).text(``)
+                        }
+                        else{
+                            $(`.info-product-${elementData.productId}`).text(`${response.value.quantity} x ${response.value.price},00 ₼`)
+                        }
+
+                        if (response.value?.total == null) {
+                            $('.total-price').add('.info-amount').text("");
+                        } else {
+                            $('.total-price').add('.info-amount').text(`${response.value.summary},00₼`);
+                        }
+
+                        toastr.success(response.message, 'Success');
+                        return;
                     }
-                });
 
-            }, 700);
+                    toastr.error(response.message, 'Error');
+                },
+                error: function (response, status, xhr) {
+                    console.log(response, status, xhr);
+                }
+            });
 
+        }, 700);
+
+    }
+
+    function addToFavorites(productId) {
+        const favorites = ($.cookie('favorites') || '').split(',').filter(item => item.length > 0);
+
+        if (favorites.filter(item => item == productId).length == 0) {
+            favorites.push(productId);
+
+            $.cookie('favorites', favorites.toString(), { path: '/' });
         }
 
+        let isInArray = true;
 
-   
+        $.each(favorites, function (index, value) {
+            if (value === productId) {
+                isInArray = true;
+            } else {
+                isInArray = false;
+            }
+        });
 
-    </script>
+        if (isInArray) {
+            toastr.success("Added to favorites");
+        } else {
+            toastr.success("Product is already in your favorites");
+        }
+
+        console.log($.cookie('favorites'))
+
+
+
+    }
+
+    function addToBasket(e) {
+        e.preventDefault();
+
+        const elementData = $(e.currentTarget).data();
+
+        $.ajax({
+            url: `@Url.Action("Basket","Shop")`,
+            type: 'POST',
+            data: elementData,
+            contentType: 'application/x-www-form-urlencoded',
+            success: function (response) {
+                if (response.error == false) {
+                    //$(e.target).closest('div.card').remove();
+
+                    var newBasketProduct = `<ul class='list d-flex single-cart-box basket-item-${response.value.product.productId}' >
+                            <li class='list__img'>
+                                    <a class='list__img__link d-block' asp-controller='shop' asp-action='details' asp-route-id='${response.value.product.productId}'>
+                                         <img src='/uploads/images/${response.value.product.product.productImages[0].name}' alt='img'>
+                                </a>
+                            </li>
+                            <li class='item-info'>
+                                <ul class='d-flex'>
+                                    <li>
+                                        <h6 class='single-product-name'>
+                                                   <a asp-controller='shop' asp-action='details' asp-route-id='${response.value.product.productId}'>${response.value.product.product.name}</a>
+                                        </h6>
+                                                            <span>${response.value.product.quantity} x ${response.value.product.product.price}₼</span>
+                                    </li>
+                                    <li class='s-remove'>
+                                        <a
+                                            class='d-inline-block del-icon'
+                                                             aria-remove-target='.basket-item-${response.value.product.productId}'
+                                                             data-product-id='${response.value.product.productId}'
+                                               onclick='removeFromBasket(this,"${response.value.product.product.name}");return;'>
+
+                                            <i class='far fa-trash-alt'></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>`;
+
+                    $(".shop-cart-content").append(newBasketProduct);
+
+                    console.log(response)
+
+                    toastr.success(response.message, 'Success');
+                    return;
+
+                }
+                console.log(response)
+
+                toastr.info(response.message, 'Info');
+            },
+            error: function (response, status, xhr) {
+                console.log(response, status, xhr);
+            }
+        });
+    }
+
+
+</script>
