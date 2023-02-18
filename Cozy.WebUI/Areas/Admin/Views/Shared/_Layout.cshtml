@@ -31,8 +31,8 @@
     <script src="https://kit.fontawesome.com/8d3b323ca7.js" crossorigin="anonymous"></script>
 
     <style>
-        .displayChatbox span:empty{
-            display:none !important;
+        .displayChatbox span:empty {
+            display: none !important;
         }
     </style>
 
@@ -246,65 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="main-friend-list">
-                                <div class="media userlist-box" data-id="1" data-status="online"
-                                     data-username="Josephin Doe" data-toggle="tooltip" data-placement="left"
-                                     title="Josephin Doe">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius img-radius"
-                                             src="~/admin/images/avatar-3.jpg" alt="Generic placeholder image ">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Josephin Doe</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="2" data-status="online"
-                                     data-username="Lary Doe" data-toggle="tooltip" data-placement="left"
-                                     title="Lary Doe">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="~/admin/images/avatar-2.jpg"
-                                             alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Lary Doe</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="3" data-status="online" data-username="Alice"
-                                     data-toggle="tooltip" data-placement="left" title="Alice">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="~/admin/images/avatar-4.jpg"
-                                             alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Alice</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="4" data-status="online" data-username="Alia"
-                                     data-toggle="tooltip" data-placement="left" title="Alia">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="~/admin/images/avatar-3.jpg"
-                                             alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Alia</div>
-                                    </div>
-                                </div>
-                                <div class="media userlist-box" data-id="5" data-status="online" data-username="Suzen"
-                                     data-toggle="tooltip" data-placement="left" title="Suzen">
-                                    <a class="media-left" href="#!">
-                                        <img class="media-object img-radius" src="~/admin/images/avatar-2.jpg"
-                                             alt="Generic placeholder image">
-                                        <div class="live-status bg-success"></div>
-                                    </a>
-                                    <div class="media-body">
-                                        <div class="f-13 chat-header">Suzen</div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="main-friend-list" id="messagelist"></div>
                         </div>
                     </div>
                 </div>
@@ -388,14 +330,29 @@
     <script src="~/admin/js/pcoded.min.js"></script>
     <!-- custom js -->
     <script src="~/admin/js/vartical-layout.min.js"></script>
-    <script type="text/javascript" src="~/admin/js/script.min.js"></script>
     <script src="~/libs/signalr/dist/browser/signalr.min.js"></script>
+
     @RenderSection("addjs", required: false)
+    <script type="text/javascript" src="~/admin/js/script.min.js"></script>
+    <script type="text/javascript" src="~/libs/live-chat/chat.js"></script>
 
     <script class="removable">
+
         $(document).ready(function () {
             $('.removable').remove();
         });
+
+        const chat = new chatBox();
+      
+       
+
+        window['sms'] = function () {
+            if (window["sms-file"] == undefined)
+                window["sms-file"] = new Audio('/assets/sounds/smsIphone.mp3');
+
+
+            window["sms-file"].play();
+        }
 
         $("#chatbox").submit(function (e) {
             e.preventDefault();
@@ -418,11 +375,15 @@
         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 
 
-        let count =0;
-        connection.on("ReceiveFromOperator", function (userId, message) {
-            console.log(userId, message);
+        let count = 0;
+        connection.on("ReceiveFromOperator", function (message) {
+            console.log(message);
             count++;
             $('.displayChatbox span').html(count);
+
+            chat.receiveMessage(JSON.parse(message));
+
+            sms()
         });
 
         connection.start().then(function () {
