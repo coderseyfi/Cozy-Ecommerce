@@ -52,44 +52,7 @@
             overflow: unset;
         }
 
-            .search-box-view > #search-result {
-                padding: 0;
-                margin: 0;
-                top: 50px;
-                position: absolute;
-                width: 100%;
-                background-color: whitesmoke;
-                border-radius: 5px;
-                box-shadow: -1px 6px 20px 2px rgb(0 0 0 / 57%);
-            }
-
-                .search-box-view > #search-result > a {
-                    display: flex;
-                    align-items: center;
-                    padding: 10px;
-                    cursor: pointer;
-                }
-
-                    .search-box-view > #search-result > a:not(:last-child) {
-                        border-bottom: 1px dashed #dddddd;
-                    }
-
-                    .search-box-view > #search-result > a:hover {
-                        background-color: #e9e9e9;
-                    }
-
-                    .search-box-view > #search-result > a > img {
-                        width: 70px;
-                        margin-right: 5px;
-                    }
-
-                .search-box-view > #search-result:empty {
-                    display: none;
-                }
-
-        .cart-counter:empty {
-            display: none;
-        }
+          
 
         .chatbox {
             width: 300px;
@@ -98,7 +61,7 @@
             bottom: 0;
             border: 1px solid teal;
             border-radius: 5px;
-            z-index: 999999;
+            z-index: 999;
             background-color: #ffffff;
             padding: 20px;
         }
@@ -107,6 +70,7 @@
                 resize: none;
                 min-height: 200px;
                 overflow-y: auto;
+                width:100%;
             }
 
        
@@ -499,8 +463,8 @@
 
     <!-- main js -->
     <script src="~/assets/js/main.js"></script>
-
-    <script src="~/libs/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/libs/microsoft/signalr/dist/browser/signalr.min.js"></script>
+  
 
 
     <script class="removable">

@@ -5,6 +5,14 @@
     {
       "library": "jquery-cookie@1.4.1",
       "destination": "wwwroot/libs/jquery-cookie/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/libs/signalr/",
+      "files": [
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }

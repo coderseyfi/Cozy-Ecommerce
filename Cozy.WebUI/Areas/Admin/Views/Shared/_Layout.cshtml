@@ -30,6 +30,12 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/8d3b323ca7.js" crossorigin="anonymous"></script>
 
+    <style>
+        .displayChatbox span:empty{
+            display:none !important;
+        }
+    </style>
+
     @RenderSection("addcss", required: false)
 </head>
 
@@ -173,18 +179,21 @@
                                 <div class="dropdown-primary dropdown">
                                     <div class="displayChatbox dropdown-toggle" data-toggle="dropdown">
                                         <i class="feather icon-message-square"></i>
-                                        <span class="badge bg-c-green">3</span>
+                                        <span class="badge bg-c-green"></span>
                                     </div>
                                 </div>
                             </li>
                             <li class="user-profile header-notification">
                                 <div class="dropdown-primary dropdown">
+
                                     <div class="dropdown-toggle" data-toggle="dropdown">
                                         <img src="~/admin/images/avatar-4.jpg" class="img-radius"
                                              alt="User-Profile-Image">
-                                        <span>John Doe</span>
+                                        <span> @User.GetPrincipalName()</span>
                                         <i class="feather icon-chevron-down"></i>
                                     </div>
+
+
                                     <ul class="show-notification profile-notification dropdown-menu"
                                         data-dropdown-in="fadeIn" data-dropdown-out="fadeOut">
                                         <li>
@@ -208,7 +217,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="default/auth-normal-sign-in.html">
+                                            <a asp-action="logout" asp-controller="account">
                                                 <i class="feather icon-log-out"></i> Logout
                                             </a>
                                         </li>
@@ -380,11 +389,50 @@
     <!-- custom js -->
     <script src="~/admin/js/vartical-layout.min.js"></script>
     <script type="text/javascript" src="~/admin/js/script.min.js"></script>
+    <script src="~/libs/signalr/dist/browser/signalr.min.js"></script>
     @RenderSection("addjs", required: false)
 
     <script class="removable">
         $(document).ready(function () {
             $('.removable').remove();
+        });
+
+        $("#chatbox").submit(function (e) {
+            e.preventDefault();
+
+            console.log('sending....');
+
+            const formData = new FormData(e.currentTarget);
+
+            connection.invoke('SendMessage', formData.get("message"))
+                .then(r => {
+                    e.currentTarget.reset();
+                })
+                .catch(response => {
+                    console.log(response);
+                });
+
+
+        });
+
+        var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+
+
+        let count =0;
+        connection.on("ReceiveFromOperator", function (userId, message) {
+            console.log(userId, message);
+            count++;
+            $('.displayChatbox span').html(count);
+        });
+
+        connection.start().then(function () {
+
+            console.log('loaded!');
+
+            $('#chatbox').css("display", "inline-block");
+
+        }).catch(function (err) {
+            return console.error(err.toString());
         });
     </script>
 </body>
