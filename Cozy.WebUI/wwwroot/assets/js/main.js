@@ -513,107 +513,109 @@ $(document).ready(function () {
     })
 
 
-    //chatbox
 
-    $(function () {
-        var INDEX = 0;
-        $("#chat-submit").click(function (e) {
-            e.preventDefault();
-            var msg = $("#chat-input").val();
-            if (msg.trim() == '') {
-                return false;
-            }
-            generate_message(msg, 'self');
-            var buttons = [
-                {
-                    name: 'Existing User',
-                    value: 'existing'
-                },
-                {
-                    name: 'New User',
-                    value: 'new'
-                }
-            ];
-            setTimeout(function () {
-                generate_message(msg, 'user');
-            }, 1000)
+    // MESSAGE INPUT
+    const textarea = document.querySelector('.chatbox-message-input')
+    const chatboxForm = document.querySelector('.chatbox-message-form')
 
-        })
+    textarea.addEventListener('input', function () {
+        let line = textarea.value.split('\n').length
 
-        function generate_message(msg, type) {
-            INDEX++;
-            var str = "";
-            str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg " + type + "\">";
-            str += "          <span class=\"msg-avatar\">";
-            str += "            <img src=\"https:\/\/image.crisp.im\/avatar\/operator\/196af8cc-f6ad-4ef7-afd1-c45d5231387c\/240\/?1483361727745\">";
-            str += "          <\/span>";
-            str += "          <div class=\"cm-msg-text\">";
-            str += msg;
-            str += "          <\/div>";
-            str += "        <\/div>";
-            $(".chat-logs").append(str);
-            $("#cm-msg-" + INDEX).hide().fadeIn(300);
-            if (type == 'self') {
-                $("#chat-input").val('');
-            }
-            $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);
+        if (textarea.rows < 6 || line < 6) {
+            textarea.rows = line
         }
 
-        function generate_button_message(msg, buttons) {
-            /* Buttons should be object array 
-              [
-                {
-                  name: 'Existing User',
-                  value: 'existing'
-                },
-                {
-                  name: 'New User',
-                  value: 'new'
-                }
-              ]
-            */
-            INDEX++;
-            var btn_obj = buttons.map(function (button) {
-                return "              <li class=\"button\"><a href=\"javascript:;\" class=\"btn btn-primary chat-btn\" chat-value=\"" + button.value + "\">" + button.name + "<\/a><\/li>";
-            }).join('');
-            var str = "";
-            str += "<div id='cm-msg-" + INDEX + "' class=\"chat-msg user\">";
-            str += "          <span class=\"msg-avatar\">";
-            str += "            <img src=\"https:\/\/image.crisp.im\/avatar\/operator\/196af8cc-f6ad-4ef7-afd1-c45d5231387c\/240\/?1483361727745\">";
-            str += "          <\/span>";
-            str += "          <div class=\"cm-msg-text\">";
-            str += msg;
-            str += "          <\/div>";
-            str += "          <div class=\"cm-msg-button\">";
-            str += "            <ul>";
-            str += btn_obj;
-            str += "            <\/ul>";
-            str += "          <\/div>";
-            str += "        <\/div>";
-            $(".chat-logs").append(str);
-            $("#cm-msg-" + INDEX).hide().fadeIn(300);
-            $(".chat-logs").stop().animate({ scrollTop: $(".chat-logs")[0].scrollHeight }, 1000);
-            $("#chat-input").attr("disabled", true);
+        if (textarea.rows > 1) {
+            chatboxForm.style.alignItems = 'flex-end'
+        } else {
+            chatboxForm.style.alignItems = 'center'
         }
-
-        $(document).delegate(".chat-btn", "click", function () {
-            var value = $(this).attr("chat-value");
-            var name = $(this).html();
-            $("#chat-input").attr("disabled", false);
-            generate_message(name, 'self');
-        })
-
-        $("#chat-circle").click(function () {
-            $("#chat-circle").toggle('scale');
-            $(".chat-box").toggle('scale');
-        })
-
-        $(".chat-box-toggle").click(function () {
-            $("#chat-circle").toggle('scale');
-            $(".chat-box").toggle('scale');
-        })
-
     })
+
+
+
+    // TOGGLE CHATBOX
+    const chatboxToggle = document.querySelector('.chatbox-toggle')
+    const chatboxMessage = document.querySelector('.chatbox-message-wrapper')
+
+    chatboxToggle.addEventListener('click', function () {
+        chatboxMessage.classList.toggle('show')
+    })
+
+
+
+    // DROPDOWN TOGGLE
+    const dropdownToggle = document.querySelector('.chatbox-message-dropdown-toggle')
+    const dropdownMenu = document.querySelector('.chatbox-message-dropdown-menu')
+
+    dropdownToggle.addEventListener('click', function () {
+        dropdownMenu.classList.toggle('show')
+    })
+
+    document.addEventListener('click', function (e) {
+        if (!e.target.matches('.chatbox-message-dropdown, .chatbox-message-dropdown *')) {
+            dropdownMenu.classList.remove('show')
+        }
+    })
+
+
+
+
+
+
+
+    // CHATBOX MESSAGE
+    const chatboxMessageWrapper = document.querySelector('.chatbox-message-content')
+    const chatboxNoMessage = document.querySelector('.chatbox-message-no-message')
+
+    chatboxForm.addEventListener('submit', function (e) {
+        e.preventDefault()
+
+        if (isValid(textarea.value)) {
+            writeMessage()
+            /*setTimeout(autoReply, 1000)*/
+        }
+    })
+
+
+
+    function addZero(num) {
+        return num < 10 ? '0' + num : num
+    }
+
+    function writeMessage() {
+        const today = new Date()
+        let message = `
+		<div class="chatbox-message-item sent">
+			<span class="chatbox-message-item-text">
+				${textarea.value.trim().replace(/\n/g, '<br>\n')}
+			</span>
+			<span class="chatbox-message-item-time">${addZero(today.getHours())}:${addZero(today.getMinutes())}</span>
+		</div>
+	`
+        chatboxMessageWrapper.insertAdjacentHTML('beforeend', message)
+        chatboxForm.style.alignItems = 'center'
+        textarea.rows = 1
+        textarea.focus()
+        textarea.value = ''
+        chatboxNoMessage.style.display = 'none'
+        scrollBottom()
+    }
+
+
+
+    function scrollBottom() {
+        chatboxMessageWrapper.scrollTo(0, chatboxMessageWrapper.scrollHeight)
+    }
+
+    function isValid(value) {
+        let text = value.replace(/\n/g, '')
+        text = text.replace(/\s/g, '')
+
+        return text.length > 0
+    }
+
+ 
 });
 
 

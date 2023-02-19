@@ -1,4 +1,4 @@
-﻿<form class="chatbox" id="chatbox" style="display:none">
+﻿@*<form class="chatbox" id="chatbox" style="display:none">
     <div class="container">
         <h4>Send a message to admin</h4>
         <div class="row">
@@ -10,32 +10,48 @@
             </div>
         </div>
     </div>
-</form>
-
-
-@*<div id="chat-circle" class="btn btn-raised">
-    <div id="chat-overlay"></div>
-    <i class="fa-solid fa-message"></i>
-</div>
-
-
-<form class="chatbox" id="chatbox" style="display:none">
-<div class="chat-box">
-    <div class="chat-box-header">
-        ChatBot
-        <span class="chat-box-toggle"><i class="fa-solid fa-xmark"></i></span>
-    </div>
-    <div class="chat-box-body">
-        <div class="chat-box-overlay">
-        </div>
-        <div class="chat-logs">
-        </div><!--chat-log -->
-    </div>
-    <div class="chat-input">
-        <form>
-            <input type="text" id="chat-input" placeholder="Send a message..." />
-            <button type="submit" class="chat-submit" id="chat-submit"><i class="fa-solid fa-paper-plane-top"></i></button>
-        </form>
-    </div>
-</div>
 </form>*@
+
+
+@{
+	var backgroundImageUrl = Url.Content("~/assets/imgs/chatbg.jpg");
+}
+
+
+	<div class="chatbox-wrapper">
+		<div class="chatbox-toggle">
+		  <i class="fa-solid fa-comments"></i>
+		</div>
+		<div class="chatbox-message-wrapper">
+			<div class="chatbox-message-header">
+				<div class="chatbox-message-profile">
+					<img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8bWFufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60" alt="" class="chatbox-message-image">
+					<div>
+						<h4 class="chatbox-message-name">Seyfi Najafli</h4>
+						<p class="chatbox-message-status">online</p>
+					</div>
+				</div>
+				<div class="chatbox-message-dropdown">
+					<i class='bx bx-dots-vertical-rounded chatbox-message-dropdown-toggle'></i>
+					<ul class="chatbox-message-dropdown-menu">
+						<li>
+							<a href="#">Search</a>
+						</li>
+						<li>
+							<a href="#">Report</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		<div class="chatbox-message-content" style="background-image: url('@backgroundImageUrl');">
+				<h4 class="chatbox-message-no-message">You don't have message yet!</h4>
+			</div>
+			<div class="chatbox-message-bottom" >
+			<form  class="chatbox-message-form"id="chatbox">
+				<textarea name="message" rows="1" placeholder="Type message..." class="chatbox-message-input"></textarea>
+				<button type="submit" class="chatbox-message-submit"><i class="fa-solid fa-arrow-right"></i></button>
+				</form>
+			</div>
+		</div>
+	</div>
+

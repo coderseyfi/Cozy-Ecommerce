@@ -201,6 +201,18 @@
                 }
 
             </li>
+            <div class="pcoded-navigatio-lavel">Chat Panel</div>
+            <li>
+                @if (User.HasAccess("admin.users.index"))
+                {
+                    <a asp-controller="chat" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-message"></i>
+                        </span>
+                        <span class="pcoded-mtext">Chats</span>
+                    </a>
+                }
+            </li>
             <div class="pcoded-navigatio-lavel">User settings</div>
             <li>
                 @if (User.HasAccess("admin.users.index"))
