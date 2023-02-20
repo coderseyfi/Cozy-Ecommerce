@@ -173,5 +173,13 @@ namespace Cozy.WebUI.Controllers
             return Json(responseError);
         }
 
+
+        [HttpPost]
+        public async Task<IActionResult> SetProductRate(SetRateCommand command)
+        {
+            var response = await mediator.Send(command);
+
+            return Json(response);
+        }
     }
 }

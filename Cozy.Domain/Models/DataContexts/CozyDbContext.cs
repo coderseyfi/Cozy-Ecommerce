@@ -29,6 +29,7 @@ namespace Cozy.Domain.Models.DataContexts
         public DbSet<Category> Categories { get; set; }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductRate> ProductRates { get; set; }
 
         public DbSet<ProductColor> Colors { get; set; }
 

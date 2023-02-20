@@ -53,15 +53,15 @@
                                 }
                             </div>
                             <div class="tab-content text-center position-relative">
-                                 @foreach (var item in Model.ProductImages)
+                                @foreach (var item in Model.ProductImages)
                                 {
                                     <div class="tab-pane arm  @(item.IsMain ? "active": "")">
-                                    <div class="product-img">
+                                        <div class="product-img">
                                             <img class="height100" src="~/uploads/images/@item.Name" alt="">
+                                        </div>
                                     </div>
-                                  </div>
                                 }
-                              
+
                             </div>
                         </div>
                     </div>
@@ -69,6 +69,9 @@
                         <div class="product-view-info">
                             <div class="product-left-img-info">
                                 <h3>@Model.Name</h3>
+                                <div class="ratings-container">
+                                    <rate rate-value="@Model.Rate" rate-product-id="@Model.Id"></rate>
+                                </div><!-- End .rating-container -->
                                 <div class="price pb-20 pt-10"><span>@Model.Price ₼</span></div>
                                 <div class="available">
                                     <p> Availability: <span class="blue-color">In Stock</span></p>
@@ -77,6 +80,8 @@
                                 <p class="border-bottom pb-35">
                                     @Model.ShortDescription
                                 </p>
+                                @*<rate rate-value="@Model.Rate" rate-product-id="@Model.Id"></rate>*@
+                              
                                 <div class="all-info d-md-flex d-lg-block align-items-center">
                                     <div class="quick-add-to-cart d-lg-flex align-items-center pt-10">
                                         <a onclick="addToBasket(event)" data-product-id="@Model.Id" class="btn dark-black-bg d-inline-block text-white">Add to cart</a>
@@ -134,7 +139,7 @@
                         <div class="describe-text">
                             <h5 class="desc-title pb-1">Description:</h5>
                             <p class="mb-0">
-                             @Html.Raw(Model.Description)
+                                @Html.Raw(Model.Description)
                             </p>
                         </div>
                         <div class="describe-product-img mt-35 mb-35">
@@ -183,15 +188,134 @@
 
 </main>
 
+
+@section addjs{
+   
+    <script>
+
+        $('.rate li').click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const data = $(e.currentTarget).data();
+
+            console.log(data);
+
+            $.ajax({
+                url: '@Url.Action("SetProductRate")',
+                type: 'POST',
+                data: data,
+                contentType: 'application/x-www-form-urlencoded',
+                success: function (response) {
+                    location.reload()
+                    console.log(response);
+                },
+                error: function (response) {
+                    console.error(response);
+                    console.log("false ")
+                }
+            });
+        });
+
+    </script>
+
+}
+
+
 @section addcss{
     <style>
+
         .inp-asp::-webkit-outer-spin-button,
         .inp-asp::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
+        .rate {
+            display: flex;
+        }
+
+            .rate li {
+                color: #f9ba48;
+                margin-right: 1px;
+                list-style: none;
+                font-family: "Font Awesome 5 Free";
+                cursor: pointer;
+            }
+
+                .rate li::before {
+                    content: "\f005";
+                    font-weight: 400;
+                }
+
+            .rate.rate-half1 li:nth-child(1)::before {
+                content: "\f5c0";
+                font-weight: 900;
+            }
+
+            .rate.rate-1 li:nth-child(1)::before,
+            .rate.rate-half2 li:nth-child(1)::before,
+            .rate.rate-3 li:nth-child(1)::before,
+            .rate.rate-3 li:nth-child(2)::before,
+            .rate.rate-half3 li:nth-child(1)::before,
+            .rate.rate-half3 li:nth-child(2)::before,
+            .rate.rate-half4 li:nth-child(1)::before,
+            .rate.rate-half4 li:nth-child(2)::before,
+            .rate.rate-half4 li:nth-child(3)::before,
+            .rate.rate-4 li:nth-child(1)::before,
+            .rate.rate-4 li:nth-child(2)::before,
+            .rate.rate-4 li:nth-child(3)::before,
+            .rate.rate-half5 li:nth-child(1)::before,
+            .rate.rate-half5 li:nth-child(2)::before,
+            .rate.rate-half5 li:nth-child(3)::before,
+            .rate.rate-half5 li:nth-child(4)::before,
+            .rate.rate-5 li:nth-child(1)::before,
+            .rate.rate-5 li:nth-child(2)::before,
+            .rate.rate-5 li:nth-child(3)::before,
+            .rate.rate-5 li:nth-child(4)::before {
+                content: "\f005";
+                font-weight: 900;
+            }
+
+            .rate.rate-half2 li:nth-child(2)::before {
+                content: "\f5c0";
+                font-weight: 900;
+            }
+
+            .rate.rate-2 li:nth-child(1)::before,
+            .rate.rate-2 li:nth-child(2)::before {
+                content: "\f005";
+                font-weight: 900;
+            }
+
+            .rate.rate-half3 li:nth-child(3)::before {
+                content: "\f5c0";
+                font-weight: 900;
+            }
+
+            .rate.rate-3 li:nth-child(3)::before {
+                content: "\f005";
+                font-weight: 900;
+            }
+
+            .rate.rate-half4 li:nth-child(4)::before {
+                content: "\f5c0";
+                font-weight: 900;
+            }
+
+            .rate.rate-4 li:nth-child(4)::before {
+                content: "\f005";
+                font-weight: 900;
+            }
+
+            .rate.rate-half5 li:nth-child(5)::before {
+                content: "\f5c0";
+                font-weight: 900;
+            }
+
+            .rate.rate-5 li:nth-child(5)::before {
+                content: "\f005";
+                font-weight: 900;
+            }
     </style>
 }
-
-

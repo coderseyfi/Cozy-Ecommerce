@@ -18,6 +18,7 @@ namespace Cozy.Domain.Models.Entites
         public string ShortDescription { get; set; }
 
         public string Description { get; set; }
+        public double Rate { get; set; }
 
         public int BrandId { get; set; }
 

@@ -1,8 +1,10 @@
 ﻿using Cozy.Domain.AppCode.Extensions;
 using Cozy.Domain.AppCode.Services;
+using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
 using Cozy.Domain.Models.Entites;
 using Cozy.Domain.Models.ViewModels.ContactPostInfo;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,12 +20,14 @@ namespace Cozy.WebUI.Controllers
         private readonly CozyDbContext db;
         private readonly CryptoService cryptoService;
         private readonly EmailService emailService;
+        private readonly IMediator mediator;
 
-        public HomeController(CozyDbContext db,CryptoService cryptoService,EmailService emailService)
+        public HomeController(CozyDbContext db,CryptoService cryptoService,EmailService emailService,IMediator mediator)
         {
             this.db = db;
             this.cryptoService = cryptoService;
             this.emailService = emailService;
+            this.mediator = mediator;
         }
 
         public IActionResult Index()
@@ -82,10 +86,7 @@ namespace Cozy.WebUI.Controllers
             return Json(responseError);
         }
 
-
-
         [HttpPost]
-
         public async Task<IActionResult> Subscribe(Subscribe model)
         {
 
@@ -157,8 +158,6 @@ namespace Cozy.WebUI.Controllers
 
         }
 
-
-
         [Route("/approve-subscribe")]
         public IActionResult SubscribeApprove(string token)
         {
@@ -209,6 +208,7 @@ namespace Cozy.WebUI.Controllers
 
         }
 
+      
 
         public IActionResult NotFoundPage()
         {

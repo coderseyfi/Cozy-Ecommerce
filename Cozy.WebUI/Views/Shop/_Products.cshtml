@@ -43,22 +43,28 @@
                     <ins>@(item.Price - 10)</ins>
                 </span>
                 <span class="old-price" data-currency-usd="@item.Price">
-                    <del>@item.Price</del>
+                    <del>@item.Price ₼</del>
                 </span>
+             
             </div>
+            <div class="product-price pl-20 pt-20 text-center">
+                    <rate rate-value="@item.Rate" rate-product-id="@item.Id"></rate>
+            </div>
+            @if (item.CreatedDate > DateTime.Now.AddDays(-7))
+            {
+                <a href="#" class="sale-tag position-absolute text-white text-uppercase d-inline-block">New</a>
+            }
         </div>
     </div>
 }
 
 
-<div class="div mb-40" style="text-align:center">
+
+@*<div class="div mb-40" style="text-align:center">
         <div class="col-12">
             @Model.GetPager(Url, "Index")
         </div>
-</div>
+</div>*@
 
 
 
-<script>
- 
-</script>
