@@ -208,13 +208,16 @@ namespace Cozy.WebUI.Controllers
 
         }
 
-      
-
         public IActionResult NotFoundPage()
         {
 
             return View();
 
+        }
+
+        public IActionResult AboutMe() 
+        { 
+            return View(); 
         }
 
     }

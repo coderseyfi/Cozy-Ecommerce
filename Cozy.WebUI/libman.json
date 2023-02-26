@@ -13,6 +13,14 @@
       "files": [
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "simplebar@5.3.8",
+      "destination": "wwwroot/libs/simplebar/",
+      "files": [
+        "simplebar.min.js",
+        "simplebar.min.css"
+      ]
     }
   ]
 }

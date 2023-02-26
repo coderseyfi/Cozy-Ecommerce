@@ -49,7 +49,7 @@ namespace Cozy.Domain.Business.ProductModule
 
 
 
-
+                    
 
                 var productIds = await query.Select(q => q.ProductId)
                     .Distinct()
@@ -57,7 +57,7 @@ namespace Cozy.Domain.Business.ProductModule
 
                 var productQuery = db.Products
                     .Include(p => p.ProductImages)
-                    .Where(p => productIds.Contains(p.Id))
+                    .Where(p => productIds.Contains(p.Id) && p.DeletedDate == null)
                     .AsQueryable();
 
                 if (request.Categories != null && request.Categories.Length > 0)

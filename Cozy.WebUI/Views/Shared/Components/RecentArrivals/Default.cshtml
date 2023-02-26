@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Product>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 bestseller__container__item">
+        <div class="product">
+            <div class="product__image">
+                <a class="product__image__link" href="single-product.html">
+                    <img class="product__image__link--img"
+                         src="~/assets/imgs/home-product1.jpg"
+                         alt="" />
+                </a>
+                <div class="product__image__hover">
+                    <a class="product__image__hover--link" href="single-product.html">
+                        <img class="product__image__hover--img"
+                             src="~/assets/imgs/home-product-hover-1.jpg"
+                             alt="" />
+                    </a>
+                </div>
+                <ul class="product__image__button">
+                    <li class="product__image__button--item">
+                        <a class="product__image__button--link" href="#">
+                            <span class="product__image__button--icon fa fa-bag-shopping"></span>
+                        </a>
+                    </li>
+                    <li class="product__image__button--item eye">
+                        <a class="product__image__button--link" href="javascript:void(0)">
+                            <span class="product__image__button--icon fa fa-eye"></span>
+                        </a>
+                    </li>
+                    <li class="product__image__button--item">
+                        <a class="product__image__button--link" href="#">
+                            <span class="product__image__button--icon fa-regular fa-heart"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <h5 class="product__name">
+                <a class="product__name__link" href="">
+                    Form Armchair Walnut Base
+                </a>
+            </h5>
+            <div class="product__price">
+                <span class="product__price__new">
+                    <ins>$799.00</ins>
+                </span>
+                <span class="product__price__old">
+                    <del>$829.00</del>
+                </span>
+            </div>
+        </div>
+    </div>
+    }
+</div>

@@ -82,13 +82,13 @@
                                 </p>
                                 @*<rate rate-value="@Model.Rate" rate-product-id="@Model.Id"></rate>*@
                               
-                                <div class="all-info d-md-flex d-lg-block align-items-center">
-                                    <div class="quick-add-to-cart d-lg-flex align-items-center pt-10">
+                                <div class="all-info d-md-flex d-lg-flex align-items-center pro-detail">
+                                    <div class="quick-add-to-cart d-lg-flex align-items-center">
                                         <a onclick="addToBasket(event)" data-product-id="@Model.Id" class="btn dark-black-bg d-inline-block text-white">Add to cart</a>
                                     </div>
-                                    <ul class="single-product-list-button d-flex align-items-center mt-40">
+                                    <ul class="single-product-list-button d-flex align-items-center">
                                         <li class="tool text-dark border p-3 ml-2">
-                                            <a href="#" class="d-block border-gray text-dark">
+                                            <a href="javascript:addToFavorites(@Model.Id)" class="d-block border-gray text-dark heart-detail">
                                                 <span class="fa fa-heart"></span>
                                             </a>
                                         </li>
@@ -187,6 +187,8 @@
 
 
 </main>
+
+
 
 
 @section addjs{
@@ -317,5 +319,19 @@
                 content: "\f005";
                 font-weight: 900;
             }
+
+        .pro-detail {
+            gap: 10px;
+        }
+
+        .heart-detail{
+            transition: .5s;
+        }
+
+        .heart-detail:hover{
+            background-color:black;
+            color:red;
+            transition:.5s;
+        }
     </style>
 }

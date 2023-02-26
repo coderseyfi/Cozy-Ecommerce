@@ -5,7 +5,10 @@
     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
         <div class="blog-right-sidebar-left-content mb-60">
             <div class="blog-right-sidebar-left-img mb-25">
-                <img class="pb-15 blog-img" src="~/uploads/images/@item.ImagePath" alt="" />
+                <a class="blog-grid-img" asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
+                    <img class="pb-15 blog-img" src="~/uploads/images/@item.ImagePath" alt="" />
+                </a>
+               
             </div>
             <ul class="blog-tag d-flex">
                 @foreach (var tag in item.TagCloud)
@@ -28,12 +31,12 @@
                 <li class="post-date pr-35">
                     Post date:<a href="#">@item.PublishedDate?.ToString("MMM dd, yyyy")</a>
                 </li>
-                <li class="post-view pr-20">
+              @*  <li class="post-view pr-20">
                     <span class="fa fa-eye pr-5"></span>443 views
-                </li>
-                <li class="post-comments">
+                </li>*@
+                @*<li class="post-comments">
                     <span><i class="far fa-comment"></i></span><span class="px-1">@item.Comments?.Count()</span>Comments
-                </li>
+                </li>*@
             </ul>
             @*<a asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="btn-1 read-more">Read More</a>*@
         </div>
@@ -46,3 +49,4 @@
         @Model.GetPager(Url, "Index", paginateFunction: "goPage")
     </div>
 </div>
+

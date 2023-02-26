@@ -75,8 +75,8 @@
     <!-- blog-banner-area-start -->
     <div class="blog-banner-area pt-65 pb-65 over-hidden">
         <div class="container-wrapper ">
-            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                <div class="blog-banner-left mb-30">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 d-flex detail-item-flex">
+                <div class="blog-banner-left mb-30 blog-detail-newItem">
                     <img src="~/uploads/images/@Model.BlogPost.ImagePath" alt="">
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <li class="post-comments">
                     <span>
                         <i class="far fa-comment"></i>
-                    </span><span class="px-1">@Model.BlogPost.Comments?.Count</span>
+                    </span><span class="px-1 comment-count">@Model.BlogPost.Comments?.Count</span>
                 </li>
                 <li >
                     @if (User.Identity.IsAuthenticated)
@@ -170,7 +170,7 @@
                             </li>
                         </ul>
                         <div class="author-post-details comments gray-bg2 pl-30 pr-30 pt-30 pb-20">
-                            <div class="row">
+                            <div class="row" id="commentAppend">
                                 @foreach (var comment in Model.BlogPost.Comments.Where(c => c.ParentId == null))
                                 {
                                     <div class="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 mb-20 cmnt-border comment" id="c-@comment.Id" data-comment-id="@comment.Id">
@@ -490,6 +490,21 @@
                 fill: #1da1f2;
             }
 
+            .recent-blog-item p{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            }
+
+            .detail-item-flex{
+                justify-content:center;
+            }
+
+            .blog-detail-newItem{
+                max-width:1000px;
+            }
+
+
     </style>
 }
 
@@ -541,6 +556,8 @@
                                 $("div.comments div.row").append($(response.responseText))
                                 $("#comment-text").val("");
                             }
+                            var commentCount = $("#commentAppend").find("div.comment").length;
+                            $('.comment-count').text(commentCount);
                         }
 
                         console.warn(response);

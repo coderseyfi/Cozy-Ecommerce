@@ -18,9 +18,11 @@
                     <div class="pic">
                         <div class="blog-slider__item">
                             <div class="blog-slider__item__img over-hidden">
-                                <img src="~/uploads/images/@item.ImagePath" alt="">
+                                <a class="blog-grid-img" asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
+                                    <img src="~/uploads/images/@item.ImagePath" alt="">
+                                </a>
                             </div>
-                            <div class="blog-slider__item__content">
+                            <div class="blog-slider__item__content recent-blog-item">
                                 <ul class="blog-slider__item__content--list d-flex">
                                     <li class="blog-slider__item__content--item">
                                         <span>Post date:</span>
@@ -32,7 +34,7 @@
                                 <h4>
                                     <a class="blog-slider__item__content__link" asp-action="details" asp-route-id="@item.Id">@item.Title</a>
                                 </h4>
-                                <p> @Html.Raw(item.Body)</p>
+                                <p class="ellipse-text-blog"> @Html.Raw(item.Body)</p>
 
                             </div>
                         </div>

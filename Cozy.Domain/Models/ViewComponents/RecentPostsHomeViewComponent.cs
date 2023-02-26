@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Cozy.WebUI.AppCode.ViewComponents
 {
-    public class RecentPostsViewComponent : ViewComponent
+    public class RecentPostsHomeViewComponent : ViewComponent
     {
         private readonly IMediator mediator;
 
-        public RecentPostsViewComponent(IMediator mediator)
+        public RecentPostsHomeViewComponent(IMediator mediator)
         {
             this.mediator = mediator;
         }

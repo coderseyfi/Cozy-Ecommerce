@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Cozy.Domain.Business.BlogPostModule
 {
-    public class BlogPostRecentQuery : IRequest<List<BlogPost>>
+    public class ProductRecentArrival : IRequest<List<BlogPost>>
     {
 
         public int Size { get; set; }
         public int PostId { get; set; }
 
-        public class BlogPostRecentQueryHandler : IRequestHandler<BlogPostRecentQuery, List<BlogPost>>
+        public class BlogPostRecentQueryHandler : IRequestHandler<ProductRecentArrival, List<BlogPost>>
         {
             private readonly CozyDbContext db;
 
@@ -23,7 +23,7 @@ namespace Cozy.Domain.Business.BlogPostModule
             {
                 this.db = db;
             }
-            public async Task<List<BlogPost>> Handle(BlogPostRecentQuery request, CancellationToken cancellationToken)
+            public async Task<List<BlogPost>> Handle(ProductRecentArrival request, CancellationToken cancellationToken)
             {
                 var posts = await db.BlogPosts
                      .Where(bp => bp.DeletedDate == null && bp.PublishedDate != null)

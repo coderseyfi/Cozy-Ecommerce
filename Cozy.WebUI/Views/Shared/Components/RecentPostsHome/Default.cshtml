@@ -1,0 +1,37 @@
+﻿@model IEnumerable<BlogPost>
+
+<div class="blog-slider">
+@foreach (var item in Model)
+{
+    
+        <div>
+            <div class="pic">
+                <div class="blog-slider__item">
+                    <div class="blog-slider__item__img over-hidden">
+                        <a asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
+                            <img src="~/uploads/images/@item.ImagePath" alt="">
+                        </a>
+                        
+                    </div>
+                    <div class="blog-slider__item__content recent-blog-item">
+                        <ul class="blog-slider__item__content--list d-flex">
+                            <li class="blog-slider__item__content--item">
+                                <span>Post date:</span>
+                            </li>
+                            <li class="blog-slider__item__content--item">
+                                <a class="date" asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.PublishedDate?.ToString("dd MMM yyy")</a>
+                            </li>
+                        </ul>
+                        <h4>
+                            <a class="blog-slider__item__content__link" asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a>
+                        </h4>
+                        @*<p>It is accompanied by a case that can contain up to three different diffusers and can be used for dry …</p>*@
+                        @Html.Raw(item.Body)
+                        <a  asp-controller="blog" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="blog-slider__item__content__btn">Continue Reading</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+}
+</div>
