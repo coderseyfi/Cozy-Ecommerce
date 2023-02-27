@@ -21,6 +21,13 @@
         "simplebar.min.js",
         "simplebar.min.css"
       ]
+    },
+    {
+      "library": "imask@6.4.3",
+      "destination": "wwwroot/libs/imask/",
+      "files": [
+        "imask.min.js"
+      ]
     }
   ]
 }

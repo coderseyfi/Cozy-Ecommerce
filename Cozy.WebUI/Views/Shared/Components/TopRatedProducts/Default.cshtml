@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Product>
+
+<div class="bestseller">
+    <div class="bestseller__container">
+        <div class="row">
+            <div class="autoplay">
+
+                @foreach (var item in Model)
+                {
+                    var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+                    var topRate = Convert.ToInt32(item.Rate);
+
+                    <div class=" bestseller__container__item">
+                        <div class="product">
+                            <div class="product__image">
+                                <a class="product__image__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                    <img class="product__image__link--img"
+                                     src="~/uploads/images/@imagePath"
+                                     alt="" />
+                                </a>
+                                <div class="product__image__hover">
+                                    <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                        <img class="product__image__hover--img"
+                                         src="~/uploads/images/@imagePath"
+                                         alt="" />
+                                    </a>
+                                </div>
+                                <ul class="product__image__button">
+                                    <li class="product__image__button--item">
+                                        <a class="product__image__button--link" data-product-id="@item.Id" onclick="addToBasket(event)">
+                                            <span class="product__image__button--icon fa fa-bag-shopping"></span>
+                                        </a>
+                                    </li>
+                                   
+                                    <li class="product__image__button--item">
+                                        <a class="product__image__button--link" href="javascript:addToFavorites(@item.Id)">
+                                            <span class="product__image__button--icon fa-regular fa-heart"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h5 class="product__name">
+                                <a class="product__name__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                       @item.Name
+                                </a>
+                            </h5>
+                            <div class="product__price">
+                                <span class="product__price__new">
+                                    <ins>@(item.Price - 10)</ins>
+                                </span>
+                                <span class="product__price__old">
+                                    <del>@item.Price ₼</del>
+                                </span>
+                            </div>
+                            <div class="product-price pl-20 pt-20 text-center">
+                                <rate rate-value="@item.Rate" rate-product-id="@item.Id"></rate>
+                            </div>
+                            @if (topRate > 3)
+                            {
+                                <a asp-controller="shop" asp-action="details" asp-route-id="@item.Id" class="top-tag position-absolute text-white text-uppercase d-inline-block">Top</a>
+                            }
+                        </div>
+                    </div>
+                }
+             
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+

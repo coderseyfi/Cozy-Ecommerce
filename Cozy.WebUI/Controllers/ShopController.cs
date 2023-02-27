@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Cozy.WebUI.Controllers
@@ -180,6 +181,41 @@ namespace Cozy.WebUI.Controllers
             var response = await mediator.Send(command);
 
             return Json(response);
+        }
+
+
+        public async Task<IActionResult> SearchProducts(string searchTerm)
+        {
+            var products = await mediator.Send(new SearchProductQuery { SearchTerm = searchTerm });
+
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_SearchResults", products.OrderByDescending(p => p.CreatedDate));
+            }
+
+            return View(products);
+
+
+            //var brands = await db.Brands.Where(b => b.DeletedDate == null).ToListAsync();
+
+            //var categories = await db.Categories
+            //    .Include(c => c.Children)
+            //    .ThenInclude(c => c.Children)
+            //    .ThenInclude(c => c.Children)
+            //    .ThenInclude(c => c.Children)
+            //    .Where(c => c.DeletedDate == null && c.ParentId == null).ToListAsync();
+
+            //var maxPrice = Math.Ceiling(db.Products.Where(p => p.DeletedDate == null).Select(p => p.Price).Max());
+
+            //var vm = new ProductViewModel()
+            //{
+            //    Brands = brands,
+            //    Categories = categories,
+            //    Products = products.ToList(),
+            //    MaxPrice = maxPrice
+            ////};
+
+
         }
     }
 }

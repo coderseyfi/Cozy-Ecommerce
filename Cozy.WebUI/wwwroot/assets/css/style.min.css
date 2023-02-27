@@ -2,3 +2,212 @@
 .modal-title {
     color: black;
 }
+
+.rate {
+    display: flex;
+}
+
+    .rate li {
+        color: #f9ba48;
+        margin-right: 1px;
+        list-style: none;
+        font-family: "Font Awesome 5 Free";
+        cursor: pointer;
+    }
+
+        .rate li::before {
+            content: "\f005";
+            font-weight: 400;
+        }
+
+    .rate.rate-half1 li:nth-child(1)::before {
+        content: "\f5c0";
+        font-weight: 900;
+    }
+
+    .rate.rate-1 li:nth-child(1)::before,
+    .rate.rate-half2 li:nth-child(1)::before,
+    .rate.rate-3 li:nth-child(1)::before,
+    .rate.rate-3 li:nth-child(2)::before,
+    .rate.rate-half3 li:nth-child(1)::before,
+    .rate.rate-half3 li:nth-child(2)::before,
+    .rate.rate-half4 li:nth-child(1)::before,
+    .rate.rate-half4 li:nth-child(2)::before,
+    .rate.rate-half4 li:nth-child(3)::before,
+    .rate.rate-4 li:nth-child(1)::before,
+    .rate.rate-4 li:nth-child(2)::before,
+    .rate.rate-4 li:nth-child(3)::before,
+    .rate.rate-half5 li:nth-child(1)::before,
+    .rate.rate-half5 li:nth-child(2)::before,
+    .rate.rate-half5 li:nth-child(3)::before,
+    .rate.rate-half5 li:nth-child(4)::before,
+    .rate.rate-5 li:nth-child(1)::before,
+    .rate.rate-5 li:nth-child(2)::before,
+    .rate.rate-5 li:nth-child(3)::before,
+    .rate.rate-5 li:nth-child(4)::before {
+        content: "\f005";
+        font-weight: 900;
+    }
+
+    .rate.rate-half2 li:nth-child(2)::before {
+        content: "\f5c0";
+        font-weight: 900;
+    }
+
+    .rate.rate-2 li:nth-child(1)::before,
+    .rate.rate-2 li:nth-child(2)::before {
+        content: "\f005";
+        font-weight: 900;
+    }
+
+    .rate.rate-half3 li:nth-child(3)::before {
+        content: "\f5c0";
+        font-weight: 900;
+    }
+
+    .rate.rate-3 li:nth-child(3)::before {
+        content: "\f005";
+        font-weight: 900;
+    }
+
+    .rate.rate-half4 li:nth-child(4)::before {
+        content: "\f5c0";
+        font-weight: 900;
+    }
+
+    .rate.rate-4 li:nth-child(4)::before {
+        content: "\f005";
+        font-weight: 900;
+    }
+
+    .rate.rate-half5 li:nth-child(5)::before {
+        content: "\f5c0";
+        font-weight: 900;
+    }
+
+    .rate.rate-5 li:nth-child(5)::before {
+        content: "\f005";
+        font-weight: 900;
+    }
+
+.sale-tag {
+    font-size: 13px;
+    top: 10px;
+    left: 10px;
+    background: #f54949;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    margin: 5px;
+}
+
+.top-tag {
+    font-size: 13px;
+    top: 10px;
+    left: 10px;
+    background: #303136;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    line-height: 50px;
+    text-align: center;
+    margin: 5px;
+}
+
+
+.search-info {
+    padding-left: 8px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-align: left;
+    font-size: 17px;
+    line-height: 12px;
+    color: #515151;
+    margin-top: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
+}
+
+
+.search-results {
+    display: none;
+    z-index: 8889;
+    list-style-type: none;
+    width: 500px;
+    margin: 0;
+    background: #ffffff;
+    /*border: 1px solid #cccccc;*/
+    border-radius: 0px;
+    -webkit-box-shadow: 0px 4px 7px 0px rgb(0 0 0 / 10%);
+    box-shadow: 0px 4px 7px 0px rgb(0 0 0 / 10%);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 22px;
+    max-height: 283px;
+}
+
+    .search-results li {
+        display: block;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        line-height: 38px;
+        overflow: hidden;
+        transition: 0.4s ease-in-out;
+        margin-bottom: 15px;
+    }
+
+.search-line {
+    margin: 15px 0;
+}
+
+.search-results li:last-child {
+    margin-bottom: 0;
+}
+
+.search-results li:hover {
+    margin-left: 25px;
+}
+
+
+.search-results .thumbnail {
+    float: left;
+    display: block;
+    width: 70px;
+    height: 60px;
+    padding: 0;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 0px;
+    margin-bottom: unset;
+}
+
+.search-results li:hover .title {
+    color: #c96;
+}
+
+.search-results .searched-item {
+    color: #c96;
+    font-size: 20px;
+}
+
+.search-results li .title {
+    transition: 0.4s ease-in;
+    font-size: 1.4rem;
+}
+
+.search-results li .searchPrice {
+    font-size: 15px;
+}

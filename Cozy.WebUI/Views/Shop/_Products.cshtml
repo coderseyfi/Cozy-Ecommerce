@@ -52,7 +52,7 @@
             </div>
             @if (item.CreatedDate > DateTime.Now.AddDays(-7))
             {
-                <a href="#" class="sale-tag position-absolute text-white text-uppercase d-inline-block">New</a>
+                <a asp-action="details" asp-route-id="@item.Id" class="sale-tag position-absolute text-white text-uppercase d-inline-block">New</a>
             }
         </div>
     </div>

@@ -3,52 +3,57 @@
 <div class="row">
     @foreach (var item in Model)
     {
-    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 bestseller__container__item">
+
+        var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 bestseller__container__item">
         <div class="product">
             <div class="product__image">
-                <a class="product__image__link" href="single-product.html">
+                    <a class="product__image__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
                     <img class="product__image__link--img"
-                         src="~/assets/imgs/home-product1.jpg"
+                         src="~/uploads/images/@imagePath"
                          alt="" />
                 </a>
                 <div class="product__image__hover">
-                    <a class="product__image__hover--link" href="single-product.html">
+                        <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
                         <img class="product__image__hover--img"
-                             src="~/assets/imgs/home-product-hover-1.jpg"
+                             src="~/uploads/images/@imagePath"
                              alt="" />
                     </a>
                 </div>
                 <ul class="product__image__button">
                     <li class="product__image__button--item">
-                        <a class="product__image__button--link" href="#">
+                            <a class="product__image__button--link" data-product-id="@item.Id" onclick="addToBasket(event)">
                             <span class="product__image__button--icon fa fa-bag-shopping"></span>
                         </a>
                     </li>
-                    <li class="product__image__button--item eye">
-                        <a class="product__image__button--link" href="javascript:void(0)">
-                            <span class="product__image__button--icon fa fa-eye"></span>
-                        </a>
-                    </li>
                     <li class="product__image__button--item">
-                        <a class="product__image__button--link" href="#">
+                            <a class="product__image__button--link" href="javascript:addToFavorites(@item.Id)">
                             <span class="product__image__button--icon fa-regular fa-heart"></span>
                         </a>
                     </li>
                 </ul>
             </div>
             <h5 class="product__name">
-                <a class="product__name__link" href="">
-                    Form Armchair Walnut Base
+                    <a class="product__name__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                     @item.Name
                 </a>
             </h5>
             <div class="product__price">
-                <span class="product__price__new">
-                    <ins>$799.00</ins>
+                    <span class="product__price__new" data-currency-usd="@(item.Price-10)">
+                        <ins>@(item.Price - 10)</ins>
                 </span>
                 <span class="product__price__old">
-                    <del>$829.00</del>
+                        <del>@item.Price ₼</del>
                 </span>
             </div>
+                <div class="product-price pl-20 pt-20 text-center">
+                    <rate rate-value="@item.Rate" rate-product-id="@item.Id"></rate>
+                </div>
+                @if (item.CreatedDate > DateTime.Now.AddDays(-7))
+                {
+                    <a asp-controller="shop" asp-action="details" asp-route-id="@item.Id" class="sale-tag position-absolute text-white text-uppercase d-inline-block">New</a>
+                }
         </div>
     </div>
     }

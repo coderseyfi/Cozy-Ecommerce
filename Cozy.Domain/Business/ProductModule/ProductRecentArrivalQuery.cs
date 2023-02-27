@@ -27,8 +27,9 @@ namespace Cozy.Domain.Business.ProductModule
             {
                 var posts = await db.Products
                      .Where(bp => bp.DeletedDate == null && bp.CreatedDate != null)
+                     .Include(p => p.ProductImages)
                      .OrderByDescending(bp => bp.CreatedDate)
-                     .Take(request.Size < 4 ? 4 : request.Size)
+                     .Take(request.Size < 8 ? 8 : request.Size)
                      .ToListAsync(cancellationToken);
 
                 return posts;

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Product>
+
+@foreach (var item in Model)
+{
+    string imagePath = item.ProductImages.FirstOrDefault(i => i.IsMain == true)?.Name;
+
+    <li class="searched-item">
+        <a asp-action="details" asp-controller="shop" asp-route-id="@item.Id">
+            <span class="thumbnail">
+                <img src="~/uploads/images/@imagePath">
+            </span>
+            <p class="search-info">
+                <span class="title">@item.Name</span>
+
+                <span class="searchPrice">@item.Price$</span>
+            </p>
+        </a>
+    </li>
+
+    <hr class="search-line" />
+}

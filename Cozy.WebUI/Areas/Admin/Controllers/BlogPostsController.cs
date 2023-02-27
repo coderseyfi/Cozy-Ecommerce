@@ -258,7 +258,19 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             return View(response);
         }
 
-  
+
+        [Authorize(Policy = "admin.blogposts.getlikes")]
+        public async Task<IActionResult> GetLikes(BlogPostGetLikesQuery query)
+        {
+            var response = await mediator.Send(query);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+
+            return View(response);
+        }
 
 
 

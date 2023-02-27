@@ -1,6 +1,4 @@
-﻿
-
-using Cozy.Domain.AppCode.Infrastructure;
+﻿using Cozy.Domain.AppCode.Infrastructure;
 using Cozy.Domain.Models.DataContexts;
 using Cozy.Domain.Models.Entites;
 using MediatR;

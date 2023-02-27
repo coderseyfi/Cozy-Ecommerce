@@ -57,6 +57,13 @@
                                         </a>
                                     }
 
+                                    @if (User.HasAccess("admin.blogposts.getlikes"))
+                                    {
+                                        <a asp-action="GetLikes" asp-route-blogpostid="@item.Id" class="btn btn-sm btn-danger">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </a>
+                                    }
+
                                     <a asp-action="GetComments" asp-route-blogpostid="@item.Id" class="btn btn-sm btn-success">
                                         <i class="fa-regular fa-comment"></i>
                                     </a>

@@ -235,5 +235,66 @@
         });
     }
 
+    $(document).ready(function () {
+
+        if ($.searchProductId != undefined) {
+            clearTimeout($.searchProductId);
+        }
+
+
+        $.searchProductId = setTimeout(function () {
+
+
+            $(".input-search").on("input", function (e) {
+                var searchTerm = e.currentTarget.value
+
+
+                var obj = { "searchTerm": searchTerm }
+
+                //console.log(obj)
+
+                $.ajax({
+                    url: '@Url.Action("SearchProducts", "Shop")',
+                    type: 'POST',
+                    data: obj,
+                    dataType: 'html',
+                    contentType: 'application/x-www-form-urlencoded',
+                    success: function (res) {
+                        setTimeout(function () {
+
+
+                            $("ul.search-results").html(res).css("display", "block");
+
+                            if ($(".input-search").val = '') {
+                                $("ul.search-results").css("display", "none !important");
+                                return;
+                            }
+
+                            if ($("ul.search-results").children().length == 0) {
+                                var noProduct = "<div class='searched-item'><span>No product found</span></div>"
+                                $("ul.search-results").html(noProduct);
+
+                                var interval = setInterval(function () {
+                                    $("ul.search-results").css("display", "none !important");
+                                    clearInterval(interval);
+                                }, 2000);
+                            }
+                            $(document).click(function (event) {
+                                $("ul.search-results").css("display", "none");
+                            })
+
+                        }, 1000);
+
+                    },
+                    error: function (res) {
+                        //console.warn(res);
+                    }
+
+                })
+            })
+
+
+        }, 2000);
+    })
 
 </script>
