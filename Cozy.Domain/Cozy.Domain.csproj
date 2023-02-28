@@ -30,5 +30,6 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="5.0.17" />
+		<PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.8.0" />
 	</ItemGroup>
 </Project>

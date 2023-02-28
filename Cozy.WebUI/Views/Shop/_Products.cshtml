@@ -3,6 +3,7 @@
 @foreach (var item in Model.Items)
 {
     var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true)?.Name;
 
     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
         <div class="single-product position-relative pb-30">
@@ -11,9 +12,17 @@
                     <img src="~/uploads/images/@imagePath" alt="pr-img" />
                 </a>
                 <div class="single-product-hover-img position-absolute">
-                    <a asp-action="details" asp-route-id="@item.Id">
-                        <img src="~/uploads/images/@imagePath" alt="pr-img" />
-                    </a>
+                    @if (notMain == null)
+                    {
+                  
+                    }
+                    else
+                    {
+                        <a asp-action="details" asp-route-id="@item.Id">
+                            <img src="~/uploads/images/@notMain" alt="pr-img" />
+                        </a>
+                    }
+                 
                 </div>
                 <ul class="single-product-button d-flex position-absolute">
                     <li>

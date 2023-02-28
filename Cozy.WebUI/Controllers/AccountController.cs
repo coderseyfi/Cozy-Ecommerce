@@ -215,7 +215,14 @@ namespace Cozy.WebUI.Controllers
 			return RedirectToAction("Index", "home");
 		}
 
-		public async Task CreateRole()
+
+        [AllowAnonymous]
+        [Route("/accesdenied.html")]
+        public IActionResult NotFoundPage()
+        {
+            return View();
+        }
+        public async Task CreateRole()
         {
             if (!await roleManager.RoleExistsAsync("User"))
             {

@@ -5,48 +5,60 @@
     {
 
         var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+        var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true)?.Name;
 
         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 bestseller__container__item">
-        <div class="product">
-            <div class="product__image">
+            <div class="product">
+                <div class="product__image">
                     <a class="product__image__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
-                    <img class="product__image__link--img"
+                        <img class="product__image__link--img"
                          src="~/uploads/images/@imagePath"
                          alt="" />
-                </a>
-                <div class="product__image__hover">
-                        <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
-                        <img class="product__image__hover--img"
+                    </a>
+                    <div class="product__image__hover">
+                        @if (notMain == null)
+                        {
+                            <a class="product__image__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                <img class="product__image__hover--img"
                              src="~/uploads/images/@imagePath"
                              alt="" />
-                    </a>
-                </div>
-                <ul class="product__image__button">
-                    <li class="product__image__button--item">
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                <img class="product__image__hover--img"
+                             src="~/uploads/images/@notMain"
+                             alt="" />
+                            </a>
+                        }
+                    </div>
+                    <ul class="product__image__button">
+                        <li class="product__image__button--item">
                             <a class="product__image__button--link" data-product-id="@item.Id" onclick="addToBasket(event)">
-                            <span class="product__image__button--icon fa fa-bag-shopping"></span>
-                        </a>
-                    </li>
-                    <li class="product__image__button--item">
+                                <span class="product__image__button--icon fa fa-bag-shopping"></span>
+                            </a>
+                        </li>
+                        <li class="product__image__button--item">
                             <a class="product__image__button--link" href="javascript:addToFavorites(@item.Id)">
-                            <span class="product__image__button--icon fa-regular fa-heart"></span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <h5 class="product__name">
+                                <span class="product__image__button--icon fa-regular fa-heart"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <h5 class="product__name">
                     <a class="product__name__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
-                     @item.Name
-                </a>
-            </h5>
-            <div class="product__price">
+                        @item.Name
+                    </a>
+                </h5>
+                <div class="product__price">
                     <span class="product__price__new" data-currency-usd="@(item.Price-10)">
                         <ins>@(item.Price - 10)</ins>
-                </span>
-                <span class="product__price__old">
+                    </span>
+                    <span class="product__price__old">
                         <del>@item.Price ₼</del>
-                </span>
-            </div>
+                    </span>
+                </div>
                 <div class="product-price pl-20 pt-20 text-center">
                     <rate rate-value="@item.Rate" rate-product-id="@item.Id"></rate>
                 </div>
@@ -54,7 +66,7 @@
                 {
                     <a asp-controller="shop" asp-action="details" asp-route-id="@item.Id" class="sale-tag position-absolute text-white text-uppercase d-inline-block">New</a>
                 }
+            </div>
         </div>
-    </div>
     }
 </div>

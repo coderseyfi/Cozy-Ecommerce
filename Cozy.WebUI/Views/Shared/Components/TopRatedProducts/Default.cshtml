@@ -8,6 +8,7 @@
                 @foreach (var item in Model)
                 {
                     var imagePath = item.ProductImages.FirstOrDefault()?.Name;
+                    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true)?.Name;
                     var topRate = Convert.ToInt32(item.Rate);
 
                     <div class=" bestseller__container__item">
@@ -19,11 +20,23 @@
                                      alt="" />
                                 </a>
                                 <div class="product__image__hover">
-                                    <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
-                                        <img class="product__image__hover--img"
+                                    @if (notMain == null)
+                                    {
+                                        <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                            <img class="product__image__link--img"
                                          src="~/uploads/images/@imagePath"
                                          alt="" />
-                                    </a>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="product__image__hover--link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
+                                            <img class="product__image__hover--img"
+                                         src="~/uploads/images/@notMain"
+                                         alt="" />
+                                        </a>
+                                    }
+
                                 </div>
                                 <ul class="product__image__button">
                                     <li class="product__image__button--item">
@@ -31,7 +44,7 @@
                                             <span class="product__image__button--icon fa fa-bag-shopping"></span>
                                         </a>
                                     </li>
-                                   
+
                                     <li class="product__image__button--item">
                                         <a class="product__image__button--link" href="javascript:addToFavorites(@item.Id)">
                                             <span class="product__image__button--icon fa-regular fa-heart"></span>
@@ -41,7 +54,7 @@
                             </div>
                             <h5 class="product__name">
                                 <a class="product__name__link" asp-controller="shop" asp-action="details" asp-route-id="@item.Id">
-                                       @item.Name
+                                    @item.Name
                                 </a>
                             </h5>
                             <div class="product__price">
@@ -62,8 +75,8 @@
                         </div>
                     </div>
                 }
-             
-              
+
+
             </div>
         </div>
     </div>

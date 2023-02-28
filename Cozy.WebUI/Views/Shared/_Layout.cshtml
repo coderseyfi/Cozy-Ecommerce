@@ -53,7 +53,7 @@
             overflow: unset;
         }
 
-          
+
 
         .chatbox {
             width: 300px;
@@ -71,13 +71,12 @@
                 resize: none;
                 min-height: 200px;
                 overflow-y: auto;
-                width:100%;
+                width: 100%;
             }
 
-            .dropdown-menu{
+        .dropdown-menu {
             transition: all 0.6s ease 0s;
-            }
-       
+        }
     </style>
     @RenderSection("addcss", required: false)
 
@@ -185,9 +184,23 @@
                         <span class="fa-regular fa-heart"></span>
                     </a>
                 </li>
+
+            </ul>
+            <ul class="header-heart d-flex justify-content-between">
+                <li>
+                    <a asp-controller="shop" asp-action="basket">Cart</a>
+                </li>
+                <li>
+                    <a asp-controller="shop" asp-action="basket">
+                        <span class="fa fa-bag-shopping"></span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>
+
+
     <!-- side-mobile-menu end -->
     <!-- header search details start -->
     <div class="header-search-details text-center pt-60 pl-230 pr-230">
@@ -438,7 +451,7 @@
         </div>
     </div>
 
-  
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-migrate-1.4.1.min.js"></script> -->
@@ -462,13 +475,13 @@
     <!-- Jquery-cookie -->
     <script src="~/libs/jquery.cookie/jquery.cookie.js"></script>
 
-   
+
 
 
     <!-- main js -->
     <script src="~/assets/js/main.js"></script>
     <script src="~/libs/microsoft/signalr/dist/browser/signalr.min.js"></script>
-  
+
 
 
     <script class="removable">

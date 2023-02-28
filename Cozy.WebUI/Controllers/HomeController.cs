@@ -7,6 +7,7 @@ using Cozy.Domain.Models.ViewModels.ContactPostInfo;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -21,13 +22,15 @@ namespace Cozy.WebUI.Controllers
         private readonly CryptoService cryptoService;
         private readonly EmailService emailService;
         private readonly IMediator mediator;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(CozyDbContext db,CryptoService cryptoService,EmailService emailService,IMediator mediator)
+        public HomeController(CozyDbContext db,CryptoService cryptoService,EmailService emailService,IMediator mediator, ILogger<HomeController> logger)
         {
             this.db = db;
             this.cryptoService = cryptoService;
             this.emailService = emailService;
             this.mediator = mediator;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -208,12 +211,7 @@ namespace Cozy.WebUI.Controllers
 
         }
 
-        public IActionResult NotFoundPage()
-        {
-
-            return View();
-
-        }
+        
 
         public IActionResult AboutMe() 
         { 

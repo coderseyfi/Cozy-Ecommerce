@@ -160,24 +160,11 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "admin.products.delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(ProductRemoveCommand command)
         {
-            var product = await db.Products.FirstOrDefaultAsync(p => p.Id == id && p.DeletedDate == null);
+            
 
-            if (product == null)
-            {
-                return Json(new
-                {
-                    error = true,
-                    message = "Melumat movcud deyil"
-                });
-            }
-
-            product.DeletedDate = DateTime.UtcNow.AddHours(4);
-            product.DeletedByUserId = User.GetCurrentUserIdNew();
-            await db.SaveChangesAsync();
-
-            var response = await mediator.Send(new ProductsPagedQuery());
+            var response = await mediator.Send(command);
 
             return PartialView("_ListBody", response);
 
