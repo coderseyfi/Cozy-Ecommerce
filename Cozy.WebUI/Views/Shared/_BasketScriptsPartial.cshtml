@@ -217,6 +217,9 @@
                             </li>
                         </ul>`;
 
+
+                    $('.header-top__container__right__item__link.same-color').append(`<sup class="icon-sup basket-sup">${response.value.basketInfo.count}</sup>`)
+
                     $(".shop-cart-content").append(newBasketProduct);
 
                     console.log(response)

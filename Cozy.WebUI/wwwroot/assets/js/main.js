@@ -72,14 +72,31 @@ $(document).ready(function () {
     if (productsShop) {
         productsShop.forEach((item) => {
             item.addEventListener('mouseenter', (e) => {
-                e.target.querySelector(".single-product-hover-img a img").style.opacity = "1"
-                e.target.querySelector(".single-product-img a img").style.opacity = "0"
-                e.target.querySelector(".single-product-button").style.opacity = "1"
+                if (e.target.querySelector(".single-product-hover-img a img")) {
+                   e.target.querySelector(".single-product-hover-img a img").style.opacity = "1"
+                }
+                if (e.target.querySelector(".single-product-img a img")) {
+                    e.target.querySelector(".single-product-img a img").style.opacity = "0"
+                }
+                if (e.target.querySelector(".single-product-button")) {
+                    e.target.querySelector(".single-product-button").style.opacity = "1"
+                }
+               
             })
             item.addEventListener('mouseleave', (e) => {
-                e.target.querySelector(".single-product-hover-img a img").style.opacity = "0"
-                e.target.querySelector(".single-product-img a img").style.opacity = "1"
+                if (e.target.querySelector(".single-product-hover-img a img")) {
+                    e.target.querySelector(".single-product-hover-img a img").style.opacity = "0"
+                }
+
+                if (e.target.querySelector(".single-product-img a img")) {
+                    e.target.querySelector(".single-product-img a img").style.opacity = "1"
+                }
+
+                if (e.target.querySelector(".single-product-button")) {
+
                 e.target.querySelector(".single-product-button").style.opacity = "0"
+                }
+                
             })
         })
     }

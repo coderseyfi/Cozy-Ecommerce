@@ -1,6 +1,9 @@
-﻿using Cozy.Domain.AppCode.Extensions;
+﻿using Azure.Core;
+using Cozy.Domain.AppCode.Extensions;
+using Cozy.Domain.AppCode.Infrastructure;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
+using Cozy.Domain.Models.Entites;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -160,13 +163,22 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Policy = "admin.products.delete")]
-        public async Task<IActionResult> DeleteConfirmed(ProductRemoveCommand command)
+        public async Task<IActionResult> DeleteConfirmed(ProductRemoveCommand command, ProductsPagedQuery request)
         {
             
 
             var response = await mediator.Send(command);
 
-            return PartialView("_ListBody", response);
+            var query = db.Products
+                .Where(p => p.DeletedDate == null)
+                   .Include(p => p.ProductImages.Where(i => i.DeletedDate == null))
+                  .Include(p => p.Brand)
+                  .Include(p => p.Category)
+                  .AsQueryable();
+
+            var pagedDate = new PagedViewModel<Product>(query, request);
+
+            return PartialView("_ListBody", pagedDate);
 
            
         }

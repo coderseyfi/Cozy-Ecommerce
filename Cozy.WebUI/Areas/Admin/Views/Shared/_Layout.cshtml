@@ -324,14 +324,14 @@
     <script type="text/javascript" src="~/libs/chart.js/dist/Chart.js"></script>
 
     <script  src="~/admin/pages/chat/js/chat.js"></script>
-@*   <script  src="~/admin/pages/chat/js/mmc-chat.js"></script>
-    <script src="~/admin/pages/chat/js/mmc-common.js"></script>*@
+    <script  src="~/admin/pages/chat/js/mmc-chat.js"></script>
+    <script src="~/admin/pages/chat/js/mmc-common.js"></script>
 
 
-  @*  <script type="text/javascript" src="~/libs/i18next/i18next.min.js"></script>
+    <script type="text/javascript" src="~/libs/i18next/i18next.min.js"></script>
     <script type="text/javascript" src="~/libs/i18next-xhr-backend/i18nextXHRBackend.min.js"></script>
     <script type="text/javascript" src="~/libs/i18next-browser-languagedetector/i18nextBrowserLanguageDetector.min.js"></script>
-    <script type="text/javascript" src="~/libs/jquery-i18next/jquery-i18next.min.js"></script>*@
+    <script type="text/javascript" src="~/libs/jquery-i18next/jquery-i18next.min.js"></script>
 
    
 
@@ -346,6 +346,8 @@
     <script src="~/admin/js/vartical-layout.min.js"></script>
     <script src="~/libs/signalr/dist/browser/signalr.min.js"></script>
 
+   
+
     @RenderSection("addjs", required: false)
     <script type="text/javascript" src="~/admin/js/script.min.js"></script>
     <script type="text/javascript" src="~/libs/live-chat/chat.js"></script>
@@ -358,7 +360,6 @@
 
         const chat = new chatBox();
       
-       
 
         window['sms'] = function () {
             if (window["sms-file"] == undefined)
@@ -368,14 +369,14 @@
             window["sms-file"].play();
         }
 
-        $("#chatbox").submit(function (e) {
+        $("#adminChatBox").submit(function (e) {
             e.preventDefault();
 
             console.log('sending....');
 
             const formData = new FormData(e.currentTarget);
 
-            connection.invoke('SendMessage', formData.get("message"))
+            connection.invoke('SendFromOperator', formData.get("message"))
                 .then(r => {
                     e.currentTarget.reset();
                 })
@@ -383,8 +384,8 @@
                     console.log(response);
                 });
 
-
         });
+      
 
         var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
 
@@ -400,11 +401,11 @@
             sms()
         });
 
-        connection.start().then(function () {
+        connection.start().then(function () {   
 
             console.log('loaded!');
 
-            $('#chatbox').css("display", "inline-block");
+            $('#adminChatBox').css("display", "inline-block");
 
         }).catch(function (err) {
             return console.error(err.toString());

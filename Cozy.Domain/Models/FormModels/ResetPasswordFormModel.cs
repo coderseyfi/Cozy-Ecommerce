@@ -8,8 +8,14 @@ using System.Xml.Linq;
 
 namespace Cozy.Domain.Models.FormModels
 {
-    public class ForgotPasswordFormModel
+    public class ResetPasswordFormModel
     {
         public string Email { get; set; }
+
+        public string Password { get; set; }
+
+        public string ConfirmPassword { get; set; }
+
+        public string Token { get; set; }
     }
 }

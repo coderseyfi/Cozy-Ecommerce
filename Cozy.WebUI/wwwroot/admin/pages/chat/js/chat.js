@@ -19,6 +19,5 @@ $(document).ready(function() {
             $(this).closest('.userlist-box')[s.indexOf(g) !== -1 ? 'show' : 'hide']();
         });
     });
-
-
+      
 });

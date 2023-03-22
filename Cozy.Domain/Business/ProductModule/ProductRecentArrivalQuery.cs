@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System;
 
 namespace Cozy.Domain.Business.ProductModule
 {
@@ -13,7 +14,6 @@ namespace Cozy.Domain.Business.ProductModule
     {
 
         public int Size { get; set; }
-        public int PostId { get; set; }
 
         public class ProductRecentQueryHandler : IRequestHandler<ProductRecentArrivalQuery, List<Product>>
         {
@@ -26,10 +26,10 @@ namespace Cozy.Domain.Business.ProductModule
             public async Task<List<Product>> Handle(ProductRecentArrivalQuery request, CancellationToken cancellationToken)
             {
                 var posts = await db.Products
-                     .Where(bp => bp.DeletedDate == null && bp.CreatedDate != null)
+                     .Where(bp => bp.DeletedDate == null && bp.CreatedDate > DateTime.Now.AddDays(-7))
                      .Include(p => p.ProductImages)
                      .OrderByDescending(bp => bp.CreatedDate)
-                     .Take(request.Size < 8 ? 8 : request.Size)
+                     .Take(8)
                      .ToListAsync(cancellationToken);
 
                 return posts;

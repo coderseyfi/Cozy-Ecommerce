@@ -1,4 +1,6 @@
-﻿using Cozy.Domain.AppCode.Extensions;
+﻿using Azure.Core;
+using Cozy.Domain.AppCode.Extensions;
+using Cozy.Domain.AppCode.Infrastructure;
 using Cozy.Domain.Business.BasketModule;
 using Cozy.Domain.Business.ProductModule;
 using Cozy.Domain.Models.DataContexts;
@@ -40,6 +42,43 @@ namespace Cozy.WebUI.Controllers
             }
 
             return View(response);
+        }
+
+
+        [AllowAnonymous]
+        public IActionResult SortBy(string sortOrder, ProductsPagedQuery request)
+        {
+            var products = db.Products
+                .Include(p => p.ProductImages.Where(pi => pi.IsMain == true))
+                .Include(p => p.Category)
+                .Where(p => p.DeletedDate == null)
+                .OrderByDescending(p => p.CreatedDate)
+                .AsQueryable();
+
+            var pagedDate = new PagedViewModel<Product>(products, request);
+
+
+            switch (sortOrder)
+            {
+                case "priceDesc":
+                    products = products.OrderByDescending(p => p.Price);
+                    pagedDate = new PagedViewModel<Product>(products, request);
+                    break;
+                case "priceAsc":
+                    products = products.OrderBy(p => p.Price);
+                    pagedDate = new PagedViewModel<Product>(products, request);
+                    break;
+                case "rateDesc":
+                    products = products.OrderByDescending(p => p.Rate);
+                    pagedDate = new PagedViewModel<Product>(products, request);
+                    break;
+                default:
+                    products = products.OrderByDescending(p => p.CreatedDate);
+                    pagedDate = new PagedViewModel<Product>(products, request);
+                    break;
+            }
+
+            return PartialView("_Products", pagedDate);
         }
 
 
@@ -182,6 +221,7 @@ namespace Cozy.WebUI.Controllers
 
             return Json(response);
         }
+
 
 
         public async Task<IActionResult> SearchProducts(string searchTerm)

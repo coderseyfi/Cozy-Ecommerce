@@ -38,7 +38,7 @@
             <div class="container-wrapper pl-15 pr-15 position-relative">
                 <div class="row position-static">
                     <div class="col-xl-4 col-lg-3 col-md-2 col-sm-3 col-12 position-static">
-                       <partial name="_SearchProducts" />
+                        <partial name="_SearchProducts" />
                         <div class="product-filter-nb d-xl-none d-block p-title">
                             <div class="product-filter pb-45 text-left">
                                 <a href="javascript:void(0)"
@@ -49,23 +49,23 @@
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 d-none d-md-block text-center">
                         <div class="shop-title p-title pb-50">
-                              <h5 class="mb-0 mt-2">Showing all @Model.Items.Count() results</h5>
+                            <h5 class="mb-0 mt-2">Showing all @Model.Items.Count() results</h5>
                         </div>
                     </div>
                     <div class="col-xl-4 col-lg-3 col-md-3 col-sm-4 col-12 d-flex justify-content-md-end position-static">
-                        <div class="select" tabindex="1">
-                            <input class="selectopt" name="test" type="radio" id="opt1" checked>
-                            <label for="opt1" class="option">Sort by: Default sorting</label>
-                            <input class="selectopt" name="test" type="radio" id="opt2">
+
+                        <div class="select" id="sorting-div" tabindex="1">
+                            <input class="selectopt" name="test" type="radio" id="opt1" value="createdDateDesc" checked>
+                            <label for="opt1" class="option" value="">Sort by: Latest</label>
+
+                            <input class="selectopt" name="test" type="radio" id="opt2" value="rateDesc">
                             <label for="opt2" class="option">Sort by: Popularity</label>
-                            <input class="selectopt" name="test" type="radio" id="opt3">
-                            <label for="opt3" class="option">Sort by: Avarage rating</label>
-                            <input class="selectopt" name="test" type="radio" id="opt4">
-                            <label for="opt4" class="option">Sort by: Latest</label>
-                            <input class="selectopt" name="test" type="radio" id="opt5">
-                            <label for="opt5" class="option">Sort by: Low to High</label>
-                            <input class="selectopt" name="test" type="radio" id="opt5">
-                            <label for="opt5" class="option">Sort by: High to Low</label>
+
+                            <input class="selectopt" name="test" type="radio" id="opt3" value="priceAsc">
+                            <label for="opt3" class="option">Sort by: Low to High</label>
+
+                            <input class="selectopt" name="test" type="radio" id="opt4" value="priceDesc">
+                            <label for="opt4" class="option">Sort by: High to Low</label>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
     <!-- /shop-slidebar-left -->
 
 
-   
+
 </main>
 
 @section addcss{
@@ -337,22 +337,22 @@
         }
 
             [data-entity-type]:not(.filled)::before {
-                    content: "";
-                    font-size: 0.7em;
-                    font-weight: 900;
-                    font-family: "Font Awesome 5 Free";
-                    position: absolute;
-                    width: 20px;
-                    height: 20px;
-                    border-radius: 2px;
-                    top: 50%;
-                    left: 0px;
-                    transform: translateY(-50%);
-                    text-align: center;
-                    text-indent: 1px;
-                    line-height: 1.7em;
-                    border-radius: 50%;
-                    border: 1px solid #343a40;
+                content: "";
+                font-size: 0.7em;
+                font-weight: 900;
+                font-family: "Font Awesome 5 Free";
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 2px;
+                top: 50%;
+                left: 0px;
+                transform: translateY(-50%);
+                text-align: center;
+                text-indent: 1px;
+                line-height: 1.7em;
+                border-radius: 50%;
+                border: 1px solid #343a40;
             }
 
             [data-entity-type].active:not(.filled)::before {
@@ -399,15 +399,15 @@
             padding-top: 15px;
         }
 
-        .def-item{
-            padding-bottom:16px;
-            font-size:15px;
-            line-height:1.4;
+        .def-item {
+            padding-bottom: 16px;
+            font-size: 15px;
+            line-height: 1.4;
         }
-        
-        .def-cap{
-            font-size:22px;
-            font-weight:400;
+
+        .def-cap {
+            font-size: 22px;
+            font-weight: 400;
             color: #fff;
             width: 100%;
             padding: 0 20px;
@@ -415,34 +415,34 @@
             background: #484848;
             border-bottom: 1px solid #dbdbdb;
         }
-     
-        .border-default .def-list{
-            overflow-y:scroll;
-            max-height:206px;
-        }
-        .def-color-name{
-            display:inline-block;
-            padding-left:15px;
-            width:100px;
-            font-size:16px;
-            color:black;
+
+        .border-default .def-list {
+            overflow-y: scroll;
+            max-height: 206px;
         }
 
-        .def-link{
-            color:black;
+        .def-color-name {
+            display: inline-block;
+            padding-left: 15px;
+            width: 100px;
+            font-size: 16px;
+            color: black;
         }
 
-        .def-link:hover, .def-link:focus, .def-link:active {
-            outline: none;
-            text-decoration: none;
-            color:black;
+        .def-link {
+            color: black;
         }
 
-        .single-product:hover  ul{
-            opacity:1 !important;
+            .def-link:hover, .def-link:focus, .def-link:active {
+                outline: none;
+                text-decoration: none;
+                color: black;
+            }
+
+        .single-product:hover ul {
+            opacity: 1 !important;
         }
 
-     
     </style>
 
 }
@@ -485,6 +485,27 @@
 
                 setFilter();
             });
+
+
+            $(".selectopt").click(function(){
+
+                var sortOrder = $("input[name='test']:checked").val();
+
+                $.ajax({
+                    type: "GET",
+                    url: "/Shop/SortBy",
+                    data: { sortOrder: sortOrder },
+                    success: function (res) {
+                        //console.log(res)
+                        $("#products").html(res);
+                    },
+                    error: function (res) {
+                        console.warn(res)
+                    }
+                });
+
+            });
+
         })
 
         const priceRangeData = $("#price-range").data();
@@ -576,10 +597,11 @@
             }, 1500);
         }
 
+
     </script>
 
 
-@*
+    @*
     <script src="~/assets/js/main.js"></script>*@
 
 }

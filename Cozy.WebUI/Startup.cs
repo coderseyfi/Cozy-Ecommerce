@@ -87,8 +87,8 @@ namespace Cozy.WebUI
                 cfg.Password.RequireLowercase = false;
                 cfg.Password.RequireNonAlphanumeric = false;
                 cfg.Password.RequiredUniqueChars = 1; //123
-                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(1, 0, 0);
-                cfg.Lockout.MaxFailedAccessAttempts = 3;
+                cfg.Lockout.DefaultLockoutTimeSpan = new TimeSpan(0, 1, 0);
+                cfg.Lockout.MaxFailedAccessAttempts = 40;
                 cfg.Password.RequiredLength = 3;
 
             });
@@ -168,13 +168,39 @@ namespace Cozy.WebUI
             app.UseAuthentication();
             app.UseAuthorization();
 
-          
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path.StartsWithSegments("/admin", StringComparison.OrdinalIgnoreCase) && !context.User.Identity.IsAuthenticated)
+                {
+                    context.Response.Redirect("/notfoundpage");
+                    return;
+                }
+                if (context.Request.Path.StartsWithSegments("/admin", StringComparison.OrdinalIgnoreCase) && context.User.IsInRole("User"))
+                {
+                    context.Response.Redirect("/notfoundpage");
+                    return;
+                }
+
+                await next();
+            });
+
 
             app.UseEndpoints(cfg =>
             {
 				cfg.MapAreaControllerRoute("defaultAdmin", "admin", "admin/{controller=account}/{action=signin}/{id?}");
 
-				cfg.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
+                cfg.MapControllerRoute(
+               name: "default-accessdenied",
+               pattern: "notfound",
+               defaults: new
+               {
+                   area = "",
+                   controller = "account",
+                   action = "notfoundpage"
+               });
+
+                cfg.MapControllerRoute("default", "{controller=home}/{action=index}/{id?}");
 
                 cfg.MapHub<ChatHub>("/chathub");
             });

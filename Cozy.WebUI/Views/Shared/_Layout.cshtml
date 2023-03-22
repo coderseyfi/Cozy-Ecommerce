@@ -77,6 +77,28 @@
         .dropdown-menu {
             transition: all 0.6s ease 0s;
         }
+
+        .basket-sup{
+              position: absolute;
+              display: inline-block;
+              text-align: center;
+              width: 20px;
+              height: 20px;
+              border-radius: 50%;
+              top: -12px;
+              right: -15px;
+              color: #ffffff;
+              font-size: 14px;
+              line-height: 22px;
+              background-color: #6C757D;
+        }
+
+        .header-top__container__right__item__link{
+            position:relative;
+        }
+
+
+
     </style>
     @RenderSection("addcss", required: false)
 
@@ -90,7 +112,8 @@
     <!-- header start -->
     <header>
         <div class="header">
-            <partial name="_Navbar" />
+            <partial name="_Navbar"/>
+
         </div>
     </header>
     <!-- header end -->
@@ -154,6 +177,12 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-action="logout" asp-controller="account">Logout</a></li>
+                                <li><a class="dropdown-item" asp-action="forgotpassword" asp-controller="account">Change Password</a></li>
+                                @if (User.HasAccess("admin.dashboard.index"))
+                                {
+                                <li><a class="dropdown-item" asp-controller="dashboard" asp-action="index" asp-controller="account">Go to Admin Panel</a></li>
+                                }
+
                             </ul>
                         </div>
                     </li>
@@ -193,6 +222,7 @@
                 <li>
                     <a asp-controller="shop" asp-action="basket">
                         <span class="fa fa-bag-shopping"></span>
+                        
                     </a>
                 </li>
 
@@ -481,7 +511,7 @@
     <!-- main js -->
     <script src="~/assets/js/main.js"></script>
     <script src="~/libs/microsoft/signalr/dist/browser/signalr.min.js"></script>
-
+    <script type="text/javascript" src="~/libs/live-chat/chat.js"></script>
 
 
     <script class="removable">
@@ -514,6 +544,8 @@
             });
 
 
+            const chat = new chatBoxAdmin();
+
             $("#chatbox").submit(function (e) {
                 e.preventDefault();
 
@@ -533,9 +565,15 @@
             });
 
             var connection = new signalR.HubConnectionBuilder().withUrl("/chathub").build();
+            let count = 0;
+            connection.on("ReceiveFromClient", function (message) {
+                console.log(message);
+                count++;
+                $('.displayChatbox span').html(count);
 
-            connection.on("ReceiveFromClient", function (json) {
-                console.log(json);
+                chat.receiveMessage(JSON.parse(message));
+
+                sms()
             });
 
             connection.start().then(function () {
