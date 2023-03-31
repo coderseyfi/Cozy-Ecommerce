@@ -236,3 +236,15 @@
     --color: #fff !important;
     --icon: #fff !important;
 }
+
+.eye-cont {
+    position: relative;
+}
+
+.eye-s {
+    position: absolute;
+    top: 20px;
+    right: 18px;
+    font-size: 18px;
+    cursor: pointer;
+}

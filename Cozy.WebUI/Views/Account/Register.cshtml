@@ -1,7 +1,7 @@
 ﻿@model RegisterFormModel
 @{
     ViewData["Title"] = "Register";
-    
+
 }
 
 <main>
@@ -47,9 +47,9 @@
                             <form method="post" asp-action="Register" class="register" id="register-form">
                                 @if (!string.IsNullOrWhiteSpace(ViewBag.Message))
                                 {
-                                   <div class="group">
-                                      <label class="alert alert-danger text-white">@ViewBag.Message</label>
-                                   </div>
+                                    <div class="group">
+                                        <label class="alert alert-danger text-white">@ViewBag.Message</label>
+                                    </div>
                                 }
                                 <div class="log-email">
                                     <label class="d-block pb-2 mb-2">
@@ -58,8 +58,7 @@
                                     <input type="text"
                                            class="form-control"
                                            asp-for="Name"
-                                           id="l-name"
-                                            />
+                                           id="l-name" />
                                     <span asp-validation-for="Name" class="text-danger ml-15"></span>
                                 </div>
                                 <div class="log-email">
@@ -69,8 +68,7 @@
                                     <input type="text"
                                            class="form-control"
                                            asp-for="Surname"
-                                           id="l-name"
-                                            />
+                                           id="l-name" />
                                     <span asp-validation-for="Surname" class="text-danger ml-15"></span>
                                 </div>
                                 <div class="log-email">
@@ -80,30 +78,34 @@
                                     <input type="email"
                                            class="form-control"
                                            asp-for="Email"
-                                           id="l-name"
-                                            />
+                                           id="l-name" />
                                     <span asp-validation-for="Email" class="text-danger ml-15"></span>
                                 </div>
                                 <div class="log-pass">
                                     <label class="d-block pt-10 pb-2 mb-2">
                                         Password<span class="text-danger">*</span>
                                     </label>
-                                    <input type="password"
-                                           class="form-control"
-                                           asp-for="Password"
-                                           id="l-pass"
-                                            />
+                                    <div class="eye-cont">
+                                        <input class="form-control tog-pass"
+                                               asp-for="Password"
+                                               id="l-pass" />
+
+                                        <i class="fa-solid fa-eye eye-s eye-1" style="color: #6d6b6b;"></i>
+                                    </div>
                                     <span asp-validation-for="Password" class="text-danger ml-15"></span>
                                 </div>
                                 <div class="log-pass">
                                     <label class="d-block pt-10 pb-2 mb-2">
                                         Confirm Password<span class="text-danger">*</span>
                                     </label>
-                                    <input type="password"
-                                           class="form-control"
-                                           asp-for="ConfirmPassword"
-                                           id="l-pass"
-                                            />
+                                    <div class="eye-cont">
+                                        <input class="form-control tog-pass1"
+                                               asp-for="ConfirmPassword"
+                                               id="l-pass" />
+
+                                        <i class="fa-solid fa-eye eye-s eye2" style="color: #6d6b6b;"></i>
+                                    </div>
+
                                     <span asp-validation-for="ConfirmPassword" class="text-danger ml-15"></span>
                                 </div>
                                 <div class="save-info login-check d-flex align-items-sm-center mt-15">
@@ -113,12 +115,12 @@
                                     <p class="mb-0 pl-10">Remember me</p>
                                 </div>
                                 <input type="submit"
-                                   class="btn text-white bg-dark transition-3 form-control mt-20" value="Register"/>
-                               @* <div class="f-get-pass text-right mt-2">
-                                    <a href="login.html" class="d-inline-block mt-10">
-                                        Lost
-                                        your password?
-                                    </a>
+                                       class="btn text-white bg-dark transition-3 form-control mt-20" value="Register" />
+                                @* <div class="f-get-pass text-right mt-2">
+                                <a href="login.html" class="d-inline-block mt-10">
+                                Lost
+                                your password?
+                                </a>
                                 </div>*@
                             </form>
                         </div>
@@ -130,3 +132,37 @@
     <!-- login area -->
 
 </main>
+
+
+
+@section addjs{
+    <script>
+
+        $(".eye-1").on('click', function () {
+            var passwordField = $('.tog-pass');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType == 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        })
+
+        $(".eye2").on('click', function () {
+            var passwordField = $('.tog-pass1');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType == 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        })
+
+
+    </script>
+
+}

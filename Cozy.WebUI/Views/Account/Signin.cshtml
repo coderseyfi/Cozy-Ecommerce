@@ -63,11 +63,14 @@
                                     <label class="d-block pt-10 pb-2 mb-2">
                                         Password<span class="text-danger">*</span>
                                     </label>
-                                    <input 
-                                           class="form-control"
-                                           asp-for="Password"
-                                           id="l-pass"
-                                            />
+                                    <div class="eye-cont">
+                                        <input class="form-control sign-tog"
+                                               asp-for="Password"
+                                               id="l-pass" />
+                                      
+                                        <i class="fa-solid fa-eye eye-s" style="color: #6d6b6b;"></i>
+                                    </div>
+                                   
                                 </div>
                               
                                 <input
@@ -91,3 +94,31 @@
     </section>
 
 </main>
+
+
+@section addcss{
+    <style>
+       
+
+    </style>
+}
+
+@section addjs{
+    <script>
+
+
+        $(".eye-cont i").on('click', function () {
+            var passwordField = $('.sign-tog');
+            var passwordFieldType = passwordField.attr('type');
+            if (passwordFieldType == 'password') {
+                passwordField.attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        })
+
+    </script>
+
+}
