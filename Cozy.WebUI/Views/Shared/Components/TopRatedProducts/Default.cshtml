@@ -7,8 +7,8 @@
 
                 @foreach (var item in Model)
                 {
-                    var imagePath = item.ProductImages.FirstOrDefault()?.Name;
-                    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true)?.Name;
+                    var imagePath = item.ProductImages.FirstOrDefault(i => i.IsMain == true && i.DeletedDate == null)?.Name;
+                    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true && i.DeletedDate == null)?.Name;
                     var topRate = Convert.ToInt32(item.Rate);
 
                     <div class=" bestseller__container__item">

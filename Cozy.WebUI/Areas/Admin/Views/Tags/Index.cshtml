@@ -104,8 +104,8 @@
 
 
 @section addcss{
-<link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
-<link rel="stylesheet" href="~/lib/jquery-treegrid/css/jquery.treegrid.css" />
+<link rel="stylesheet" href="~/libs/toastr.js/toastr.min.css" />
+<link rel="stylesheet" href="~/libs/jquery-treegrid/css/jquery.treegrid.css" />
 
 <style>
     th.operations,
@@ -124,14 +124,12 @@
 }
 
 @section addjs{
-<script src="~/lib/sweetalert/sweetalert.min.js"></script>
-<script src="~/lib/toastr.js/toastr.min.js"></script>
-<script src="~/lib/toastr.js/toastr.customize.js"></script>
-<script src="~/lib/jquery-treegrid/js/jquery.treegrid.js"></script>
+<script src="~/libs/sweetalert/sweetalert.min.js"></script>
+<script src="~/libs/toastr.js/toastr.min.js"></script>
+<script src="~/libs/toastr.js/toastr.customize.js"></script>
+<script src="~/libs/jquery-treegrid/js/jquery.treegrid.js"></script>
 
-<script type="text/javascript">
-    $('.tree').treegrid();
-</script>
+
 
 
 @if (User.HasAccess("admin.categories.remove")){

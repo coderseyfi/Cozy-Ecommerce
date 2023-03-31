@@ -88,7 +88,10 @@
 
                                             <div id="products" class="row">
                                                 <partial name="_Products" model="@Model" />
+
+                                               
                                             </div>
+                                          
 
                                         </div>
                                     </div>
@@ -439,9 +442,16 @@
                 color: black;
             }
 
-        .single-product:hover ul {
+       /* .single-product:hover .filter-img{
+            opacity:0 !important;
+        }*/
+
+        .single-product:hover ul,
+        .single-product:hover .filter-hover-img {
             opacity: 1 !important;
         }
+
+
 
     </style>
 
@@ -583,7 +593,7 @@
                         console.log($('#products').children().length)
 
                         if ($('#products').children().length == 0) {
-                            $("#products").html("<div style='display: flex; justify-content: center;'><img src='/assets/imgs/no-product-found.png'/></div>");
+                            $("#products").html("<div style='display: flex; justify-content: center;'><img src='./assets/imgs/no-product-found.png'/></div>");
                             console.log("test")
                         }
 

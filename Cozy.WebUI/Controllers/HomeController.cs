@@ -98,7 +98,7 @@ namespace Cozy.WebUI.Controllers
                 return Json(new
                 {
                     error = true,
-                    message = "Boş göndərilə bilməz"
+                    message = "Cannot be send empty"
                 });
             }
 
@@ -107,7 +107,7 @@ namespace Cozy.WebUI.Controllers
                 return Json(new
                 {
                     error = true,
-                    message = "Məlumat düzgün göndərilməyib"
+                    message = "The information was not sent correctly"
                 });
             }
 
@@ -129,7 +129,7 @@ namespace Cozy.WebUI.Controllers
                 return Json(new
                 {
                     error = false,
-                    message = "Siz artıq abunə olmusunuz"
+                    message = "You are already subscribed"
                 });
             }
 
@@ -148,7 +148,7 @@ namespace Cozy.WebUI.Controllers
             token = cryptoService.Encrypt(token, true);
 
 
-            string message = $"Zəhmət olmasa <a href='{Request.Scheme}://{Request.Host}/approve-subscribe?token={token}'>link</a> vasitəsilə abunəliyinizi təsdiq edin";
+            string message = $"Please approve your subscription via <a href='{Request.Scheme}://{Request.Host}/approve-subscribe?token={token}'>link</a>";
 
 
             await emailService.SendEmailAsync(model.Email, "Subscribe Approve Message", message);
@@ -156,7 +156,7 @@ namespace Cozy.WebUI.Controllers
             return Json(new
             {
                 error = false,
-                message = "E-mailinizə təsdiq mesajı göndərildi"
+                message = "A confirmation message has been sent to your email"
             });
 
         }
@@ -187,7 +187,7 @@ namespace Cozy.WebUI.Controllers
 
                 if (entity.IsApproved)
                 {
-                    ViewBag.Message = Tuple.Create(true, "Sizin müraciətiniz artıq təsdiq edilib");
+                    ViewBag.Message = Tuple.Create(true, "Your request has already been approved");
 
                     goto end;
                 }
@@ -197,12 +197,12 @@ namespace Cozy.WebUI.Controllers
                 db.SaveChanges();
 
 
-                ViewBag.Message = Tuple.Create(false, "Sizin abunəliyiniz təsdiq edildi");
+                ViewBag.Message = Tuple.Create(false, "Your subscription has been confirmed");
 
             }
             else
             {
-                ViewBag.Message = Tuple.Create(true, "Token xətası");
+                ViewBag.Message = Tuple.Create(true, "Token error");
             }
 
         end:

@@ -2,8 +2,8 @@
 
 @foreach (var item in Model.Items)
 {
-    var imagePath = item.ProductImages.FirstOrDefault()?.Name;
-    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true)?.Name;
+    var imagePath = item.ProductImages.FirstOrDefault(i => i.IsMain == true && i.DeletedDate == null)?.Name;
+    var notMain = item.ProductImages.FirstOrDefault(i => i.IsMain != true && i.DeletedDate == null)?.Name;
 
     <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12 mb-40">
         <div class="single-product position-relative pb-30">
@@ -14,14 +14,14 @@
                 <div class="single-product-hover-img position-absolute">
                     @if (notMain == null)
                     {
-                        <a asp-action="details" asp-route-id="@item.Id">
-                            <img src="~/uploads/images/@imagePath" alt="pr-img" />
+                        <a asp-action="details" asp-route-id="@item.Id" class="filter-img-link">
+                            <img src="~/uploads/images/@imagePath" alt="pr-img" class="filter-img" />
                         </a>
                     }
                     else
                     {
                         <a asp-action="details" asp-route-id="@item.Id">
-                            <img src="~/uploads/images/@notMain" alt="pr-img" />
+                            <img src="~/uploads/images/@notMain" alt="pr-img"  class="filter-hover-img"/>
                         </a>
                     }
                  
@@ -71,11 +71,10 @@
 
 
 
-@*<div class="div mb-40" style="text-align:center">
-        <div class="col-12">
-            @Model.GetPager(Url, "Index")
-        </div>
-</div>*@
-
+<div class="div mb-40" style="text-align:center">
+    <div class="col-12">
+        @Model.GetPager(Url, "Index")
+    </div>
+</div>
 
 

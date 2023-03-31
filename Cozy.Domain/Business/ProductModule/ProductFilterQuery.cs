@@ -57,6 +57,7 @@ namespace Cozy.Domain.Business.ProductModule
 
                 var productQuery = db.Products
                     .Include(p => p.ProductImages)
+                    //.Include(p => p.ProductImages.Where(i=>i.DeletedDate == null && i.IsMain == true))
                     .Where(p => productIds.Contains(p.Id) && p.DeletedDate == null)
                     .AsQueryable();
 

@@ -4,8 +4,12 @@
 }
 
 .tab-control > .tab-navs {
-    background-color: #ab8e66;
+    background-color: #848484;
     padding: 0 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 260px;
 }
 
     .tab-control > .tab-navs > li {
@@ -18,7 +22,7 @@
             border: 0px;
             padding: 15px 20px;
             color: #ffffff;
-            min-width: 70px;
+            
             font-size: 1.5em;
         }
 
@@ -34,7 +38,6 @@
                 border: 1px solid #ddd;
                 border-bottom-color: transparent;
                 border-width: 0px;
-                border-radius: 25%;
             }
 
             .tab-control > .tab-navs > li > a.required {

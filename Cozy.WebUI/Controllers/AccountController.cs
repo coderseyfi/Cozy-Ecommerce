@@ -155,15 +155,15 @@ namespace Cozy.WebUI.Controllers
 					var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
 					string path = $"{Request.Scheme}://{Request.Host}/registration-confirm.html?email={user.Email}&token={token}";
 
-					var emailResponse = await emailService.SendEmailAsync(user.Email, "Registration for Cozy e-commerce Perfume website", $"Zəhmət olmasa abunəliyinizi <a href='{path}'>link</a> vasitəsilə təsdiq edin");
+					var emailResponse = await emailService.SendEmailAsync(user.Email, "Registration for Cozy e-commerce  website", $"Please confirm your subscription via <a href='{path}'>link</a>");
 
 					if (emailResponse)
 					{
-						ViewBag.Message = "Qeydiyyat uğurla tamamlandı";
+						ViewBag.Message = "Registration completed successfully";
 					}
 					else
 					{
-						ViewBag.Message = " E-mail' göndərərkən xəta baş verdi, zəhmət olmasa yenidən cəhd edin";
+						ViewBag.Message = "There was an error sending the email, please try again";
 					}
 
 					await userManager.AddToRoleAsync(user, "User");
@@ -190,7 +190,7 @@ namespace Cozy.WebUI.Controllers
 			var foundedUser = await userManager.FindByEmailAsync(email);
 			if (foundedUser == null)
 			{
-				ViewBag.Message = "Xətalı token";
+				ViewBag.Message = "Invalid token";
 				goto end;
 			}
 			token = token.Replace(" ", "+");
@@ -198,11 +198,11 @@ namespace Cozy.WebUI.Controllers
 
 			if (!result.Succeeded)
 			{
-				ViewBag.Message = "Xətalı token";
+				ViewBag.Message = "Invalid token";
 				goto end;
 			}
 
-			ViewBag.Message = "Hesabınız təsdiqləndi";
+			ViewBag.Message = "Your account has been verified";
 		end:
 			return RedirectToAction(nameof(Signin));
 		}

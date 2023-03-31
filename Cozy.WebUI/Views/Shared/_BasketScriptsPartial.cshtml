@@ -35,12 +35,11 @@
                                     $(removeTarget).remove();
                                 }
 
-                                //if (response.value.count == undefined) {
-                                //    $('.cart-counter').text('')
-                                //}
-                                //else {
-                                //    $('.cart-counter').text(`${response.value.count}`) //basket header
-                                //}
+                                if (response.value?.count == null) {
+                                    $('.basket-sup').text("0");
+                                } else {
+                                    $('.basket-sup').text(response.value.count);
+                                }
 
 
                                 if (response.value?.count == null) {

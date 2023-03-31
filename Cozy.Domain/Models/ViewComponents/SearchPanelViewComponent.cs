@@ -62,9 +62,16 @@ namespace Cozy.Domain.Models.ViewComponents
                 .ToArrayAsync();
 
 
+            if (priceRange.Any())
+            {
+                vm.Min = (int)Math.Floor(priceRange.Min());
+            }
 
-            vm.Min = (int)Math.Floor(priceRange.Min());
-            vm.Max = (int)Math.Ceiling(priceRange.Max());
+
+            if (priceRange.Any())
+            {
+                vm.Max = (int)Math.Ceiling(priceRange.Max());
+            }
 
             return View(vm);
         }

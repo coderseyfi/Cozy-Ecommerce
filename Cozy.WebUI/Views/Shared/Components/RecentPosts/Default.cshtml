@@ -32,7 +32,7 @@
                                     </li>
                                 </ul>
                                 <h4>
-                                    <a class="blog-slider__item__content__link" asp-action="details" asp-route-id="@item.Id">@item.Title</a>
+                                    <a class="blog-slider__item__content__link" asp-action="details" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a>
                                 </h4>
                                 <p class="ellipse-text-blog"> @Html.Raw(item.Body)</p>
 

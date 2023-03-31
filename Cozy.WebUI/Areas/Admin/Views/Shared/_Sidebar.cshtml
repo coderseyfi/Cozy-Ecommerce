@@ -28,9 +28,7 @@
                                 <span class="pcoded-mtext">Blog Posts</span>
                             </a>
                         }
-
                     </li>
-                   
                     <li>
                         @if (User.HasAccess("admin.blogposts.deletedposts"))
                         {
@@ -38,22 +36,11 @@
                                 <span class="pcoded-mtext">Deleted Posts</span>
                             </a>
                         }
-
-                        @if (User.HasAccess("admin.tags.index"))
-                        {
-                        <li>
-                            <a asp-controller="tags" asp-action="index">
-                                <span class="pcoded-mtext">Tags</span>
-                            </a>
-                        </li>
-                        }
-
                     </li>
                 </ul>
             </li>
-
-
         </ul>
+
         <ul class="pcoded-item pcoded-left-item">
             <li>
                 @if (User.HasAccess("admin.brands.index"))
@@ -79,13 +66,24 @@
                 }
 
             </li>
-        
+            <li>
+                @if (User.HasAccess("admin.tags.index"))
+                {
+                    <a asp-controller="tags" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-tag"></i>
+                        </span>
+                        <span class="pcoded-mtext">Tags</span>
+                    </a>
+                }
+
+            </li>
             <li>
                 @if (User.HasAccess("admin.productcolors.index"))
                 {
                     <a asp-controller="products" asp-action="index">
                         <span class="pcoded-micon">
-                            <i class="fa-solid fa-shop"></i>
+                            <i class="fa-solid fa-list"></i>
                         </span>
                         <span class="pcoded-mtext">Products</span>
                     </a>
@@ -153,51 +151,51 @@
                     </a>
                 }
             </li>
-            <li>
+          @*  <li>
                 @if (User.HasAccess("admin.abouts.index"))
                 {
-                <a asp-controller="abouts" asp-action="index">
-                    <span class="pcoded-micon">
-                        <i class="feather icon-help-circle"></i>
-                    </span>
-                    <span class="pcoded-mtext">About me</span>
-                </a>
+                    <a asp-controller="abouts" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="feather icon-help-circle"></i>
+                        </span>
+                        <span class="pcoded-mtext">About me</span>
+                    </a>
                 }
 
-            </li>
+            </li>*@
             <li>
                 @if (User.HasAccess("admin.contactinfos.index"))
                 {
-                <a asp-controller="contactinfos" asp-action="index">
-                    <span class="pcoded-micon">
-                        <i class="fa-regular fa-address-book"></i>
-                    </span>
-                    <span class="pcoded-mtext">Contact with Admin</span>
-                </a>
+                    <a asp-controller="contactinfos" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-regular fa-address-book"></i>
+                        </span>
+                        <span class="pcoded-mtext">Contact with Admin</span>
+                    </a>
                 }
 
             </li>
             <li>
                 @if (User.HasAccess("admin.subscribes.index"))
                 {
-                <a asp-controller="subscribes" asp-action="index">
-                    <span class="pcoded-micon">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </span>
-                    <span class="pcoded-mtext">Subscribers</span>
-                </a>
+                    <a asp-controller="subscribes" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-circle-check"></i>
+                        </span>
+                        <span class="pcoded-mtext">Subscribers</span>
+                    </a>
                 }
 
             </li>
             <li>
                 @if (User.HasAccess("admin.faqs.index"))
                 {
-                <a asp-controller="faqs" asp-action="index">
-                    <span class="pcoded-micon">
-                        <i class="fa-solid fa-question"></i>
-                    </span>
-                    <span class="pcoded-mtext">Faqs </span>
-                </a>
+                    <a asp-controller="faqs" asp-action="index">
+                        <span class="pcoded-micon">
+                            <i class="fa-solid fa-question"></i>
+                        </span>
+                        <span class="pcoded-mtext">Faqs </span>
+                    </a>
                 }
 
             </li>
@@ -217,12 +215,12 @@
             <li>
                 @if (User.HasAccess("admin.users.index"))
                 {
-                <a asp-controller="users" asp-action="index">
-                    <span class="pcoded-micon">
+                    <a asp-controller="users" asp-action="index">
+                        <span class="pcoded-micon">
                             <i class="fa-solid fa-users"></i>
-                    </span>
-                    <span class="pcoded-mtext">Users </span>
-                </a>
+                        </span>
+                        <span class="pcoded-mtext">Users </span>
+                    </a>
                 }
             </li>
         </ul>

@@ -84,12 +84,10 @@ namespace Cozy.WebUI.Controllers
 
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(ProductSingleQuery query)
         {
-            
-           var product = await db.Products
-                .Include(p => p.ProductImages)
-                .FirstOrDefaultAsync(p => p.Id == id && p.DeletedDate == null);
+
+            var product = await mediator.Send(query);
 
 
             if (product == null)
