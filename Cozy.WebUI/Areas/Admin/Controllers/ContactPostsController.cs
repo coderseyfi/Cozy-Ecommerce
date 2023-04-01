@@ -104,7 +104,7 @@ namespace Cozy.WebUI.Areas.Admin.Controllers
             entity.EmailSubject = model.EmailSubject;
             await db.SaveChangesAsync();
 
-            await emailService.SendEmailAsync(model.Email, "Response from Stelina online service", model.Answer);
+            await emailService.SendEmailAsync(model.Email, "Response from CozyStore online service", model.Answer);
 
             return Json(new
             {
